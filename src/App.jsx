@@ -1,8 +1,6 @@
 import Navbar from "./components/Navbar/Navbar";
-import SingleEntryForm from "./components/SIngleEntryForm/SingleEntryForm";
-import Temp from "./components/Temp";
-import HomePage from "./screens/HomePage/HomePage";
 import SingleEntryForm from "./screens/SingleEntryForm/SingleEntryForm";
+import HomePage from "./screens/HomePage/HomePage";
 
 import "./styles.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
