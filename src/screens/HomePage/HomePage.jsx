@@ -1,7 +1,7 @@
 import React from "react";
 import "./HomePage.css";
 import { Container, Form, InputGroup, Button } from "react-bootstrap";
-import Table from "../../components/Navbar/Table";
+import Table from "../../components/Table/Table";
 
 const HomePage = () => {
   return (
@@ -16,7 +16,7 @@ const HomePage = () => {
         </InputGroup> */}
         <h2 className="fw-bold fs-1">Loan Servicing System</h2>
 
-        <div classname="w-100">
+        <div className="w-100">
 
           <InputGroup className="my-5">
 
@@ -28,7 +28,7 @@ const HomePage = () => {
            
           <Button className="mx-3 rounded" variant="dark">Search</Button>
           
-          <Button variant="dark" classname="rounded">Board</Button>
+          <Button variant="dark" className="rounded">Board</Button>
             
            
           </InputGroup>
