@@ -1,8 +1,24 @@
-import React from "react";
 import "./HomePage.css";
-import { Container, Form, InputGroup, Button } from "react-bootstrap";
-import Table from "../../components/Navbar/Table";
+import { Container, Form, InputGroup, Button,Table } from "react-bootstrap";
+// import Table from "../../components/Navbar/Table";
 
+
+// const tableData = [
+//   { id: 1, column1: "Data 1-1", column2: "Data 1-2", /* ...other columns */ },
+//   { id: 2, column1: "Data 2-1", column2: "Data 2-2", /* ...other columns */ },
+//   // ... more rows
+// ];
+
+const tableData = [
+  { id: 1, LoanNumber: "Temp", UploadDate: "Temp", UPBAmount: "Temp", BorrowerName: "Temp", Status: "Temp"},
+  { id: 2, LoanNumber: "Temp", UploadDate: "Temp", UPBAmount: "Temp", BorrowerName: "Temp", Status: "Temp"}
+];
+
+const handleRowClick = (row) => {
+  // Do something with the clicked row data,
+  // e.g., navigate to a detail page or display a modal
+  console.log("Clicked row:", row);
+};
 const HomePage = () => {
   return (
     <>
@@ -33,9 +49,35 @@ const HomePage = () => {
            
           </InputGroup>
         </div>
+        <div>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Loan Number</th>
+              <th>Borrower Name</th>
+              <th>Upload Date</th>
+              <th>UPB Amount</th>
+              <th>Status</th>
+              {/* ...other column headers */}
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((row) => (
+              <tr key={row.id} onClick={() => handleRowClick(row)}>
+                <td>{row.LoanNumber}</td>
+                <td>{row.UploadDate}</td>
+                <td>{row.UPBAmount}</td>
+                <td>{row.BorrowerName}</td>
+                <td>{row.Status}</td>
+                {/* ...other column data */}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+        </div>
       </Container>
       {/* table here */}
-      <Table/>
+      
     </>
   );
 };
