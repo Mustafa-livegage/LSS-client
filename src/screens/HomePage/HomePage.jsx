@@ -5,9 +5,8 @@ import { Container, Form, InputGroup } from "react-bootstrap";
 const HomePage = () => {
   return (
     <>
-      <Container className="homePageContainer">
+      <Container className="container-fluid">
         <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
           <Form.Control
             placeholder="Username"
             aria-label="Username"
