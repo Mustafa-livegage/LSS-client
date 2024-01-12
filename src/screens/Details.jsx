@@ -85,7 +85,7 @@ const Details = () => {
 
             <tr>
               <td>PPR</td>
-              <td className="fw-bold ">{loan.ppr} waterfall</td>
+              <td className="fw-bold ">{loan.ppr}</td>
             </tr>
 
             <tr>

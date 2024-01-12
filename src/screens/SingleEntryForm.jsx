@@ -221,9 +221,9 @@ const SingleEntryForm = () => {
                         name="ppr"
                       >
                         {/* <option selected >Current waterfall</option> */}
-                        <option value="X">X waterfall</option>
-                        <option value="Y">Y Waterfall</option>
-                        <option value="Z">Z waterfall</option>
+                        <option value="X Waterfall">X waterfall</option>
+                        <option value="Y Waterfall">Y Waterfall</option>
+                        <option value="Z Waterfall">Z waterfall</option>
                       </Form.Select>
                     </FloatingLabel>
                     <FloatingLabel
