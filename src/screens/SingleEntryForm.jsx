@@ -7,9 +7,9 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
-import validateLoanData  from "./validateLoanData";
+import validateLoanData from "./validateLoanData";
 import { useNavigate } from "react-router-dom";
-import { Alert } from "react-bootstrap";
+import { Alert, InputGroup } from "react-bootstrap";
 import BackButton from "../components/BackButton";
 
 const SingleEntryForm = () => {
@@ -42,14 +42,8 @@ const SingleEntryForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validateErrors = validateLoanData(formData)
 
-    if (validateErrors.length > 0) {
-      // Display validation errors to the user
-      alert(validateErrors.join("\n"));
-      return; // Prevent API call
-    } else {
-      axios
+    axios
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
         console.log(response);
@@ -60,7 +54,6 @@ const SingleEntryForm = () => {
       });
     formRef.current.reset();
   };
-  }
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split("-");
     return year + "-" + month + "-" + day;
@@ -85,20 +78,21 @@ const SingleEntryForm = () => {
             // Display validation errors to the user
             alert(validationErrors.join("\n"));
             return; // Prevent API call
-          }
-          axios
-            .post("http://localhost:5000/api/loans/Bulk", formattedData)
-            .then((response) => {
-              console.log(response);
-              showAlert("success", "CSV data added successfully!");
+          } else {
+            axios
+              .post("http://localhost:5000/api/loans/Bulk", formattedData)
+              .then((response) => {
+                console.log(response);
+                showAlert("success", "CSV data added successfully!");
 
-              // history("/");
-            })
-            .catch((error) => {
-              console.log(error);
-              alert("The loan Number already Exists! \n Enter a unique Loan Number.")
-              showAlert("danger", "Error adding CSV data.");
-            });
+                // history("/");
+              })
+              .catch((error) => {
+                console.log(error);
+                alert(error);
+                showAlert("danger", "Error adding CSV data.");
+              });
+          }
         },
       });
     });
@@ -120,7 +114,9 @@ const SingleEntryForm = () => {
         >
           {alertMessage?.message}
         </Alert>
-        <h2 className="text-center fw-bold fs-1">Board loan</h2>
+        <h2 className="text-center fw-bold fs-1 text-decoration-underline">
+          Board loan
+        </h2>
 
         <div className="row h-100">
           <div className="col-8 mx-2 h-100">
@@ -152,7 +148,7 @@ const SingleEntryForm = () => {
                       label="Loan number"
                     >
                       <Form.Control
-                        type="text"
+                        type="number"
                         name="loan_number"
                         maxLength={10}
                         placeholder="0000000000"
@@ -197,7 +193,7 @@ const SingleEntryForm = () => {
                         name="current_rate"
                       />
                       <label htmlFor="curr-int-rate">
-                        Current Intrest Rate
+                        Current Interest Rate
                       </label>
                     </div>
                     <div className="form-floating my-5">

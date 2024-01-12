@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
+import { formatCurrency } from "../helper/formatCurrecny";
 
 const Details = () => {
   const { id } = useParams();
@@ -21,13 +22,16 @@ const Details = () => {
     };
 
     fetchData(); // Call the function
-  }, [id]); // Add dependencies as needed
+  }, [id]);
+
   return (
     <>
-    <BackButton/>
+      <BackButton />
       <Container className="d-flex flex-column align-align-items-center justify-content-center">
         <div className="text-center  mt-5 fw-bold">
-          <h2 className="fw-bold fs-1 ">Loan Details</h2>
+          <h2 className="fw-bold fs-1 text-decoration-underline ">
+            Loan Details
+          </h2>
         </div>
 
         <table className=" table-striped table-responsive my-5 text-center table fs-5  my-4">
@@ -38,6 +42,10 @@ const Details = () => {
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>Borrowers Name</td>
+              <td>{loan.name}</td>
+            </tr>
             <tr>
               <td>Note Date</td>
               <td>{loan.note_date}</td>
@@ -52,7 +60,7 @@ const Details = () => {
             </tr>
             <tr>
               <td>UPB Amount</td>
-              <td>{loan.upb_amount}</td>
+              <td>{"$ " + `${formatCurrency(loan.upb_amount)}`}</td>
             </tr>
             <tr>
               <td>Current Interest Rate</td>
@@ -64,23 +72,20 @@ const Details = () => {
             </tr>
             <tr>
               <td>Principal and Interest</td>
-              <td>{loan.principal_intrest}</td>
+              <td>{"$ " + `${formatCurrency(loan.principal_intrest)}`}</td>
             </tr>
             <tr>
               <td>Tax and Insurance payment</td>
-              <td>{loan.tax_insurance}</td>
+              <td>{"$ " + `${formatCurrency(loan.tax_insurance)}`}</td>
             </tr>
             <tr>
               <td>Total Payment amount</td>
-              <td>{loan.pmt_amount}</td>
+              <td>{"$ " + `${formatCurrency(loan.pmt_amount)}`}</td>
             </tr>
-            <tr>
-              <td>Borrowers Name</td>
-              <td>{loan.name}</td>
-            </tr>
+
             <tr>
               <td>PPR</td>
-              <td className="fw-bold ">{loan.ppr}</td>
+              <td className="fw-bold ">{loan.ppr} waterfall</td>
             </tr>
 
             <tr>
