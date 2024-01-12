@@ -23,15 +23,7 @@ function validateLoanDataOne(loan) {
       else if (!loan.pmt_amount) errors.push(`PMT amount is missing for loan ${loan.loan_number}`);
       else if (!loan.name) errors.push(`Name is missing for loan ${loan.loan_number}`);
   
-    //   // Validate date constraints
-    //   if (loan.note_date >= loan.boarding_date) {
-    //     errors.push(`Note date must be earlier than Loan Boarding Date for loan Number: ${loan.loan_number}`);
-    //   }
-    //   if (loan.note_date >= loan.pmt_due_date) {
-    //     errors.push(`Note date must be earlier than Next Payment Due Date for loan Number: ${loan.loan_number}`);
-    //   }
-
-      // Validate data types
+  
         
         else if (!isNumeric(loan.note_rate)) {
             errors.push(`Note rate must be a number for loan ${loan.loan_number}`);
