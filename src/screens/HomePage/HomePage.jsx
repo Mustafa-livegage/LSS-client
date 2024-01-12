@@ -61,7 +61,7 @@ const HomePage = () => {
         <div className="w-100">
           <InputGroup className="my-5">
             <Form.Control
-              placeholder="Loan number"
+              placeholder="Enter loan number or borrower name"
               aria-label=""
               aria-describedby="basic-addon2"
               onChange={(e) => setSearchTerm(e.target.value)}
