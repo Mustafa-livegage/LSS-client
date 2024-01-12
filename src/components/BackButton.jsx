@@ -1,8 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import { IoMdArrowRoundBack } from "react-icons/io";
-
 export const BackButton = () => {
   const navigate = useNavigate();
 

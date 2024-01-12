@@ -3,10 +3,9 @@
 // }
 
 
-// function validateLoanData(loanData) {
+// function validateLoanDataOne(loanData) {
 //     const errors = [];
   
-//     loanData.forEach((loan) => {
 //         // Validate required fields
 //       if (!loan.loan_number) errors.push(`Loan number is missing for loan ${loan.loan_number}`);
 
@@ -53,12 +52,11 @@
 //         if (!isNumeric(loan.pmt_amount)) {
 //             errors.push(`PMT amount must be a number for loan ${loan.loan_number}`);
 //         }
-//     });
   
 //     return errors;
 //   }
   
-//   export default validateLoanData;
+//   export default validateLoanDataOne;
 
 function isNumeric(x) {
     return parseFloat(x).toString() === x;

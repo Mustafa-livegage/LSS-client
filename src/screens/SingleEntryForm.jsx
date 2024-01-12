@@ -11,6 +11,7 @@ import validateLoanData  from "./validateLoanData";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import BackButton from "../components/BackButton";
+import validateLoanDataOne from "./HomePage/validateLoanDataOne";
 
 const SingleEntryForm = () => {
   const history = useNavigate();
@@ -42,7 +43,7 @@ const SingleEntryForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validateErrors = validateLoanData(formData)
+    const validateErrors = validateLoanDataOne(formData)
 
     if (validateErrors.length > 0) {
       // Display validation errors to the user
@@ -86,19 +87,26 @@ const SingleEntryForm = () => {
             alert(validationErrors.join("\n"));
             return; // Prevent API call
           }
-          axios
+          else {
+            axios
             .post("http://localhost:5000/api/loans/Bulk", formattedData)
             .then((response) => {
               console.log(response);
-              showAlert("success", "CSV data added successfully!");
+              showAlert("success", "CSV Data Added Successfully!");
 
               // history("/");
             })
             .catch((error) => {
               console.log(error);
-              alert("The loan Number already Exists! \n Enter a unique Loan Number.")
+              if (error.response && error.response.status === 400) {
+                alert("Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them.");
+              } else {
+                alert("The loan number already exists!\n Please enter a unique loan number.");
+              }
+            
               showAlert("danger", "Error adding CSV data.");
             });
+          }
         },
       });
     });
@@ -153,7 +161,7 @@ const SingleEntryForm = () => {
                     label="Loan number"
                   >
                     <Form.Control
-                      type="text"
+                      type="number"
                       name="loan_number"
                       maxLength={10}
                       placeholder="0000000000"
