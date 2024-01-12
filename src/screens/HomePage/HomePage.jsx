@@ -33,6 +33,27 @@ const HomePage = () => {
       )
     );
   };
+  const handleDelete = (id) => {
+    // const isConfirmed = window.confirm(
+    //   "Are you sure you want to delete this loan?"
+    // );
+
+    // if (isConfirmed) {
+    axios
+      .delete(`http://localhost:5000/api/loans/${id}`)
+      .then((response) => {
+        // Remove the deleted loan from the state
+        setLoans((prevLoans) => prevLoans.filter((loan) => loan.id !== id));
+        setFilteredLoans((prevFilteredLoans) =>
+          prevFilteredLoans.filter((loan) => loan.id !== id)
+        );
+        console.log(`Loan with ID ${id} deleted successfully`);
+      })
+      .catch((error) => {
+        console.error(`Error deleting loan with ID ${id}:`, error);
+      });
+    // }
+  };
 
   return (
     <>
@@ -71,6 +92,7 @@ const HomePage = () => {
                 <th>Upload Date</th>
                 <th>UPB Amount</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -81,6 +103,16 @@ const HomePage = () => {
                   <td>{loan.boarding_date}</td>
                   <td>{loan.upb_amount}</td>
                   <td>null</td>
+                  <td>
+                    {/* Add a delete button with onClick handler */}
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => handleDelete(loan.id)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>

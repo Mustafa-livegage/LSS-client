@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
+import { useDropzone } from "react-dropzone";
+import Papa from "papaparse";
 
 const SingleEntryForm = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +23,7 @@ const SingleEntryForm = () => {
     name: "",
     ppr: "",
   });
+  const formRef = useRef();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,20 +35,59 @@ const SingleEntryForm = () => {
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
         console.log(response);
+        console.log(formData.note_date);
       })
       .catch((error) => {
         console.log(error);
       });
+    formRef.current.reset();
   };
+  const parseDate = (dateString) => {
+    const [day, month, year] = dateString.split("-");
+    return year + "-" + month + "-" + day;
+  };
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file) => {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => {
+          const formattedData = result.data.map((row) => {
+            row.note_date = parseDate(row.note_date);
+            row.boarding_date = parseDate(row.boarding_date);
+            row.pmt_due_date = parseDate(row.pmt_due_date);
+          });
+
+          console.log(result.data[0]);
+          axios
+            .post("http://localhost:5000/api/loans/Bulk", result.data)
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          // }
+          // );
+        },
+      });
+    });
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
   return (
     <div className="container my-5" style={{ height: "80vh" }}>
       <div className="row h-100">
-        <div className="col-8 mx-2 border border-dark h-100">
+        <div className="col-8 mx-2 h-100">
           <h2 className="text-center">Board loan</h2>
           <Container className="mt-5 h-100">
             {" "}
             {/* Wrap in Container and add margin-top */}
-            <form className="text-center h-100" onSubmit={handleSubmit}>
+            <form
+              className="text-center h-100"
+              onSubmit={handleSubmit}
+              ref={formRef}
+            >
               <Row className="g-2 my-3">
                 <Col md>
                   <FloatingLabel
@@ -212,14 +254,13 @@ const SingleEntryForm = () => {
             </form>
           </Container>
         </div>
-        {/* <div className="col  mx-2 d-flex flex-column  align-items-center justify-content-center ">
-          <input
-            className="btn btn-outline-dark "
-            type="file"
-            name="upload"
-            id="upload"
-          />
-        </div> */}
+        <div
+          className="col  mx-2 d-flex flex-column border border-dark align-items-center justify-content-center "
+          {...getRootProps()}
+        >
+          <input {...getInputProps()} />
+          <p>Drag 'n' drop some files here, or click to select files</p>
+        </div>
       </div>
     </div>
   );
