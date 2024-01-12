@@ -23,15 +23,12 @@ const Details = () => {
   }, [id]); // Add dependencies as needed
   return (
     <>
-      <Container className="container">
-        <div className="text-center  my-3 fw-bold">
-          <h2 className="fw-bold fs-1">Loan Details</h2>
+      <Container className="d-flex flex-column align-align-items-center justify-content-center">
+        <div className="text-center  mt-5 fw-bold">
+          <h2 className="fw-bold fs-1 ">Loan Details</h2>
         </div>
 
-        {/* <div className="row">
-    <div className="col-8 offset-2 "> */}
-
-        <table className=" table-striped     text-center table    my-4">
+        <table className=" table-striped table-responsive my-5 text-center table fs-5  my-4">
           <thead>
             <tr>
               <th>Loan Number</th>
@@ -81,12 +78,24 @@ const Details = () => {
             </tr>
             <tr>
               <td>PPR</td>
-              <td>{loan.ppr}</td>
+              <td className="fw-bold ">{loan.ppr}</td>
+            </tr>
+
+            <tr>
+              <td
+                colSpan="2"
+                className="text-white fw-bold"
+                style={
+                  loan.upb_amount == 0
+                    ? { backgroundColor: "grey" }
+                    : { backgroundColor: "green" }
+                }
+              >
+                {loan.upb_amount == 0 ? "Expired" : "Active"}
+              </td>
             </tr>
           </tbody>
         </table>
-        {/* </div>
-</div> */}
       </Container>
     </>
   );

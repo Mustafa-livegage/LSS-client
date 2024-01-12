@@ -1,9 +1,9 @@
 import Navbar from "./components/Navbar/Navbar";
-import SingleEntryForm from "./screens/SingleEntryForm/SingleEntryForm";
-import HomePage from "./screens/HomePage/HomePage";
+import SingleEntryForm from "./screens/SingleEntryForm";
+import HomePage from "./screens/HomePage";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Details from "./screens/ShowDetails/Details";
+import Details from "./screens/Details";
 import "./styles.css";
 
 function App() {

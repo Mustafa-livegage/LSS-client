@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { Container, Form, InputGroup, Button, Table } from "react-bootstrap";
-// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 // import Details from "../ShowDetails/Details";
 
-const handleRowClick = (row) => {
-  console.log("Clicked row:", row);
-};
-
 const HomePage = () => {
+  const history = useNavigate();
   const [loans, setLoans] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredLoans, setFilteredLoans] = useState([]);
@@ -27,6 +24,10 @@ const HomePage = () => {
         console.log(error);
       });
   }, []);
+  const parseDate = (dateString) => {
+    const [year, month, day] = dateString.split("-");
+    return day + "-" + month + "-" + year;
+  };
 
   const handleSearch = () => {
     setFilteredLoans(
@@ -38,25 +39,24 @@ const HomePage = () => {
     );
   };
   const handleDelete = (id) => {
-    // const isConfirmed = window.confirm(
-    //   "Are you sure you want to delete this loan?"
-    // );
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this loan?"
+    );
 
-    // if (isConfirmed) {
-    axios
-      .delete(`http://localhost:5000/api/loans/${id}`)
-      .then((response) => {
-        // Remove the deleted loan from the state
-        setLoans((prevLoans) => prevLoans.filter((loan) => loan.id !== id));
-        setFilteredLoans((prevFilteredLoans) =>
-          prevFilteredLoans.filter((loan) => loan.id !== id)
-        );
-        console.log(`Loan with ID ${id} deleted successfully`);
-      })
-      .catch((error) => {
-        console.error(`Error deleting loan with ID ${id}:`, error);
-      });
-    // }
+    if (isConfirmed) {
+      axios
+        .delete(`http://localhost:5000/api/loans/${id}`)
+        .then((response) => {
+          // Remove the deleted loan from the state
+          setLoans((prevLoans) => prevLoans.filter((loan) => loan.id !== id));
+          setFilteredLoans((prevFilteredLoans) =>
+            prevFilteredLoans.filter((loan) => loan.id !== id)
+          );
+        })
+        .catch((error) => {
+          console.error(`Error deleting loan with ID ${id}:`, error);
+        });
+    }
   };
 
   const showDetails = (loan) => {
@@ -65,7 +65,7 @@ const HomePage = () => {
 
   const handleRowClick = (loan) => {
     console.log("Clicked row:", loan);
-    window.location.href = `/loan-details/${loan.id}`;
+    history(`/loan-details/${loan.id}`);
     // axios
     // .get(`http://localhost:5000/api/loans/${loan.id}`)
     // .then()
@@ -105,7 +105,7 @@ const HomePage = () => {
               <tr>
                 <th>Loan Number</th>
                 <th>Borrower Name</th>
-                <th>Upload Date</th>
+                <th>Boarding Date</th>
                 <th>UPB Amount</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -113,17 +113,24 @@ const HomePage = () => {
             </thead>
             <tbody>
               {filteredLoans.map((loan) => (
-                <tr key={loan.id} onClick={() => handleRowClick(loan)}>
-                  <td>{loan.loan_number}</td>
+                <tr key={loan.id}>
+                  <td onClick={() => handleRowClick(loan)}>
+                    {loan.loan_number}
+                  </td>
                   <td>{loan.name}</td>
-                  <td>{loan.boarding_date}</td>
+                  <td>{parseDate(loan.boarding_date)}</td>
                   <td>{loan.upb_amount}</td>
-                  <td>null</td>
+
+                  <td className=" fw-bold">
+                    {loan.upb_amount == 0 ? "Expired" : "Active"}
+                  </td>
+
                   <td>
                     {/* Add a delete button with onClick handler */}
                     <Button
                       variant="danger"
                       size="sm"
+                      style={{ zIndex: 2 }}
                       onClick={() => handleDelete(loan.id)}
                     >
                       Delete
