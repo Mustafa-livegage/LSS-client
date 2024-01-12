@@ -2,39 +2,40 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
-import NavBar from "../../components/Navbar/Navbar";
 
 const Details = () => {
-    const { id } = useParams();
-    const [loan, setLoan] = useState([]);
-    useEffect(() => {
-        // Fetch data based on route parameters
-        const fetchData = async () => {
-          try {
-            const response = await axios.get(`http://localhost:5000/api/loans/${id}`);
-            setLoan(response.data);
-          } catch (error) {
-            console.error(error);
-          }
-        };
-      
-        fetchData(); // Call the function
-      }, [id]); // Add dependencies as needed
-    return (
+  const { id } = useParams();
+  const [loan, setLoan] = useState([]);
+  useEffect(() => {
+    // Fetch data based on route parameters
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/loans/${id}`
+        );
+        setLoan(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData(); // Call the function
+  }, [id]); // Add dependencies as needed
+  return (
     <>
-      <Container>
+      <Container className="container">
         <div className="text-center  my-3 fw-bold">
-          <h2>Loan Details</h2>
+          <h2 className="fw-bold fs-1">Loan Details</h2>
         </div>
 
-{/* <div className="row">
+        {/* <div className="row">
     <div className="col-8 offset-2 "> */}
 
         <table className=" table-striped     text-center table    my-4">
           <thead>
             <tr>
-              <th >Loan Number</th>
-              <th >{loan.loan_number}</th>
+              <th>Loan Number</th>
+              <th>{loan.loan_number}</th>
             </tr>
           </thead>
           <tbody>
@@ -71,20 +72,20 @@ const Details = () => {
               <td>{loan.tax_insurance}</td>
             </tr>
             <tr>
-                <td>Total Payment amount</td>
-                <td>{loan.pmt_amount}</td>
+              <td>Total Payment amount</td>
+              <td>{loan.pmt_amount}</td>
             </tr>
             <tr>
-                <td>Borrowers Name</td>
-                <td>{loan.name}</td>
+              <td>Borrowers Name</td>
+              <td>{loan.name}</td>
             </tr>
             <tr>
-                <td>PPR</td>
-                <td>{loan.ppr}</td>
+              <td>PPR</td>
+              <td>{loan.ppr}</td>
             </tr>
           </tbody>
         </table>
-    {/* </div>
+        {/* </div>
 </div> */}
       </Container>
     </>

@@ -63,15 +63,12 @@ const HomePage = () => {
     setSelectedLoan(loan);
   };
 
-
-
-    const handleRowClick = (loan) => {
-      console.log('Clicked row:', loan);
-      window.location.href = `/loan-details/${loan.id}`;
-      // axios
-      // .get(`http://localhost:5000/api/loans/${loan.id}`)
-      // .then()
-      
+  const handleRowClick = (loan) => {
+    console.log("Clicked row:", loan);
+    window.location.href = `/loan-details/${loan.id}`;
+    // axios
+    // .get(`http://localhost:5000/api/loans/${loan.id}`)
+    // .then()
   };
 
   return (
@@ -131,7 +128,7 @@ const HomePage = () => {
                     >
                       Delete
                     </Button>
-                    </td>
+                  </td>
                   <td style={{ display: "none" }}>
                     {/* <button
                       className="btn btn-primary"

@@ -79,7 +79,7 @@ const SingleEntryForm = () => {
     <div className="container my-5" style={{ height: "80vh" }}>
       <div className="row h-100">
         <div className="col-8 mx-2 h-100">
-          <h2 className="text-center">Board loan</h2>
+          <h2 className="text-center fw-bold fs-1">Board loan</h2>
           <Container className="mt-5 h-100">
             {" "}
             {/* Wrap in Container and add margin-top */}

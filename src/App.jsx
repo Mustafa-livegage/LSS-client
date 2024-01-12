@@ -13,12 +13,11 @@ function App() {
         <Navbar />
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          <Route exact path="/addloans" element={<SingleEntryForm/>} />
-          <Route exact path="/loan-details/:id" element={<Details/>} />
+          <Route exact path="/addloans" element={<SingleEntryForm />} />
+          <Route exact path="/loan-details/:id" element={<Details />} />
         </Routes>
       </Router>
       {/* <Details/> */}
-
     </>
   );
 }
