@@ -8,8 +8,12 @@ import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
 import validateLoanData  from "./validateLoanData";
+import { useNavigate } from "react-router-dom";
+import { Alert } from "react-bootstrap";
+import BackButton from "../components/BackButton";
 
 const SingleEntryForm = () => {
+  const history = useNavigate();
   const [formData, setFormData] = useState({
     loan_number: "",
     note_date: "",
@@ -24,7 +28,13 @@ const SingleEntryForm = () => {
     name: "",
     ppr: "",
   });
+  const [alertMessage, setAlertMessage] = useState(null);
+
   const formRef = useRef();
+
+  const showAlert = (variant, message) => {
+    setAlertMessage({ variant, message });
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,9 +53,10 @@ const SingleEntryForm = () => {
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
         console.log(response);
+        showAlert("success", "Single loan entry submitted successfully!");
       })
       .catch((error) => {
-        console.log(error);
+        showAlert("danger", "Error submitting loan entry.");
       });
     formRef.current.reset();
   };
@@ -54,6 +65,7 @@ const SingleEntryForm = () => {
     const [day, month, year] = dateString.split("-");
     return year + "-" + month + "-" + day;
   };
+
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       Papa.parse(file, {
@@ -78,10 +90,14 @@ const SingleEntryForm = () => {
             .post("http://localhost:5000/api/loans/Bulk", formattedData)
             .then((response) => {
               console.log(response);
+              showAlert("success", "CSV data added successfully!");
+
+              // history("/");
             })
             .catch((error) => {
               console.log(error);
               alert("The loan Number already Exists! \n Enter a unique Loan Number.")
+              showAlert("danger", "Error adding CSV data.");
             });
         },
       });
@@ -90,10 +106,25 @@ const SingleEntryForm = () => {
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
   return (
+    <>
+    
+   <BackButton/>
     <div className="container my-5" style={{ height: "80vh" }}>
+      <Alert
+        variant={alertMessage?.variant}
+        show={!!alertMessage}
+        onClose={() => {
+          setAlertMessage(null);
+          history("/");
+        }}
+        dismissible
+      >
+        {alertMessage?.message}
+      </Alert>
+      <h2 className="text-center fw-bold fs-1">Board loan</h2>
+
       <div className="row h-100">
         <div className="col-8 mx-2 h-100">
-          <h2 className="text-center fw-bold fs-1">Board loan</h2>
           <Container className="mt-5 h-100">
             {" "}
             {/* Wrap in Container and add margin-top */}
@@ -178,7 +209,7 @@ const SingleEntryForm = () => {
                       onChange={handleChange}
                       name="principal_intrest"
                     />
-                    <label htmlFor="pi-pmt-amt">PI Principal Amount</label>
+                    <label htmlFor="pi-pmt-amt">Principal and Interest</label>
                   </div>
                 </Col>
                 <Col md>
@@ -264,19 +295,21 @@ const SingleEntryForm = () => {
                   </div>
                 </Col>
               </Row>
-              <button className="btn btn-dark text-center w-50">Submit</button>
+              <button className="btn btn-dark text-center w-50 my-3">Submit</button>
             </form>
           </Container>
         </div>
         <div
-          className="col  mx-2 d-flex flex-column border border-dark align-items-center justify-content-center "
+          className="col mx-2 my-5 h-75 py-2 d-flex flex-column bg-white align-items-center justify-content-center "
           {...getRootProps()}
+          style={{ border: "3px dashed #999" }}
         >
           <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <h5>drag 'n' drop some files here, or click to select files</h5>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

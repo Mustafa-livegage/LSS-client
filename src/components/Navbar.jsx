@@ -1,15 +1,21 @@
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import { BackButton } from "./BackButton";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <Navbar expand="lg" className="bg-dark w-100">
       <Container className="mx-0 w-100">
-        <Navbar.Brand href="#home" className="float-left">
-          <img src="./assets/logo.png" alt="logo" className="img-fluid w-25" />
-        </Navbar.Brand>
+        <Link to="/">
+          <Navbar.Brand className="float-left">
+            <img
+              src="./assets/logo.png"
+              alt="logo"
+              className="img-fluid w-25"
+            />
+          </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {/* <Nav className="">
