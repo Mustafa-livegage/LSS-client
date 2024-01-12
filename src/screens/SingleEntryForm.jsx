@@ -7,6 +7,7 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
+import validateLoanData  from "./validateLoanData";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import BackButton from "../components/BackButton";
@@ -41,7 +42,14 @@ const SingleEntryForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
+    const validateErrors = validateLoanData(formData)
+
+    if (validateErrors.length > 0) {
+      // Display validation errors to the user
+      alert(validateErrors.join("\n"));
+      return; // Prevent API call
+    } else {
+      axios
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
         console.log(response);
@@ -52,6 +60,7 @@ const SingleEntryForm = () => {
       });
     formRef.current.reset();
   };
+  }
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split("-");
     return year + "-" + month + "-" + day;
@@ -67,11 +76,18 @@ const SingleEntryForm = () => {
             row.note_date = parseDate(row.note_date);
             row.boarding_date = parseDate(row.boarding_date);
             row.pmt_due_date = parseDate(row.pmt_due_date);
+            return row;
           });
 
-          console.log(result.data[0]);
+          const validationErrors = validateLoanData(formattedData); // Validate formatted data
+
+          if (validationErrors.length > 0) {
+            // Display validation errors to the user
+            alert(validationErrors.join("\n"));
+            return; // Prevent API call
+          }
           axios
-            .post("http://localhost:5000/api/loans/Bulk", result.data)
+            .post("http://localhost:5000/api/loans/Bulk", formattedData)
             .then((response) => {
               console.log(response);
               showAlert("success", "CSV data added successfully!");
@@ -79,10 +95,10 @@ const SingleEntryForm = () => {
               // history("/");
             })
             .catch((error) => {
+              console.log(error);
+              alert("The loan Number already Exists! \n Enter a unique Loan Number.")
               showAlert("danger", "Error adding CSV data.");
             });
-          // }
-          // );
         },
       });
     });
