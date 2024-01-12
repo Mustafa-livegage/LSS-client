@@ -9,6 +9,7 @@ import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
+import BackButton from "../components/BackButton";
 
 const SingleEntryForm = () => {
   const history = useNavigate();
@@ -89,6 +90,9 @@ const SingleEntryForm = () => {
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
   return (
+    <>
+    
+   <BackButton/>
     <div className="container my-5" style={{ height: "80vh" }}>
       <Alert
         variant={alertMessage?.variant}
@@ -275,7 +279,7 @@ const SingleEntryForm = () => {
                   </div>
                 </Col>
               </Row>
-              <button className="btn btn-dark text-center w-50">Submit</button>
+              <button className="btn btn-dark text-center w-50 my-3">Submit</button>
             </form>
           </Container>
         </div>
@@ -289,6 +293,7 @@ const SingleEntryForm = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

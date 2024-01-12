@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
+import BackButton from "../components/BackButton";
 
 const Details = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const Details = () => {
   }, [id]); // Add dependencies as needed
   return (
     <>
+    <BackButton/>
       <Container className="d-flex flex-column align-align-items-center justify-content-center">
         <div className="text-center  mt-5 fw-bold">
           <h2 className="fw-bold fs-1 ">Loan Details</h2>

@@ -100,6 +100,7 @@ const HomePage = () => {
           </InputGroup>
         </div>
         <div>
+          {loans.length>0 && 
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -114,7 +115,7 @@ const HomePage = () => {
             <tbody>
               {filteredLoans.map((loan) => (
                 <tr key={loan.id}>
-                  <td onClick={() => handleRowClick(loan)}>
+                  <td onClick={() => handleRowClick(loan)} style={{cursor:"pointer"}}>
                     {loan.loan_number}
                   </td>
                   <td>{loan.name}</td>
@@ -148,6 +149,7 @@ const HomePage = () => {
               ))}
             </tbody>
           </Table>
+          }
         </div>
       </Container>
       {/* temp  */}
