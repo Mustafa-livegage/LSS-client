@@ -43,7 +43,7 @@ const SingleEntryForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validateErrors = validateLoanDataOne(formData)
+    const validateErrors = validateLoanDataOne(formData);
 
     axios
       .post("http://localhost:5000/api/loans", formData)
@@ -80,26 +80,25 @@ const SingleEntryForm = () => {
             // Display validation errors to the user
             alert(validationErrors.join("\n"));
             return; // Prevent API call
-          }
-          else {
+          } else {
             axios
-            .post("http://localhost:5000/api/loans/Bulk", formattedData)
-            .then((response) => {
-              console.log(response);
-              showAlert("success", "CSV Data Added Successfully!");
+              .post("http://localhost:5000/api/loans/Bulk", formattedData)
+              .then((response) => {
+                console.log(response);
+                showAlert("success", "CSV Data Added Successfully!");
 
-              // history("/");
-            })
-            .catch((error) => {
-              console.log(error);
-              if (error.response && error.response.status === 400) {
-                alert("Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them.");
-              } else {
-                alert("The loan number already exists!\n Please enter a unique loan number.");
-              }
-            
-              showAlert("danger", "Error adding CSV data.");
-            });
+                // history("/");
+              })
+              .catch((error) => {
+                console.log(error);
+                if (error.response && error.response.status === 400) {
+                  alert(
+                    "Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them."
+                  );
+                }
+
+                showAlert("danger", "Error adding CSV data.");
+              });
           }
         },
       });

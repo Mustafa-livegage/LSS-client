@@ -38,24 +38,24 @@ const HomePage = () => {
     );
   };
   const handleDelete = (id) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this loan?"
-    );
+    // const isConfirmed = window.confirm(
+    //   "Are you sure you want to delete this loan?"
+    // );
 
-    if (isConfirmed) {
-      axios
-        .delete(`http://localhost:5000/api/loans/${id}`)
-        .then((response) => {
-          // Remove the deleted loan from the state
-          setLoans((prevLoans) => prevLoans.filter((loan) => loan.id !== id));
-          setFilteredLoans((prevFilteredLoans) =>
-            prevFilteredLoans.filter((loan) => loan.id !== id)
-          );
-        })
-        .catch((error) => {
-          console.error(`Error deleting loan with ID ${id}:`, error);
-        });
-    }
+    // if (isConfirmed) {
+    axios
+      .delete(`http://localhost:5000/api/loans/${id}`)
+      .then((response) => {
+        // Remove the deleted loan from the state
+        setLoans((prevLoans) => prevLoans.filter((loan) => loan.id !== id));
+        setFilteredLoans((prevFilteredLoans) =>
+          prevFilteredLoans.filter((loan) => loan.id !== id)
+        );
+      })
+      .catch((error) => {
+        console.error(`Error deleting loan with ID ${id}:`, error);
+      });
+    // }
   };
 
   const handleRowClick = (loan) => {
