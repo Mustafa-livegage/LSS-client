@@ -10,12 +10,8 @@ export const BackButton = () => {
 
   return (
     <Button className=" mx-3 my-3 " variant="dark" onClick={handleGoBack}>
-      
-
       {/* <IoMdArrowRoundBack /> */}
       <h5 className="mx-1">Back</h5>
-      
-      
     </Button>
   );
 };
