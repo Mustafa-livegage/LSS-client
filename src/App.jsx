@@ -1,4 +1,4 @@
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar";
 import SingleEntryForm from "./screens/SingleEntryForm";
 import HomePage from "./screens/HomePage";
 
