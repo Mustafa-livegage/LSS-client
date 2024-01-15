@@ -58,7 +58,6 @@ const HomePage = () => {
   };
 
   const handleRowClick = (loan) => {
-    console.log("Clicked row:", loan);
     history(`/loan-details/${loan.id}`);
   };
 
@@ -92,7 +91,7 @@ const HomePage = () => {
         </div>
         <div>
           {loans.length > 0 && (
-            <Table striped bordered hover>
+            <Table striped responsive bordered hover>
               <thead>
                 <tr>
                   <th>Loan Number</th>
@@ -146,9 +145,6 @@ const HomePage = () => {
           )}
         </div>
       </Container>
-      {/* temp  */}
-
-      {/* {selectedLoan && <Details loan={selectedLoan} />} */}
     </>
   );
 };

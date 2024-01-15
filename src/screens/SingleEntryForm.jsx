@@ -7,11 +7,11 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
-import validateLoanData from "./validateLoanData";
+import validateLoanData from "../helper/validateLoanData";
 import { useNavigate } from "react-router-dom";
 import { Alert, InputGroup, Tab, Tabs } from "react-bootstrap";
 import BackButton from "../components/BackButton";
-import validateLoanDataOne from "./HomePage/validateLoanDataOne";
+import validateLoanDataOne from "../helper/validateLoanDataOne";
 
 const SingleEntryForm = () => {
   const history = useNavigate();
@@ -48,7 +48,6 @@ const SingleEntryForm = () => {
     axios
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
-        console.log(response);
         showAlert("success", "Single loan entry submitted successfully!");
       })
       .catch((error) => {
@@ -84,7 +83,6 @@ const SingleEntryForm = () => {
             axios
               .post("http://localhost:5000/api/loans/Bulk", formattedData)
               .then((response) => {
-                console.log(response);
                 showAlert("success", "CSV Data Added Successfully!");
               })
               .catch((error) => {
@@ -121,14 +119,9 @@ const SingleEntryForm = () => {
         </Alert>
 
         <h2 className="text-center fw-bold fs-1 mb-5">Board loan</h2>
-        <Tabs
-          defaultActiveKey="profile"
-          id="uncontrolled-tab-example"
-          className="mb-3 px-5"
-          fill
-        >
-          <Tab eventKey="home" title="Home">
-            <Container className=" px-5">
+        <Tabs defaultActiveKey="upload" className="mb-3" fill>
+          <Tab eventKey="form" title="Form">
+            <Container className="px-0">
               <form
                 className="text-center h-100"
                 onSubmit={handleSubmit}
@@ -306,7 +299,7 @@ const SingleEntryForm = () => {
               </form>
             </Container>
           </Tab>
-          <Tab eventKey="profile" title="Profile">
+          <Tab eventKey="upload" title="Upload">
             <Container
               className="my-5 py-2 bg-white"
               {...getRootProps()}

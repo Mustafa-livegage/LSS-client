@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { FaArrowLeft } from "react-icons/fa";
 export const BackButton = () => {
   const navigate = useNavigate();
 
@@ -9,9 +10,12 @@ export const BackButton = () => {
   };
 
   return (
-    <Button className=" mx-3 my-3 " variant="dark" onClick={handleGoBack}>
-      {/* <IoMdArrowRoundBack /> */}
-      <h5 className="mx-1">Back</h5>
+    <Button
+      className=" mx-3 my-3 px-4 d-flex flex-row align-items-center rounded"
+      variant="dark"
+      onClick={handleGoBack}
+    >
+      <FaArrowLeft />
     </Button>
   );
 };
