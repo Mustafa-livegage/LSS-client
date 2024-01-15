@@ -39,33 +39,30 @@ const Details = () => {
   const { id } = useParams();
   const [loan, setLoan] = useState([]);
 
-  const handleSavePPR = async (newPPR) => {
-    const updatedLoanDetails = { ...loan, ppr: newPPR };
+  const handleSavePPR = async (updatePpr) => {
+    const updatedLoanDetails = { ...loan, ppr: updatePpr };
+    console.log(updatePpr);
 
     try {
-      await axios.put(`http://localhost:5000/api/loans/${id}`, newPPR)
-      
-
-
-      // Assuming your API supports updating the PPR field using a PUT request
+      await axios.put(`http://localhost:5000/api/loans/${id}`, updatePpr);
     } catch (error) {
       console.error(error);
     }
     setLoan(updatedLoanDetails);
-
   };
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/loans/${id}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/loans/${id}`
+        );
         setLoan(response.data);
-        console.log(response.data)
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchData(); // Call the function
+    fetchData();
   }, [id]);
 
   return (
