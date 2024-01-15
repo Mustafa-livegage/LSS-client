@@ -7,9 +7,11 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
+import validateLoanData from "./validateLoanData";
 import { useNavigate } from "react-router-dom";
-import { Alert } from "react-bootstrap";
+import { Alert, InputGroup } from "react-bootstrap";
 import BackButton from "../components/BackButton";
+import validateLoanDataOne from "./HomePage/validateLoanDataOne";
 
 const SingleEntryForm = () => {
   const history = useNavigate();
@@ -41,6 +43,8 @@ const SingleEntryForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validateErrors = validateLoanDataOne(formData);
+
     axios
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
@@ -67,22 +71,34 @@ const SingleEntryForm = () => {
             row.note_date = parseDate(row.note_date);
             row.boarding_date = parseDate(row.boarding_date);
             row.pmt_due_date = parseDate(row.pmt_due_date);
+            return row;
           });
 
-          console.log(result.data[0]);
-          axios
-            .post("http://localhost:5000/api/loans/Bulk", result.data)
-            .then((response) => {
-              console.log(response);
-              showAlert("success", "CSV data added successfully!");
+          const validationErrors = validateLoanData(formattedData); // Validate formatted data
 
-              // history("/");
-            })
-            .catch((error) => {
-              showAlert("danger", "Error adding CSV data.");
-            });
-          // }
-          // );
+          if (validationErrors.length > 0) {
+            // Display validation errors to the user
+            alert(validationErrors.join("\n"));
+            return; // Prevent API call
+          } else {
+            axios
+              .post("http://localhost:5000/api/loans/Bulk", formattedData)
+              .then((response) => {
+                console.log(response);
+                showAlert("success", "CSV Data Added Successfully!");
+
+              })
+              .catch((error) => {
+                console.log(error);
+                if (error.response && error.response.status === 400) {
+                  alert(
+                    "Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them."
+                  );
+                }
+
+                showAlert("danger", "Error adding CSV data.");
+              });
+          }
         },
       });
     });
@@ -288,11 +304,206 @@ const SingleEntryForm = () => {
           {...getRootProps()}
           style={{ border: "3px dashed #999" }}
         >
-          <input {...getInputProps()} />
-          <h5>drag 'n' drop some files here, or click to select files</h5>
+          {alertMessage?.message}
+        
+        <h2 className="text-center fw-bold fs-1 text-decoration-underline">
+          Board loan
+        </h2>
+
+        <div className="row h-100">
+          <div className="col-8 mx-2 h-100">
+            <Container className="mt-5 h-100">
+              {" "}
+              {/* Wrap in Container and add margin-top */}
+              <form
+                className="text-center h-100"
+                onSubmit={handleSubmit}
+                ref={formRef}
+              >
+                <Row className="g-2 my-3">
+                  <Col md>
+                    <FloatingLabel
+                      className="my-5"
+                      controlId="floatingInputGrid"
+                      label="Borrowers name"
+                    >
+                      <Form.Control
+                        type="text"
+                        name="name"
+                        placeholder="Bucky Barnes"
+                        onChange={handleChange}
+                      />
+                    </FloatingLabel>
+                    <FloatingLabel
+                      className="my-5"
+                      controlId="floatingInputGrid"
+                      label="Loan number"
+                    >
+                      <Form.Control
+                        type="number"
+                        name="loan_number"
+                        maxLength={10}
+                        placeholder="0000000000"
+                        onChange={handleChange}
+                      />
+                    </FloatingLabel>
+
+                    <div className="form-floating my-5">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="note-rate"
+                        placeholder="0.00"
+                        step={0.01}
+                        onChange={handleChange}
+                        name="note_rate"
+                      />
+                      <label htmlFor="note-rate">Note Rate</label>
+                    </div>
+
+                    <div className="form-floating my-5">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="upb-amount"
+                        placeholder="900000"
+                        step={0.01}
+                        onChange={handleChange}
+                        name="upb_amount"
+                      />
+                      <label htmlFor="upb-amount">UPB Amount</label>
+                    </div>
+
+                    <div className="form-floating my-5">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="curr-int-rate"
+                        placeholder="0.00"
+                        step={0.01}
+                        onChange={handleChange}
+                        name="current_rate"
+                      />
+                      <label htmlFor="curr-int-rate">
+                        Current Interest Rate
+                      </label>
+                    </div>
+                    <div className="form-floating my-5">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="pi-pmt-amt"
+                        placeholder="900000"
+                        step={0.01}
+                        onChange={handleChange}
+                        name="principal_intrest"
+                      />
+                      <label htmlFor="pi-pmt-amt">Principal and Interest</label>
+                    </div>
+                  </Col>
+                  <Col md>
+                    <FloatingLabel
+                      className="my-5"
+                      controlId="floatingSelectGrid"
+                      label="ppr"
+                    >
+                      <Form.Select
+                        aria-label="Floating label select example"
+                        onChange={handleChange}
+                        name="ppr"
+                      >
+                        {/* <option selected >Current waterfall</option> */}
+                        <option value="X Waterfall">X waterfall</option>
+                        <option value="Y Waterfall">Y Waterfall</option>
+                        <option value="Z Waterfall">Z waterfall</option>
+                      </Form.Select>
+                    </FloatingLabel>
+                    <FloatingLabel
+                      className="my-5"
+                      controlId="floatingInputGrid"
+                      label="Note Date"
+                    >
+                      <Form.Control
+                        type="date"
+                        placeholder="dd-mm-yyyy"
+                        onChange={handleChange}
+                        name="note_date"
+                      />
+                    </FloatingLabel>
+                    <FloatingLabel
+                      className="my-5"
+                      controlId="floatingInputGrid"
+                      label="Loan Boarding Date"
+                    >
+                      <Form.Control
+                        type="date"
+                        placeholder="dd-mm-yyyy"
+                        onChange={handleChange}
+                        name="boarding_date"
+                      />
+                    </FloatingLabel>
+
+                    <FloatingLabel
+                      className="my-5"
+                      controlId="floatingInputGrid"
+                      label="Next Payment Due Date"
+                    >
+                      <Form.Control
+                        type="date"
+                        placeholder="dd-mm-yyyy"
+                        onChange={handleChange}
+                        name="pmt_due_date"
+                      />
+                    </FloatingLabel>
+
+                    <div className="form-floating my-5">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="t-and-i-pmt-amt"
+                        placeholder="900000"
+                        step={0.01}
+                        onChange={handleChange}
+                        name="tax_insurance"
+                      />
+                      <label htmlFor="t-and-i-pmt-amt">
+                        Tax and Insurnace Amount
+                      </label>
+                    </div>
+                    <div className="form-floating my-5">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="total-pmt-amt"
+                        placeholder="900000"
+                        step={0.01}
+                        onChange={handleChange}
+                        name="pmt_amount"
+                      />
+                      <label htmlFor="total-pmt-amt">
+                        Total payment Amount
+                      </label>
+                    </div>
+                  </Col>
+                </Row>
+                <button className="btn btn-dark text-center w-50 my-3">
+                  Submit
+                </button>
+              </form>
+            </Container>
+          </div>
+          <div
+            className="col mx-2 my-5 h-75 py-2 d-flex flex-column bg-white align-items-center justify-content-center "
+            {...getRootProps()}
+            style={{ border: "3px dashed #999" }}
+          >
+            <input {...getInputProps()} />
+            <h5>drag 'n' drop some files here, or click to select files</h5>
+          </div>
         </div>
       </div>
-    </div>
+      </div>
+      </div>
     </>
   );
 };

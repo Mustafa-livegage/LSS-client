@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
+import { formatCurrency } from "../helper/formatCurrecny";
 
 const EditableTableCell = ({ value, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -41,11 +42,6 @@ const Details = () => {
   const handleSavePPR = async (newPPR) => {
     const updatedLoanDetails = { ...loan, ppr: newPPR };
 
-    // Save the new PPR value, for example, by updating the state or making an API call.
-    // You can modify this part based on how you want to handle the update.
-    console.log("Saved PPR value:", newPPR);
-
-    // Example: Update the PPR value in the backend
     try {
       await axios.put(`http://localhost:5000/api/loans/${id}`, newPPR)
       
@@ -69,29 +65,17 @@ const Details = () => {
       }
     };
 
-    fetchData();
+    fetchData(); // Call the function
   }, [id]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://localhost:5000/api/loans/${id}`
-  //       );
-  //       setLoan(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   fetchData(); // Call the function
-  // }, [id]); // Add dependencies as needed
   return (
     <>
       <BackButton />
       <Container className="d-flex flex-column align-align-items-center justify-content-center">
         <div className="text-center  mt-5 fw-bold">
-          <h2 className="fw-bold fs-1 ">Loan Details</h2>
+          <h2 className="fw-bold fs-1 text-decoration-underline ">
+            Loan Details
+          </h2>
         </div>
 
         <table className=" table-striped table-responsive my-5 text-center table fs-5  my-4">
@@ -102,6 +86,10 @@ const Details = () => {
             </tr>
           </thead>
           <tbody>
+            <tr>
+              <td>Borrowers Name</td>
+              <td>{loan.name}</td>
+            </tr>
             <tr>
               <td>Note Date</td>
               <td>{loan.note_date}</td>
@@ -116,7 +104,7 @@ const Details = () => {
             </tr>
             <tr>
               <td>UPB Amount</td>
-              <td>{loan.upb_amount}</td>
+              <td>{"$ " + `${formatCurrency(loan.upb_amount)}`}</td>
             </tr>
             <tr>
               <td>Current Interest Rate</td>
@@ -128,20 +116,17 @@ const Details = () => {
             </tr>
             <tr>
               <td>Principal and Interest</td>
-              <td>{loan.principle_intrest}</td>
+              <td>{"$ " + `${formatCurrency(loan.principal_intrest)}`}</td>
             </tr>
             <tr>
               <td>Tax and Insurance payment</td>
-              <td>{loan.tax_insurance}</td>
+              <td>{"$ " + `${formatCurrency(loan.tax_insurance)}`}</td>
             </tr>
             <tr>
               <td>Total Payment amount</td>
-              <td>{loan.pmt_amount}</td>
+              <td>{"$ " + `${formatCurrency(loan.pmt_amount)}`}</td>
             </tr>
-            <tr>
-              <td>Borrowers Name</td>
-              <td>{loan.name}</td>
-            </tr>
+
             <tr>
               <td>PPR</td>
               <td className="fw-bold">
