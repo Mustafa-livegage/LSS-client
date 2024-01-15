@@ -4,27 +4,91 @@ import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
 
+const EditableTableCell = ({ value, onSave }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(value);
+
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    onSave(editValue);
+  };
+
+  const handleChange = (e) => {
+    setEditValue(e.target.value);
+  };
+
+  return isEditing ? (
+    <input
+      type="text"
+      value={editValue}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      autoFocus
+    />
+  ) : (
+    <div onDoubleClick={handleDoubleClick}>{value}</div>
+  );
+};
+
 const Details = () => {
   const { id } = useParams();
   const [loan, setLoan] = useState([]);
+
+  const handleSavePPR = async (newPPR) => {
+    const updatedLoanDetails = { ...loan, ppr: newPPR };
+
+    // Save the new PPR value, for example, by updating the state or making an API call.
+    // You can modify this part based on how you want to handle the update.
+    console.log("Saved PPR value:", newPPR);
+
+    // Example: Update the PPR value in the backend
+    try {
+      await axios.put(`http://localhost:5000/api/loans/${id}`, newPPR)
+      
+
+
+      // Assuming your API supports updating the PPR field using a PUT request
+    } catch (error) {
+      console.error(error);
+    }
+    setLoan(updatedLoanDetails);
+
+  };
   useEffect(() => {
-    // Fetch data based on route parameters
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/loans/${id}`
-        );
+        const response = await axios.get(`http://localhost:5000/api/loans/${id}`);
         setLoan(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchData(); // Call the function
-  }, [id]); // Add dependencies as needed
+    fetchData();
+  }, [id]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:5000/api/loans/${id}`
+  //       );
+  //       setLoan(response.data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+
+  //   fetchData(); // Call the function
+  // }, [id]); // Add dependencies as needed
   return (
     <>
-    <BackButton/>
+      <BackButton />
       <Container className="d-flex flex-column align-align-items-center justify-content-center">
         <div className="text-center  mt-5 fw-bold">
           <h2 className="fw-bold fs-1 ">Loan Details</h2>
@@ -64,7 +128,7 @@ const Details = () => {
             </tr>
             <tr>
               <td>Principal and Interest</td>
-              <td>{loan.principal_intrest}</td>
+              <td>{loan.principle_intrest}</td>
             </tr>
             <tr>
               <td>Tax and Insurance payment</td>
@@ -80,7 +144,9 @@ const Details = () => {
             </tr>
             <tr>
               <td>PPR</td>
-              <td className="fw-bold ">{loan.ppr}</td>
+              <td className="fw-bold">
+                <EditableTableCell value={loan.ppr} onSave={handleSavePPR} />
+              </td>
             </tr>
 
             <tr>

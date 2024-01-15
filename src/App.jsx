@@ -12,6 +12,9 @@ function App() {
     <>
       <Router>
         <Navbar />
+        {/* {location.pathname !== "/" && (
+          <BackButton />
+        )} */}
         
         {/* {location.pathname !== "/" && <BackButton />} */}
         

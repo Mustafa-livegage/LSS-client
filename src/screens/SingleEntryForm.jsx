@@ -191,7 +191,7 @@ const SingleEntryForm = () => {
                       placeholder="900000"
                       step={0.01}
                       onChange={handleChange}
-                      name="principal_intrest"
+                      name="principle_intrest"
                     />
                     <label htmlFor="pi-pmt-amt">Principal and Interest</label>
                   </div>
