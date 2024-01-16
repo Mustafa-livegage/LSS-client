@@ -4,12 +4,23 @@ import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
 import { formatCurrency } from "../helper/formatCurrecny";
+import { Button, Form, Table } from "react-bootstrap";
+import EditableTableCell from "../components/EditableTableCell";
 
 const Details = () => {
   const { id } = useParams();
   const [loan, setLoan] = useState([]);
+
+  const handleSavePPR = (updatePpr) => {
+    const updatedLoanDetails = { ...loan, ppr: updatePpr };
+    try {
+      axios.put(`http://localhost:5000/api/loans/${id}`, updatedLoanDetails);
+    } catch (error) {
+      console.error(error);
+    }
+    setLoan(updatedLoanDetails);
+  };
   useEffect(() => {
-    // Fetch data based on route parameters
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -21,7 +32,7 @@ const Details = () => {
       }
     };
 
-    fetchData(); // Call the function
+    fetchData();
   }, [id]);
 
   return (
@@ -34,7 +45,7 @@ const Details = () => {
           </h2>
         </div>
 
-        <table className=" table-striped table-responsive my-5 text-center table fs-5  my-4">
+        <Table className=" table-striped table-responsive my-5 text-center table fs-5  my-4">
           <thead>
             <tr>
               <th>Loan Number</th>
@@ -85,7 +96,13 @@ const Details = () => {
 
             <tr>
               <td>PPR</td>
-              <td className="fw-bold ">{loan.ppr} waterfall</td>
+              <td className="fw-bold d-flex flex-row align-items-center justify-content-center">
+                <EditableTableCell
+                  value={loan.ppr}
+                  onSave={handleSavePPR}
+                  options={["x waterfall", "y waterfall", "z waterfall"]}
+                />
+              </td>
             </tr>
 
             <tr>
@@ -102,7 +119,7 @@ const Details = () => {
               </td>
             </tr>
           </tbody>
-        </table>
+        </Table>
       </Container>
     </>
   );

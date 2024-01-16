@@ -30,7 +30,7 @@ function validateLoanData(loanData) {
     } else if (!loan.pmt_due_date) {
       alert(`PMT due date is missing for loan ${loan.loan_number}`);
       return errors;
-    } else if (!loan.principle_intrest) {
+    } else if (!loan.principal_intrest) {
       alert(`Principal interest is missing for loan ${loan.loan_number}`);
       return errors;
     } else if (!loan.tax_insurance) {
@@ -54,7 +54,7 @@ function validateLoanData(loanData) {
     } else if (!isNumeric(loan.current_rate)) {
       alert(`Current rate must be a number for loan ${loan.loan_number}`);
       return errors;
-    } else if (!isNumeric(loan.principle_intrest)) {
+    } else if (!isNumeric(loan.principal_intrest)) {
       alert(`Principal interest must be a number for loan ${loan.loan_number}`);
       return errors;
     } else if (!isNumeric(loan.tax_insurance)) {

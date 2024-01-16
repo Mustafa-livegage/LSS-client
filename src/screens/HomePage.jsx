@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../helper/formatCurrecny";
-// import Details from "../ShowDetails/Details";
 
 const HomePage = () => {
   const history = useNavigate();
@@ -16,7 +15,7 @@ const HomePage = () => {
     axios
       .get("http://localhost:5000/api/loans")
       .then(function (response) {
-        setLoans(response.data);
+        setLoans(response.data.reverse());
         setFilteredLoans(response.data);
       })
       .catch(function (error) {
@@ -59,7 +58,6 @@ const HomePage = () => {
   };
 
   const handleRowClick = (loan) => {
-    console.log("Clicked row:", loan);
     history(`/loan-details/${loan.id}`);
   };
 
@@ -93,7 +91,7 @@ const HomePage = () => {
         </div>
         <div>
           {loans.length > 0 && (
-            <Table striped bordered hover>
+            <Table striped responsive bordered hover>
               <thead>
                 <tr>
                   <th>Loan Number</th>
@@ -147,9 +145,6 @@ const HomePage = () => {
           )}
         </div>
       </Container>
-      {/* temp  */}
-
-      {/* {selectedLoan && <Details loan={selectedLoan} />} */}
     </>
   );
 };

@@ -7,11 +7,11 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
-import validateLoanData from "./validateLoanData";
+import validateLoanData from "../helper/validateLoanData";
 import { useNavigate } from "react-router-dom";
-import { Alert, InputGroup } from "react-bootstrap";
+import { Alert, InputGroup, Tab, Tabs } from "react-bootstrap";
 import BackButton from "../components/BackButton";
-import validateLoanDataOne from "./HomePage/validateLoanDataOne";
+import validateLoanDataOne from "../helper/validateLoanDataOne";
 
 const SingleEntryForm = () => {
   const history = useNavigate();
@@ -43,12 +43,11 @@ const SingleEntryForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validateErrors = validateLoanDataOne(formData)
+    const validateErrors = validateLoanDataOne(formData);
 
     axios
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
-        console.log(response);
         showAlert("success", "Single loan entry submitted successfully!");
       })
       .catch((error) => {
@@ -80,26 +79,22 @@ const SingleEntryForm = () => {
             // Display validation errors to the user
             alert(validationErrors.join("\n"));
             return; // Prevent API call
-          }
-          else {
+          } else {
             axios
-            .post("http://localhost:5000/api/loans/Bulk", formattedData)
-            .then((response) => {
-              console.log(response);
-              showAlert("success", "CSV Data Added Successfully!");
+              .post("http://localhost:5000/api/loans/Bulk", formattedData)
+              .then((response) => {
+                showAlert("success", "CSV Data Added Successfully!");
+              })
+              .catch((error) => {
+                console.log(error);
+                if (error.response && error.response.status === 400) {
+                  alert(
+                    "Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them."
+                  );
+                }
 
-              // history("/");
-            })
-            .catch((error) => {
-              console.log(error);
-              if (error.response && error.response.status === 400) {
-                alert("Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them.");
-              } else {
-                alert("The loan number already exists!\n Please enter a unique loan number.");
-              }
-            
-              showAlert("danger", "Error adding CSV data.");
-            });
+                showAlert("danger", "Error adding CSV data.");
+              });
           }
         },
       });
@@ -122,24 +117,20 @@ const SingleEntryForm = () => {
         >
           {alertMessage?.message}
         </Alert>
-        <h2 className="text-center fw-bold fs-1 text-decoration-underline">
-          Board loan
-        </h2>
 
-        <div className="row h-100">
-          <div className="col-8 mx-2 h-100">
-            <Container className="mt-5 h-100">
-              {" "}
-              {/* Wrap in Container and add margin-top */}
+        <h2 className="text-center fw-bold fs-1 mb-5">Board loan</h2>
+        <Tabs defaultActiveKey="upload" className="mb-3" fill>
+          <Tab eventKey="form" title="Form">
+            <Container className="px-0">
               <form
                 className="text-center h-100"
                 onSubmit={handleSubmit}
                 ref={formRef}
               >
-                <Row className="g-2 my-3">
+                <Row className="g-2 gx-2">
                   <Col md>
                     <FloatingLabel
-                      className="my-5"
+                      className="my-4"
                       controlId="floatingInputGrid"
                       label="Borrowers name"
                     >
@@ -151,12 +142,12 @@ const SingleEntryForm = () => {
                       />
                     </FloatingLabel>
                     <FloatingLabel
-                      className="my-5"
+                      className="my-4"
                       controlId="floatingInputGrid"
                       label="Loan number"
                     >
                       <Form.Control
-                        type="number"
+                        type="text"
                         name="loan_number"
                         maxLength={10}
                         placeholder="0000000000"
@@ -164,7 +155,7 @@ const SingleEntryForm = () => {
                       />
                     </FloatingLabel>
 
-                    <div className="form-floating my-5">
+                    <div className="form-floating my-4">
                       <input
                         type="number"
                         className="form-control"
@@ -177,7 +168,7 @@ const SingleEntryForm = () => {
                       <label htmlFor="note-rate">Note Rate</label>
                     </div>
 
-                    <div className="form-floating my-5">
+                    <div className="form-floating my-4">
                       <input
                         type="number"
                         className="form-control"
@@ -190,7 +181,7 @@ const SingleEntryForm = () => {
                       <label htmlFor="upb-amount">UPB Amount</label>
                     </div>
 
-                    <div className="form-floating my-5">
+                    <div className="form-floating my-4">
                       <input
                         type="number"
                         className="form-control"
@@ -201,10 +192,10 @@ const SingleEntryForm = () => {
                         name="current_rate"
                       />
                       <label htmlFor="curr-int-rate">
-                        Current Interest Rate
+                        Current Intrest Rate
                       </label>
                     </div>
-                    <div className="form-floating my-5">
+                    <div className="form-floating my-4">
                       <input
                         type="number"
                         className="form-control"
@@ -219,7 +210,7 @@ const SingleEntryForm = () => {
                   </Col>
                   <Col md>
                     <FloatingLabel
-                      className="my-5"
+                      className="my-4"
                       controlId="floatingSelectGrid"
                       label="ppr"
                     >
@@ -229,13 +220,13 @@ const SingleEntryForm = () => {
                         name="ppr"
                       >
                         {/* <option selected >Current waterfall</option> */}
-                        <option value="X">X waterfall</option>
-                        <option value="Y">Y Waterfall</option>
-                        <option value="Z">Z waterfall</option>
+                        <option value="X waterfall">X waterfall</option>
+                        <option value="Y waterfall">Y Waterfall</option>
+                        <option value="Z waterfall">Z waterfall</option>
                       </Form.Select>
                     </FloatingLabel>
                     <FloatingLabel
-                      className="my-5"
+                      className="my-4"
                       controlId="floatingInputGrid"
                       label="Note Date"
                     >
@@ -247,7 +238,7 @@ const SingleEntryForm = () => {
                       />
                     </FloatingLabel>
                     <FloatingLabel
-                      className="my-5"
+                      className="my-4"
                       controlId="floatingInputGrid"
                       label="Loan Boarding Date"
                     >
@@ -260,7 +251,7 @@ const SingleEntryForm = () => {
                     </FloatingLabel>
 
                     <FloatingLabel
-                      className="my-5"
+                      className="my-4"
                       controlId="floatingInputGrid"
                       label="Next Payment Due Date"
                     >
@@ -272,7 +263,7 @@ const SingleEntryForm = () => {
                       />
                     </FloatingLabel>
 
-                    <div className="form-floating my-5">
+                    <div className="form-floating my-4">
                       <input
                         type="number"
                         className="form-control"
@@ -283,10 +274,10 @@ const SingleEntryForm = () => {
                         name="tax_insurance"
                       />
                       <label htmlFor="t-and-i-pmt-amt">
-                        Tax and Insurnace Amount
+                        Tax and Insurance Amount
                       </label>
                     </div>
-                    <div className="form-floating my-5">
+                    <div className="form-floating my-4">
                       <input
                         type="number"
                         className="form-control"
@@ -302,21 +293,27 @@ const SingleEntryForm = () => {
                     </div>
                   </Col>
                 </Row>
-                <button className="btn btn-dark text-center w-50 my-3">
+                <button className="btn btn-dark text-center w-50 mt-5">
                   Submit
                 </button>
               </form>
             </Container>
-          </div>
-          <div
-            className="col mx-2 my-5 h-75 py-2 d-flex flex-column bg-white align-items-center justify-content-center "
-            {...getRootProps()}
-            style={{ border: "3px dashed #999" }}
-          >
-            <input {...getInputProps()} />
-            <h5>drag 'n' drop some files here, or click to select files</h5>
-          </div>
-        </div>
+          </Tab>
+          <Tab eventKey="upload" title="Upload">
+            <Container
+              className="my-5 py-2 bg-white"
+              {...getRootProps()}
+              style={{ border: "3px dashed #999" }}
+            >
+              <div>
+                <input {...getInputProps()} />
+                <h5 className="text-center">
+                  drag 'n' drop some files here, or click to select files
+                </h5>
+              </div>
+            </Container>
+          </Tab>
+        </Tabs>
       </div>
     </>
   );
