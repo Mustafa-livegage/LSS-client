@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
 import { formatCurrency } from "../helper/formatCurrecny";
+// import { log } from "console";
 
 const EditableTableCell = ({ value, onSave }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -38,34 +39,37 @@ const EditableTableCell = ({ value, onSave }) => {
 const Details = () => {
   const { id } = useParams();
   const [loan, setLoan] = useState([]);
+  const [payment, setPayment] = useState([]);
 
   const handleSavePPR = async (newPPR) => {
     const updatedLoanDetails = { ...loan, ppr: newPPR };
 
     try {
-      await axios.put(`http://localhost:5000/api/loans/${id}`, newPPR)
-      
-
+      await axios.put(`http://localhost:5000/api/loans/${id}`, newPPR);
 
       // Assuming your API supports updating the PPR field using a PUT request
     } catch (error) {
       console.error(error);
     }
     setLoan(updatedLoanDetails);
-
   };
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/loans/${id}`);
-        setLoan(response.data);
-        console.log(response.data)
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
-    fetchData(); // Call the function
+  const fetchLoanAndPaymentData = async () => {
+    try {
+      const [loanResponse, paymentResponse] = await Promise.all([
+        axios.get(`http://localhost:5000/api/loans/${id}`),
+        axios.get(`http://localhost:5000/api/schedule/${id}`),
+      ]);
+
+      setLoan(loanResponse.data);
+      setPayment(paymentResponse.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLoanAndPaymentData();
   }, [id]);
 
   return (
@@ -114,18 +118,22 @@ const Details = () => {
               <td>Net Payment Due Date</td>
               <td>{loan.pmt_due_date}</td>
             </tr>
-            <tr>
-              <td>Principal and Interest</td>
-              <td>{"$ " + `${formatCurrency(loan.principal_intrest)}`}</td>
-            </tr>
+            {payment[0] && (
+              <tr>
+                <td>Principal and Interest</td>
+                <td>
+                  {"$ " + `${formatCurrency(payment[0].interest_amount)}`}
+                </td>
+              </tr>
+            )}
             <tr>
               <td>Tax and Insurance payment</td>
-              <td>{"$ " + `${formatCurrency(loan.tax_insurance)}`}</td>
+              <td>{"$ " + `${formatCurrency(loan.escrow_amount / 12)}`}</td>
             </tr>
-            <tr>
+            {/* <tr>
               <td>Total Payment amount</td>
-              <td>{"$ " + `${formatCurrency(loan.pmt_amount)}`}</td>
-            </tr>
+              <td>{"$ " + `${formatCurrency(payment.monthly_payment)}`}</td>
+            </tr> */}
 
             <tr>
               <td>PPR</td>

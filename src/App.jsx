@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from "react-route
 import Details from "./screens/Details";
 import "./styles.css";
 import BackButton from "./components/BackButton";
+import PaymentSched from "./components/PaymentSchedule";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/addloans" element={<SingleEntryForm />} />
           <Route exact path="/loan-details/:id" element={<Details />} />
+          {/* <Route exact path="/payment_schedule" element={<PaymentSchedule />} /> */}
         </Routes>
       </Router>
       {/* <Details/> */}

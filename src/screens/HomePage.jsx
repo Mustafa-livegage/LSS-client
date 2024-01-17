@@ -19,7 +19,7 @@ const HomePage = () => {
         setLoans(response.data);
         setFilteredLoans(response.data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   }, []);
