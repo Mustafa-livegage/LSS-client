@@ -1,6 +1,5 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { BackButton } from "./BackButton";
 import { Link } from "react-router-dom";
 
 function NavBar() {
@@ -12,21 +11,12 @@ function NavBar() {
             <img
               src="./assets/logo.png"
               alt="logo"
-              className="img-fluid w-25"
+              className="w-25 img-fluid"
             />
           </Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          {/* <Nav className="">
-            <Nav.Link href="#home" className="text-light fs-5">
-              Home
-            </Nav.Link>
-            <Nav.Link href="#link" className="text-light fs-5">
-              Link
-            </Nav.Link>
-          </Nav> */}
-        </Navbar.Collapse>
+        <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
       </Container>
     </Navbar>
   );

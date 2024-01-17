@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { formatCurrency } from "../helper/formatCurrecny";
-// import Details from "../ShowDetails/Details";
 
 const HomePage = () => {
   const history = useNavigate();
@@ -16,7 +15,7 @@ const HomePage = () => {
     axios
       .get("http://localhost:5000/api/loans")
       .then(function (response) {
-        setLoans(response.data);
+        setLoans(response.data.reverse());
         setFilteredLoans(response.data);
       })
       .catch((error) => {
@@ -38,28 +37,27 @@ const HomePage = () => {
     );
   };
   const handleDelete = (id) => {
-    // const isConfirmed = window.confirm(
-    //   "Are you sure you want to delete this loan?"
-    // );
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this loan?"
+    );
 
-    // if (isConfirmed) {
-    axios
-      .delete(`http://localhost:5000/api/loans/${id}`)
-      .then((response) => {
-        // Remove the deleted loan from the state
-        setLoans((prevLoans) => prevLoans.filter((loan) => loan.id !== id));
-        setFilteredLoans((prevFilteredLoans) =>
-          prevFilteredLoans.filter((loan) => loan.id !== id)
-        );
-      })
-      .catch((error) => {
-        console.error(`Error deleting loan with ID ${id}:`, error);
-      });
-    // }
+    if (isConfirmed) {
+      axios
+        .delete(`http://localhost:5000/api/loans/${id}`)
+        .then((response) => {
+          // Remove the deleted loan from the state
+          setLoans((prevLoans) => prevLoans.filter((loan) => loan.id !== id));
+          setFilteredLoans((prevFilteredLoans) =>
+            prevFilteredLoans.filter((loan) => loan.id !== id)
+          );
+        })
+        .catch((error) => {
+          console.error(`Error deleting loan with ID ${id}:`, error);
+        });
+    }
   };
 
   const handleRowClick = (loan) => {
-    console.log("Clicked row:", loan);
     history(`/loan-details/${loan.id}`);
   };
 
@@ -93,7 +91,7 @@ const HomePage = () => {
         </div>
         <div>
           {loans.length > 0 && (
-            <Table striped bordered hover>
+            <Table striped responsive bordered hover>
               <thead>
                 <tr>
                   <th>Loan Number</th>
@@ -147,9 +145,6 @@ const HomePage = () => {
           )}
         </div>
       </Container>
-      {/* temp  */}
-
-      {/* {selectedLoan && <Details loan={selectedLoan} />} */}
     </>
   );
 };
