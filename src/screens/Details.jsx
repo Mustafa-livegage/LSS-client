@@ -10,9 +10,10 @@ import EditableTableCell from "../components/EditableTableCell";
 const Details = () => {
   const { id } = useParams();
   const [loan, setLoan] = useState([]);
-  const [waterfall, setWaterFall] = useState("");
+  const [waterfall, setWaterfall] = useState("");
   const [payment, setPayment] = useState([]);
   const [waterfallOptions, setWaterfallOptions] = useState([]);
+  const [wfId,setWfId]= useState(0)
 
   const handleSavePPR = (updatePpr) => {
     const updatedLoanDetails = { ...loan, ppr: updatePpr };
@@ -26,24 +27,37 @@ const Details = () => {
 
   const fetchLoanAndPaymentData = async () => {
     try {
-      const [loanResponse, paymentResponse] = await Promise.all([
+      const [loanResponse, paymentResponse,waterfallResponse] = await Promise.all([
         axios.get(`http://localhost:5000/api/loans/${id}`),
         axios.get(`http://localhost:5000/api/schedule/${id}`),
       ]);
 
       setLoan(loanResponse.data);
-      setWaterFall(loanResponse.data.waterfall.w_name);
-      console.log(waterfall);
+      console.log(loanResponse.data.waterfallId)
+      // setWfId(loanResponse.data.waterfallId);
       setPayment(paymentResponse.data);
     } catch (error) {
       console.log(error);
     }
   };
+  const fetchwaterfall =async ()=>{
+    await axios
+      .get(`http://localhost:5000/api/waterfall/${loan.waterfallId}`)
+      .then(function (response) {
+        console.log(response.data)
+        setWaterfall(response.data);
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   const fetchWaterfallOptions = () => {
     axios
       .get("http://localhost:5000/api/waterfall/")
       .then(function (response) {
         setWaterfallOptions(response.data);
+       
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +67,8 @@ const Details = () => {
   useEffect(() => {
     fetchLoanAndPaymentData();
     fetchWaterfallOptions();
-  }, [id]);
+    fetchwaterfall();
+  }, [id,loan.waterfallId]);
 
   return (
     <>
@@ -122,12 +137,12 @@ const Details = () => {
               <td>PPR</td>
               <td className="fw-bold d-flex flex-row align-items-center justify-content-center">
                 <EditableTableCell
-                  value={waterfall}
+                  value={waterfall.w_name}
                   onSave={handleSavePPR}
                   options={waterfallOptions.map((wf) => wf.w_name)}
                 />
               </td>
-            </tr>
+          </tr>
 
             <tr>
               <td

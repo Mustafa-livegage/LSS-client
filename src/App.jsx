@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import SingleEntryForm from "./screens/SingleEntryForm";
 import HomePage from "./screens/HomePage";
+import TempScreen from "./screens/TempScreen";
 
 import {
   BrowserRouter as Router,
@@ -21,7 +22,7 @@ function App() {
 
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-
+          {/* <Route exact path="/" element={<TempScreen />} /> */}
           <Route exact path="/addloans" element={<SingleEntryForm />} />
           <Route exact path="/loan-details/:id" element={<Details />} />
           {/* <Route exact path="/payment_schedule" element={<PaymentSchedule />} /> */}

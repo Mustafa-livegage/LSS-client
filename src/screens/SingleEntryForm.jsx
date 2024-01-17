@@ -23,11 +23,9 @@ const SingleEntryForm = () => {
     upb_amount: "",
     current_rate: "",
     pmt_due_date: "",
-    principal_intrest: "",
-    tax_insurance: "",
-    pmt_amount: "",
+    escrow_amount: "",
     name: "",
-    ppr: "",
+    waterfallId: "",
   });
   const [alertMessage, setAlertMessage] = useState(null);
 
@@ -73,13 +71,13 @@ const SingleEntryForm = () => {
             return row;
           });
 
-          const validationErrors = validateLoanData(formattedData); // Validate formatted data
+          // const validationErrors = validateLoanData(formattedData); // Validate formatted data
 
-          if (validationErrors.length > 0) {
-            // Display validation errors to the user
-            alert(validationErrors.join("\n"));
-            return; // Prevent API call
-          } else {
+          // if (validationErrors.length > 0) {
+          //   // Display validation errors to the user
+          //   alert(validationErrors.join("\n"));
+          //   return; // Prevent API call
+          // } else {
             axios
               .post("http://localhost:5000/api/loans/Bulk", formattedData)
               .then((response) => {
@@ -96,7 +94,7 @@ const SingleEntryForm = () => {
                 showAlert("danger", "Error adding CSV data.");
               });
           }
-        },
+        // },
       });
     });
   }, []);
@@ -195,18 +193,7 @@ const SingleEntryForm = () => {
                         Current Intrest Rate
                       </label>
                     </div>
-                    <div className="form-floating my-4">
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="pi-pmt-amt"
-                        placeholder="900000"
-                        step={0.01}
-                        onChange={handleChange}
-                        name="principal_intrest"
-                      />
-                      <label htmlFor="pi-pmt-amt">Principal and Interest</label>
-                    </div>
+                    
                   </Col>
                   <Col md>
                     <FloatingLabel
@@ -217,12 +204,12 @@ const SingleEntryForm = () => {
                       <Form.Select
                         aria-label="Floating label select example"
                         onChange={handleChange}
-                        name="ppr"
+                        name="waterfallId"
                       >
                         {/* <option selected >Current waterfall</option> */}
-                        <option value="X waterfall">X waterfall</option>
-                        <option value="Y waterfall">Y Waterfall</option>
-                        <option value="Z waterfall">Z waterfall</option>
+                        <option value="1">X waterfall</option>
+                        <option value="2">Y Waterfall</option>
+                        <option value="3">Z waterfall</option>
                       </Form.Select>
                     </FloatingLabel>
                     <FloatingLabel
@@ -267,30 +254,17 @@ const SingleEntryForm = () => {
                       <input
                         type="number"
                         className="form-control"
-                        id="t-and-i-pmt-amt"
+                        id="escrow-amount"
                         placeholder="900000"
                         step={0.01}
                         onChange={handleChange}
-                        name="tax_insurance"
+                        name="escrow_amount"
                       />
-                      <label htmlFor="t-and-i-pmt-amt">
-                        Tax and Insurance Amount
+                      <label htmlFor="escrow-amount">
+                        Escrow Amount
                       </label>
                     </div>
-                    <div className="form-floating my-4">
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="total-pmt-amt"
-                        placeholder="900000"
-                        step={0.01}
-                        onChange={handleChange}
-                        name="pmt_amount"
-                      />
-                      <label htmlFor="total-pmt-amt">
-                        Total payment Amount
-                      </label>
-                    </div>
+                    
                   </Col>
                 </Row>
                 <button className="btn btn-dark text-center w-50 mt-5">
