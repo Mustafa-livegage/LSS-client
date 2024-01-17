@@ -4,13 +4,15 @@ import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
 import { formatCurrency } from "../helper/formatCurrecny";
-import { Button, Form, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import EditableTableCell from "../components/EditableTableCell";
 
 const Details = () => {
   const { id } = useParams();
   const [loan, setLoan] = useState([]);
+  const [waterfall, setWaterFall] = useState("");
   const [payment, setPayment] = useState([]);
+  const [waterfallOptions, setWaterfallOptions] = useState([]);
 
   const handleSavePPR = (updatePpr) => {
     const updatedLoanDetails = { ...loan, ppr: updatePpr };
@@ -30,14 +32,27 @@ const Details = () => {
       ]);
 
       setLoan(loanResponse.data);
+      setWaterFall(loanResponse.data.waterfall.w_name);
+      console.log(waterfall);
       setPayment(paymentResponse.data);
     } catch (error) {
       console.log(error);
     }
   };
+  const fetchWaterfallOptions = () => {
+    axios
+      .get("http://localhost:5000/api/waterfall/")
+      .then(function (response) {
+        setWaterfallOptions(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     fetchLoanAndPaymentData();
+    fetchWaterfallOptions();
   }, [id]);
 
   return (
@@ -107,9 +122,9 @@ const Details = () => {
               <td>PPR</td>
               <td className="fw-bold d-flex flex-row align-items-center justify-content-center">
                 <EditableTableCell
-                  value={loan.ppr}
+                  value={waterfall}
                   onSave={handleSavePPR}
-                  options={["x waterfall", "y waterfall", "z waterfall"]}
+                  options={waterfallOptions.map((wf) => wf.w_name)}
                 />
               </td>
             </tr>
