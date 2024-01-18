@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import EditableTableCell from "../components/EditableTableCell";
 import { useNavigate } from "react-router-dom";
 
-
 const Details = () => {
   const history = useNavigate();
   const { id } = useParams();
@@ -25,8 +24,9 @@ const Details = () => {
         axios.get(`http://localhost:5000/api/schedule/${id}`),
       ]);
 
-      setLoan(loanResponse.data);1
-      console.log(loanResponse.data.waterfallId)
+      setLoan(loanResponse.data);
+      1;
+      console.log(loanResponse.data.waterfallId);
       // setWfId(loanResponse.data.waterfallId);
       setLoan(loanResponse.data);
       setPayment(paymentResponse.data);
@@ -71,8 +71,6 @@ const Details = () => {
   );
 
   const savingId = () => {
-    // Assuming you have the useHistory hook
-    // Replace `history` with the actual instance of your `useHistory` hook
     history(`/payment-schedule-details/${loan.id}`);
   };
 
@@ -150,11 +148,15 @@ const Details = () => {
               </td>
             </tr>
 
-          <tr>
+            <tr>
               <td>Payment Schedule</td>
               <td>
-                <Link to={`/payment-schedule-details/${loan.id}`}> 
-                  < Button variant="primary" 
+                <Link
+                  to={`/payment-schedule-details/${loan.id}`}
+                  state={{ loanNumber: loan.loan_number, userName: loan.name }}
+                >
+                  <Button
+                    variant="primary"
                     className="rounded"
                     onClick={savingId}
                   >
