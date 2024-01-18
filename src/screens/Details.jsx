@@ -4,10 +4,14 @@ import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
 import { formatCurrency } from "../helper/formatCurrecny";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import EditableTableCell from "../components/EditableTableCell";
+import { useNavigate } from "react-router-dom";
+
 
 const Details = () => {
+  const history = useNavigate();
   const { id } = useParams();
   const [loan, setLoan] = useState([]);
   const [waterfall, setWaterfall] = useState("");
@@ -32,7 +36,7 @@ const Details = () => {
         axios.get(`http://localhost:5000/api/schedule/${id}`),
       ]);
 
-      setLoan(loanResponse.data);
+      setLoan(loanResponse.data);1
       console.log(loanResponse.data.waterfallId)
       // setWfId(loanResponse.data.waterfallId);
       setPayment(paymentResponse.data);
@@ -69,6 +73,12 @@ const Details = () => {
     fetchWaterfallOptions();
     fetchwaterfall();
   }, [id,loan.waterfallId]);
+
+  const savingId = () => {
+    // Assuming you have the useHistory hook
+    // Replace `history` with the actual instance of your `useHistory` hook
+    history(`/payment-schedule-details/${loan.id}`);
+  };
 
   return (
     <>
@@ -143,6 +153,29 @@ const Details = () => {
                 />
               </td>
           </tr>
+
+          <tr>
+              <td>Payment Schedule</td>
+              <td>
+                <Link to={`/payment-schedule-details/${loan.id}`}> 
+                  < Button variant="primary" 
+                    className="rounded"
+                    onClick={savingId}
+                  >
+                    Show Details
+                  </Button>
+                </Link>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Escrow Details</td>
+              <td>
+                <Button variant="primary" className="rounded">
+                  Show Details
+                </Button>
+              </td>
+            </tr>
 
             <tr>
               <td

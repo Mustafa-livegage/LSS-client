@@ -1,13 +1,13 @@
 export function formatCurrency(amount) {
-    const amountString = String(amount);
+  const amountString = String(amount);
 
-    const [dollars, cents] = amountString.split(".");
+  const [dollars, cents] = amountString.split(".");
 
-    const formattedDollars = dollars.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const formattedDollars = dollars.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    const formattedCurrency = cents
-      ? `${formattedDollars}.${cents}`
-      : formattedDollars;
+  const formattedCents = cents ? `.${cents.slice(0, 3)}` : '';
 
-    return formattedCurrency;
-  }
+  const formattedCurrency = `${formattedDollars}${formattedCents}`;
+
+  return formattedCurrency;
+}
