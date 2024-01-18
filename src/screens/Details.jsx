@@ -16,7 +16,7 @@ const Details = () => {
   // const [wfId, setWfId] = useState(0);
 
   const handleSavePPR = (updatePpr) => {
-    const updatedLoanDetails = { ...loan, ppr: updatePpr };
+    const updatedLoanDetails = { ...loan, waterfall_name: updatePpr };
     try {
       axios.put(`http://localhost:5000/api/loans/${id}`, updatedLoanDetails);
     } catch (error) {
@@ -38,17 +38,7 @@ const Details = () => {
       console.log(error);
     }
   };
-  const fetchwaterfall = async () => {
-    await axios
-      .get(`http://localhost:5000/api/waterfall/${loan.waterfallId}`)
-      .then(function (response) {
-        console.log(response.data);
-        setWaterfall(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  
   const fetchWaterfallOptions = () => {
     axios
       .get("http://localhost:5000/api/waterfall/")
@@ -64,11 +54,7 @@ const Details = () => {
     fetchLoanAndPaymentData();
     fetchWaterfallOptions();
   }, [id]);
-  useEffect(() => {
-    if (loan.waterfallId) {
-      fetchwaterfall();
-    }
-  }, [loan.waterfallId]);
+
 
   return (
     <>
@@ -137,7 +123,7 @@ const Details = () => {
               <td>PPR</td>
               <td className="fw-bold d-flex flex-row align-items-center justify-content-center">
                 <EditableTableCell
-                  value={waterfall.w_name}
+                  value={loan.waterfall_name}
                   onSave={handleSavePPR}
                   options={waterfallOptions.map((wf) => wf.w_name)}
                 />
