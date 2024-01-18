@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
@@ -13,17 +13,6 @@ const Details = () => {
   const [waterfall, setWaterfall] = useState("");
   const [payment, setPayment] = useState([]);
   const [waterfallOptions, setWaterfallOptions] = useState([]);
-  // const [wfId, setWfId] = useState(0);
-
-  const handleSavePPR = (updatePpr) => {
-    const updatedLoanDetails = { ...loan, waterfall_name: updatePpr };
-    try {
-      axios.put(`http://localhost:5000/api/loans/${id}`, updatedLoanDetails);
-    } catch (error) {
-      console.error(error);
-    }
-    setLoan(updatedLoanDetails);
-  };
 
   const fetchLoanAndPaymentData = async () => {
     try {
@@ -38,7 +27,7 @@ const Details = () => {
       console.log(error);
     }
   };
-  
+
   const fetchWaterfallOptions = () => {
     axios
       .get("http://localhost:5000/api/waterfall/")
@@ -55,6 +44,24 @@ const Details = () => {
     fetchWaterfallOptions();
   }, [id]);
 
+  const handleSavePPR = useCallback(
+    (updatePpr) => {
+      console.log("updatePpr:", updatePpr);
+      const updatedLoanDetails = { ...loan, waterfall_name: updatePpr };
+      try {
+        axios.put(`http://localhost:5000/api/loans/${id}`, updatedLoanDetails);
+      } catch (error) {
+        console.error(error);
+      }
+      setLoan(updatedLoanDetails);
+    },
+    [loan, id]
+  );
+
+  const formattedUPBAmount = useMemo(
+    () => formatCurrency(loan.upb_amount),
+    [loan.upb_amount]
+  );
 
   return (
     <>
@@ -92,7 +99,7 @@ const Details = () => {
             </tr>
             <tr>
               <td>UPB Amount</td>
-              <td>{"$ " + `${formatCurrency(loan.upb_amount)}`}</td>
+              <td>{"$ " + `${formattedUPBAmount}`}</td>
             </tr>
             <tr>
               <td>Current Interest Rate</td>
