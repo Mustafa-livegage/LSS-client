@@ -153,7 +153,12 @@ const Details = () => {
               <td>
                 <Link
                   to={`/payment-schedule-details/${loan.id}`}
-                  state={{ loanNumber: loan.loan_number, userName: loan.name }}
+                  state={{
+                    loanNumber: loan.loan_number,
+                    userName: loan.name,
+                    interestRate: loan.current_rate,
+                    boardDate:loan.boarding_date
+                  }}
                 >
                   <Button
                     variant="primary"
