@@ -8,11 +8,7 @@ function NavBar() {
       <Container className="mx-0 w-100">
         <Link to="/">
           <Navbar.Brand className="float-left">
-            <img
-              src="./assets/logo.png"
-              alt="logo"
-              className="w-25 img-fluid"
-            />
+            <img src="/assets/logo.png" alt="logo" className="w-25 img-fluid" />
           </Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
@@ -17,21 +17,10 @@ const Details = () => {
   const [waterfall, setWaterfall] = useState("");
   const [payment, setPayment] = useState([]);
   const [waterfallOptions, setWaterfallOptions] = useState([]);
-  const [wfId,setWfId]= useState(0)
-
-  const handleSavePPR = (updatePpr) => {
-    const updatedLoanDetails = { ...loan, ppr: updatePpr };
-    try {
-      axios.put(`http://localhost:5000/api/loans/${id}`, updatedLoanDetails);
-    } catch (error) {
-      console.error(error);
-    }
-    setLoan(updatedLoanDetails);
-  };
 
   const fetchLoanAndPaymentData = async () => {
     try {
-      const [loanResponse, paymentResponse,waterfallResponse] = await Promise.all([
+      const [loanResponse, paymentResponse] = await Promise.all([
         axios.get(`http://localhost:5000/api/loans/${id}`),
         axios.get(`http://localhost:5000/api/schedule/${id}`),
       ]);
@@ -39,29 +28,18 @@ const Details = () => {
       setLoan(loanResponse.data);1
       console.log(loanResponse.data.waterfallId)
       // setWfId(loanResponse.data.waterfallId);
+      setLoan(loanResponse.data);
       setPayment(paymentResponse.data);
     } catch (error) {
       console.log(error);
     }
   };
-  const fetchwaterfall =async ()=>{
-    await axios
-      .get(`http://localhost:5000/api/waterfall/${loan.waterfallId}`)
-      .then(function (response) {
-        console.log(response.data)
-        setWaterfall(response.data);
-        
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+
   const fetchWaterfallOptions = () => {
     axios
       .get("http://localhost:5000/api/waterfall/")
       .then(function (response) {
         setWaterfallOptions(response.data);
-       
       })
       .catch((error) => {
         console.log(error);
@@ -71,8 +49,26 @@ const Details = () => {
   useEffect(() => {
     fetchLoanAndPaymentData();
     fetchWaterfallOptions();
-    fetchwaterfall();
-  }, [id,loan.waterfallId]);
+  }, [id]);
+
+  const handleSavePPR = useCallback(
+    (updatePpr) => {
+      console.log("updatePpr:", updatePpr);
+      const updatedLoanDetails = { ...loan, waterfall_name: updatePpr };
+      try {
+        axios.put(`http://localhost:5000/api/loans/${id}`, updatedLoanDetails);
+      } catch (error) {
+        console.error(error);
+      }
+      setLoan(updatedLoanDetails);
+    },
+    [loan, id]
+  );
+
+  const formattedUPBAmount = useMemo(
+    () => formatCurrency(loan.upb_amount),
+    [loan.upb_amount]
+  );
 
   const savingId = () => {
     // Assuming you have the useHistory hook
@@ -116,7 +112,7 @@ const Details = () => {
             </tr>
             <tr>
               <td>UPB Amount</td>
-              <td>{"$ " + `${formatCurrency(loan.upb_amount)}`}</td>
+              <td>{"$ " + `${formattedUPBAmount}`}</td>
             </tr>
             <tr>
               <td>Current Interest Rate</td>
@@ -147,12 +143,12 @@ const Details = () => {
               <td>PPR</td>
               <td className="fw-bold d-flex flex-row align-items-center justify-content-center">
                 <EditableTableCell
-                  value={waterfall.w_name}
+                  value={loan.waterfall_name}
                   onSave={handleSavePPR}
                   options={waterfallOptions.map((wf) => wf.w_name)}
                 />
               </td>
-          </tr>
+            </tr>
 
           <tr>
               <td>Payment Schedule</td>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { FaEdit, FaSave } from "react-icons/fa";
 
 const EditableTableCell = ({ value, onSave, options }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editValue, setEditValue] = useState(value || "");
+  const [editValue, setEditValue] = useState(value || options[0] || "");
 
   const handleToggleEdit = () => {
     setIsEditing(!isEditing);
@@ -12,6 +12,7 @@ const EditableTableCell = ({ value, onSave, options }) => {
 
   const handleSave = () => {
     onSave(editValue);
+    console.log(editValue);
     setIsEditing(false);
   };
 
