@@ -13,7 +13,7 @@ const PaymentScheduler = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/schedule/${id}`)
+      .get(`http://localhost:5000/api/schedule/7aec4286-4e9a-438a-83a7-ba8000089983`)
       .then((response) => {
         // const formattedData = response.data.map(item => ({
         //   monthly_payment: formatCurrency(item.monthly_payment),
@@ -53,15 +53,16 @@ const PaymentScheduler = () => {
           </tr>
         </thead>
         <tbody>
-          {scheduleData.map((data, index) => (
+          {scheduleData.map((data,index) => (
             <tr key={index}>
               <td>{data.month}</td>
               <td>{data.annual_interest_rate}</td>
               <td>{"$ " + `${formatCurrency(data.monthly_payment)}`}</td>
               <td>{"$ " + `${formatCurrency(data.principal_amount)}`}</td>
               <td>{"$ " + `${formatCurrency(data.interest_amount)}`}</td>
+              <td>{"$ " + `${formatCurrency(data.escrow)}`}</td>
               <td>{"$ " + `${formatCurrency(data.upb_amount)}`}</td>
-              <td>{"$ " + `${formatCurrency(data.monthly_payment)}`}</td>
+
             </tr>
           ))}
         </tbody>
