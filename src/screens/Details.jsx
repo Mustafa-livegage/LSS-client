@@ -13,7 +13,7 @@ const Details = () => {
   const [waterfall, setWaterfall] = useState("");
   const [payment, setPayment] = useState([]);
   const [waterfallOptions, setWaterfallOptions] = useState([]);
-  const [wfId,setWfId]= useState(0)
+  // const [wfId, setWfId] = useState(0);
 
   const handleSavePPR = (updatePpr) => {
     const updatedLoanDetails = { ...loan, ppr: updatePpr };
@@ -27,37 +27,33 @@ const Details = () => {
 
   const fetchLoanAndPaymentData = async () => {
     try {
-      const [loanResponse, paymentResponse,waterfallResponse] = await Promise.all([
+      const [loanResponse, paymentResponse] = await Promise.all([
         axios.get(`http://localhost:5000/api/loans/${id}`),
         axios.get(`http://localhost:5000/api/schedule/${id}`),
       ]);
 
       setLoan(loanResponse.data);
-      console.log(loanResponse.data.waterfallId)
-      // setWfId(loanResponse.data.waterfallId);
       setPayment(paymentResponse.data);
     } catch (error) {
       console.log(error);
     }
   };
-  const fetchwaterfall =async ()=>{
+  const fetchwaterfall = async () => {
     await axios
       .get(`http://localhost:5000/api/waterfall/${loan.waterfallId}`)
       .then(function (response) {
-        console.log(response.data)
+        console.log(response.data);
         setWaterfall(response.data);
-        
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
   const fetchWaterfallOptions = () => {
     axios
       .get("http://localhost:5000/api/waterfall/")
       .then(function (response) {
         setWaterfallOptions(response.data);
-       
       })
       .catch((error) => {
         console.log(error);
@@ -67,8 +63,12 @@ const Details = () => {
   useEffect(() => {
     fetchLoanAndPaymentData();
     fetchWaterfallOptions();
-    fetchwaterfall();
-  }, [id,loan.waterfallId]);
+  }, [id]);
+  useEffect(() => {
+    if (loan.waterfallId) {
+      fetchwaterfall();
+    }
+  }, [loan.waterfallId]);
 
   return (
     <>
@@ -142,7 +142,7 @@ const Details = () => {
                   options={waterfallOptions.map((wf) => wf.w_name)}
                 />
               </td>
-          </tr>
+            </tr>
 
             <tr>
               <td
