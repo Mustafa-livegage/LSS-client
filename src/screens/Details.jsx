@@ -3,17 +3,16 @@ import React, { useEffect, useMemo, useState, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import BackButton from "../components/BackButton";
-import { formatCurrency } from "../helper/formatCurrecny";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import EditableTableCell from "../components/EditableTableCell";
 import { useNavigate } from "react-router-dom";
+import { formatCurrency } from "../helper/formatCurrency";
 
 const Details = () => {
   const history = useNavigate();
   const { id } = useParams();
   const [loan, setLoan] = useState([]);
-  const [waterfall, setWaterfall] = useState("");
   const [payment, setPayment] = useState([]);
   const [waterfallOptions, setWaterfallOptions] = useState([]);
 
@@ -23,8 +22,6 @@ const Details = () => {
         axios.get(`http://localhost:5000/api/loans/${id}`),
         axios.get(`http://localhost:5000/api/schedule/${id}`),
       ]);
-      console.log(loanResponse.data.waterfallId);
-      // setWfId(loanResponse.data.waterfallId);
       setLoan(loanResponse.data);
       setPayment(paymentResponse.data);
     } catch (error) {
@@ -107,7 +104,7 @@ const Details = () => {
             </tr>
             <tr>
               <td>UPB Amount</td>
-              <td>{"$ " + `${formattedUPBAmount}`}</td>
+              <td>{`${formattedUPBAmount}`}</td>
             </tr>
             <tr>
               <td>Current Interest Rate</td>
@@ -120,19 +117,13 @@ const Details = () => {
             {payment[0] && (
               <tr>
                 <td>Principal and Interest</td>
-                <td>
-                  {"$ " + `${formatCurrency(payment[0].interest_amount)}`}
-                </td>
+                <td>{`${formatCurrency(payment[0].interest_amount)}`}</td>
               </tr>
             )}
             <tr>
               <td>Tax and Insurance payment</td>
-              <td>{"$ " + `${formatCurrency(loan.escrow_amount / 12)}`}</td>
+              <td>{`${formatCurrency(loan.escrow_amount / 12)}`}</td>
             </tr>
-            {/* <tr>
-              <td>Total Payment amount</td>
-              <td>{"$ " + `${formatCurrency(payment.monthly_payment)}`}</td>
-            </tr> */}
 
             <tr>
               <td>PPR</td>
@@ -144,29 +135,22 @@ const Details = () => {
                 />
               </td>
             </tr>
-
-            <tr>
-              <td>Payment Schedule</td>
-              <td>
-                <Link
-                  to={`/payment-schedule-details/${loan.id}`}
-                  state={{
-                    loanNumber: loan.loan_number || "",
-                    userName: loan.name || "",
-                    interestRate: loan.current_rate || "",
-                    boardDate: loan.boarding_date || "",
-                  }}
-                >
-                  <Button
-                    variant="primary"
-                    className="rounded"
-                    onClick={savingId}
-                  >
-                    Show Details
-                  </Button>
-                </Link>
-              </td>
-            </tr>
+            {loan.upb_amount != 0 && (
+              <tr>
+                <td>Schedules</td>
+                <td>
+                  <Link to={`/payment-schedule-details/${loan.id}`}>
+                    <Button
+                      variant="light"
+                      className="rounded"
+                      onClick={savingId}
+                    >
+                      Show Details
+                    </Button>
+                  </Link>
+                </td>
+              </tr>
+            )}
 
             <tr>
               <td

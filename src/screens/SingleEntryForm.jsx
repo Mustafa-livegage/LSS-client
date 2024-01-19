@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -7,7 +7,6 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import axios from "axios";
 import { useDropzone } from "react-dropzone";
 import Papa from "papaparse";
-import validateLoanData from "../helper/validateLoanData";
 import { useNavigate } from "react-router-dom";
 import { Alert, InputGroup, Tab, Tabs } from "react-bootstrap";
 import BackButton from "../components/BackButton";
@@ -25,8 +24,9 @@ const SingleEntryForm = () => {
     pmt_due_date: "",
     escrow_amount: "",
     name: "",
-    waterfallId: "",
+    waterfall_name: "",
   });
+  const [waterfallOptions, setWaterfallOptions] = useState([]);
   const [alertMessage, setAlertMessage] = useState(null);
 
   const formRef = useRef();
@@ -46,6 +46,7 @@ const SingleEntryForm = () => {
     axios
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
+        console.log(formData);
         showAlert("success", "Single loan entry submitted successfully!");
       })
       .catch((error) => {
@@ -57,6 +58,20 @@ const SingleEntryForm = () => {
     const [day, month, year] = dateString.split("-");
     return year + "-" + month + "-" + day;
   };
+  const fetchWaterfallOptions = () => {
+    axios
+      .get("http://localhost:5000/api/waterfall/")
+      .then(function (response) {
+        setWaterfallOptions(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchWaterfallOptions();
+  }, []);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -71,13 +86,6 @@ const SingleEntryForm = () => {
             return row;
           });
 
-          // const validationErrors = validateLoanData(formattedData); // Validate formatted data
-
-          // if (validationErrors.length > 0) {
-          //   // Display validation errors to the user
-          //   alert(validationErrors.join("\n"));
-          //   return; // Prevent API call
-          // } else {
           axios
             .post("http://localhost:5000/api/loans/Bulk", formattedData)
             .then((response) => {
@@ -117,7 +125,11 @@ const SingleEntryForm = () => {
         </Alert>
 
         <h2 className="text-center fw-bold fs-1 mb-5">Board loan</h2>
-        <Tabs defaultActiveKey="upload" className="mb-3" fill>
+        <Tabs
+          defaultActiveKey="upload"
+          className=" fs-5 fw-bold w-100 mb-3"
+          fill
+        >
           <Tab eventKey="form" title="Form">
             <Container className="px-0">
               <form
@@ -179,7 +191,7 @@ const SingleEntryForm = () => {
                       <label htmlFor="upb-amount">UPB Amount</label>
                     </div>
 
-                    <div className="form-floating my-4">
+                    <div className="form-floating">
                       <input
                         type="number"
                         className="form-control"
@@ -203,12 +215,13 @@ const SingleEntryForm = () => {
                       <Form.Select
                         aria-label="Floating label select example"
                         onChange={handleChange}
-                        name="waterfallId"
+                        name="waterfall_name"
                       >
-                        {/* <option selected >Current waterfall</option> */}
-                        <option value="1">X waterfall</option>
-                        <option value="2">Y Waterfall</option>
-                        <option value="3">Z waterfall</option>
+                        {waterfallOptions.map((option) => (
+                          <option key={option.id} value={option.w_name}>
+                            {option.w_name}
+                          </option>
+                        ))}
                       </Form.Select>
                     </FloatingLabel>
                     <FloatingLabel

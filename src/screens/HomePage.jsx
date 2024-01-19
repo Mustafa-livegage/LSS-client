@@ -3,7 +3,7 @@ import { Container, Form, InputGroup, Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { formatCurrency } from "../helper/formatCurrecny";
+import { formatCurrency } from "../helper/formatCurrency";
 
 const HomePage = () => {
   const history = useNavigate();
@@ -94,7 +94,7 @@ const HomePage = () => {
         </div>
         <div>
           {loans.length > 0 && (
-            <Table striped responsive bordered hover dark>
+            <Table striped responsive bordered hover>
               <thead>
                 <tr className="table-dark">
                   <th>Loan Number</th>
@@ -116,14 +116,13 @@ const HomePage = () => {
                     </td>
                     <td>{loan.name}</td>
                     <td>{parseDate(loan.boarding_date)}</td>
-                    <td>{"$ " + `${formatCurrency(loan.upb_amount)}`}</td>
+                    <td>{`${formatCurrency(loan.upb_amount)}`}</td>
 
                     <td className=" fw-bold">
                       {loan.upb_amount == 0 ? "Expired" : "Active"}
                     </td>
 
                     <td>
-                      {/* Add a delete button with onClick handler */}
                       <Button
                         variant="danger"
                         size="sm"
@@ -132,14 +131,6 @@ const HomePage = () => {
                       >
                         Delete
                       </Button>
-                    </td>
-                    <td style={{ display: "none" }}>
-                      {/* <button
-                      className="btn btn-primary"
-                      onClick={(e) => showDetails(loan)}
-                    >
-                      Show All
-                    </button> */}
                     </td>
                   </tr>
                 ))}
