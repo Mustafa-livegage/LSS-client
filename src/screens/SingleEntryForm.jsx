@@ -78,22 +78,22 @@ const SingleEntryForm = () => {
           //   alert(validationErrors.join("\n"));
           //   return; // Prevent API call
           // } else {
-            axios
-              .post("http://localhost:5000/api/loans/Bulk", formattedData)
-              .then((response) => {
-                showAlert("success", "CSV Data Added Successfully!");
-              })
-              .catch((error) => {
-                console.log(error);
-                if (error.response && error.response.status === 400) {
-                  alert(
-                    "Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them."
-                  );
-                }
+          axios
+            .post("http://localhost:5000/api/loans/Bulk", formattedData)
+            .then((response) => {
+              showAlert("success", "CSV Data Added Successfully!");
+            })
+            .catch((error) => {
+              console.log(error);
+              if (error.response && error.response.status === 400) {
+                alert(
+                  "Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them."
+                );
+              }
 
-                showAlert("danger", "Error adding CSV data.");
-              });
-          }
+              showAlert("danger", "Error adding CSV data.");
+            });
+        },
         // },
       });
     });
@@ -193,7 +193,6 @@ const SingleEntryForm = () => {
                         Current Intrest Rate
                       </label>
                     </div>
-                    
                   </Col>
                   <Col md>
                     <FloatingLabel
@@ -260,11 +259,8 @@ const SingleEntryForm = () => {
                         onChange={handleChange}
                         name="escrow_amount"
                       />
-                      <label htmlFor="escrow-amount">
-                        Escrow Amount
-                      </label>
+                      <label htmlFor="escrow-amount">Escrow Amount</label>
                     </div>
-                    
                   </Col>
                 </Row>
                 <button className="btn btn-dark text-center w-50 mt-5">
@@ -275,15 +271,22 @@ const SingleEntryForm = () => {
           </Tab>
           <Tab eventKey="upload" title="Upload">
             <Container
-              className="my-5 py-2 bg-white"
               {...getRootProps()}
-              style={{ border: "3px dashed #999" }}
+              style={{
+                border: "3px dashed #999",
+                height: "40vh",
+                margin: "50px 0px",
+                padding: "10px 0px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#ffffff",
+                cursor: "pointer",
+              }}
             >
               <div>
                 <input {...getInputProps()} />
-                <h5 className="text-center">
-                  drag 'n' drop some files here, or click to select files
-                </h5>
+                <h4>drag 'n' drop some files here, or click to select files</h4>
               </div>
             </Container>
           </Tab>
