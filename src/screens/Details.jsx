@@ -26,7 +26,7 @@ const Details = () => {
 
       setLoan(loanResponse.data);
       1;
-      console.log(loanResponse.data.waterfallId);
+      // console.log(loanResponse.data.waterfallId);
       // setWfId(loanResponse.data.waterfallId);
       setLoan(loanResponse.data);
       setPayment(paymentResponse.data);
@@ -168,15 +168,6 @@ const Details = () => {
                     Show Details
                   </Button>
                 </Link>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Escrow Details</td>
-              <td>
-                <Button variant="primary" className="rounded">
-                  Show Details
-                </Button>
               </td>
             </tr>
 
