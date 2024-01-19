@@ -116,8 +116,15 @@ const Details = () => {
             </tr>
             {payment[0] && (
               <tr>
-                <td>Principal and Interest</td>
-                <td>{`${formatCurrency(payment[0].interest_amount)}`}</td>
+                <td>Monthly Payment</td>
+                <td>
+                  {"$ " +
+                    `${formatCurrency(
+                      payment[0].interest_amount +
+                        payment[0].principal_amount +
+                        loan.escrow_amount / 12
+                    )}`}
+                </td>
               </tr>
             )}
             <tr>
