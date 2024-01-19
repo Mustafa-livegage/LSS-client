@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, InputGroup, Tab, Tabs } from "react-bootstrap";
 import BackButton from "../components/BackButton";
 import validateLoanDataOne from "../helper/validateLoanDataOne";
+// import validateUsingZod from "../helper/validateUsingZod";
 
 const SingleEntryForm = () => {
   const history = useNavigate();
@@ -41,8 +42,11 @@ const SingleEntryForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validateErrors = validateLoanDataOne(formData);
-
+    const validatedData = validateLoanDataOne(formData);
+    if(validatedData.length > 0) {
+      alert(validatedData.join("\n"));
+      return; 
+    }
     axios
       .post("http://localhost:5000/api/loans", formData)
       .then((response) => {
@@ -53,6 +57,44 @@ const SingleEntryForm = () => {
       });
     formRef.current.reset();
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const validatedData = validateUsingZod(formData);
+  //     console.log(validatedData);
+
+  //     axios
+  //       .post("http://localhost:5000/api/loans", validatedData)
+  //       .then((response) => {
+  //         showAlert("success", "Single loan entry submitted successfully!");
+  //       })
+  //       .catch((error) => {
+  //         showAlert("danger", "Error submitting loan entry.");
+  //       });
+
+  //     formRef.current.reset();
+  //   } catch (error) {
+  //     if (error.message === "Please review the errors and correct the input data.") {
+  //       // Handle Zod validation errors:
+  //       const formattedErrors = error.flatten();
+
+  //       if (formattedErrors.formErrors.length > 0) {
+  //         showAlert("danger", formattedErrors.formErrors.join(", "));
+  //       } else {
+  //         const fieldErrorMessages = Object.values(formattedErrors.fieldErrors)
+  //           .flatMap((fieldErrors) => fieldErrors)
+  //           .join(", ");
+  //         showAlert("danger", fieldErrorMessages);
+  //       }
+  //     } else {
+  //       // Handle other errors:
+  //       showAlert("danger", `Validation error: ${error.message}`);
+  //     }
+  //   }
+  // };
+
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split("-");
     return year + "-" + month + "-" + day;
@@ -71,13 +113,12 @@ const SingleEntryForm = () => {
             return row;
           });
 
-          // const validationErrors = validateLoanData(formattedData); // Validate formatted data
+          const validationErrors = validateLoanData(formattedData); // Validate formatted data
 
-          // if (validationErrors.length > 0) {
-          //   // Display validation errors to the user
-          //   alert(validationErrors.join("\n"));
-          //   return; // Prevent API call
-          // } else {
+          if (validationErrors.length > 0) {
+            alert(validationErrors.join("\n"));
+            return; 
+          } 
           axios
             .post("http://localhost:5000/api/loans/Bulk", formattedData)
             .then((response) => {
@@ -89,6 +130,7 @@ const SingleEntryForm = () => {
                 alert(
                   "Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them."
                 );
+                alert(validationErrors.join("\n"));
               }
 
               showAlert("danger", "Error adding CSV data.");

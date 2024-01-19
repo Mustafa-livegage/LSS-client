@@ -36,10 +36,10 @@ const PaymentSchedule = () => {
       <div className="d-flex flex-row justify-content-between align-items-center w-100">
         <div>
           <h3 >Loan Number : <strong>{loanNumber}</strong></h3>
-          <h3 >Borrower Name : <strong>{userName}</strong></h3>
+          <h3>Interest Rate : <strong>{interestRate} {' %'}</strong></h3>
         </div>
         <div>
-          <h3>Interest Rate : <strong>{interestRate} {' %'}</strong></h3>
+          <h3 >Borrower Name : <strong>{userName}</strong></h3>
           <h3>Boarding Data : <strong>{parseDate(boardDate)}</strong></h3>
         </div>
       </div>
