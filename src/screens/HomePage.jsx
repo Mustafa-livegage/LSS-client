@@ -94,9 +94,9 @@ const HomePage = () => {
         </div>
         <div>
           {loans.length > 0 && (
-            <Table striped responsive bordered hover>
+            <Table striped responsive bordered hover dark>
               <thead>
-                <tr>
+                <tr className="table-dark">
                   <th>Loan Number</th>
                   <th>Borrower Name</th>
                   <th>Boarding Date</th>

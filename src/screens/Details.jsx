@@ -23,9 +23,6 @@ const Details = () => {
         axios.get(`http://localhost:5000/api/loans/${id}`),
         axios.get(`http://localhost:5000/api/schedule/${id}`),
       ]);
-
-      setLoan(loanResponse.data);
-      1;
       console.log(loanResponse.data.waterfallId);
       // setWfId(loanResponse.data.waterfallId);
       setLoan(loanResponse.data);
@@ -154,10 +151,10 @@ const Details = () => {
                 <Link
                   to={`/payment-schedule-details/${loan.id}`}
                   state={{
-                    loanNumber: loan.loan_number,
-                    userName: loan.name,
-                    interestRate: loan.current_rate,
-                    boardDate:loan.boarding_date
+                    loanNumber: loan.loan_number || "",
+                    userName: loan.name || "",
+                    interestRate: loan.current_rate || "",
+                    boardDate: loan.boarding_date || "",
                   }}
                 >
                   <Button
@@ -168,15 +165,6 @@ const Details = () => {
                     Show Details
                   </Button>
                 </Link>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Escrow Details</td>
-              <td>
-                <Button variant="primary" className="rounded">
-                  Show Details
-                </Button>
               </td>
             </tr>
 
