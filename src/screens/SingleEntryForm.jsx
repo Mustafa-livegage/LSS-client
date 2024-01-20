@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert, InputGroup, Tab, Tabs } from "react-bootstrap";
 import BackButton from "../components/BackButton";
 import validateLoanDataOne from "../helper/validateLoanDataOne";
+import validateLoanData from "../helper/validateLoanData";
 // import validateUsingZod from "../helper/validateUsingZod";
 
 const SingleEntryForm = () => {
@@ -145,7 +146,6 @@ const SingleEntryForm = () => {
                 alert(
                   "Your Data is not Saved. \nThere are errors in the data.\n Please review and correct them."
                 );
-                alert(validationErrors.join("\n"));
               }
 
               showAlert("danger", "Error adding CSV data.");
@@ -251,7 +251,7 @@ const SingleEntryForm = () => {
                         name="current_rate"
                       />
                       <label htmlFor="curr-int-rate">
-                        Current Intrest Rate
+                        Current Interest Rate
                       </label>
                     </div>
                   </Col>
@@ -283,6 +283,7 @@ const SingleEntryForm = () => {
                         placeholder="dd-mm-yyyy"
                         onChange={handleChange}
                         name="note_date"
+                        required
                       />
                     </FloatingLabel>
                     <FloatingLabel
@@ -295,6 +296,7 @@ const SingleEntryForm = () => {
                         placeholder="dd-mm-yyyy"
                         onChange={handleChange}
                         name="boarding_date"
+                        required
                       />
                     </FloatingLabel>
 
@@ -308,6 +310,7 @@ const SingleEntryForm = () => {
                         placeholder="dd-mm-yyyy"
                         onChange={handleChange}
                         name="pmt_due_date"
+                        required
                       />
                     </FloatingLabel>
 
