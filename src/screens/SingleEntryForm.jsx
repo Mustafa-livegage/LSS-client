@@ -12,7 +12,6 @@ import { Alert, InputGroup, Tab, Tabs } from "react-bootstrap";
 import BackButton from "../components/BackButton";
 import validateLoanDataOne from "../helper/validateLoanDataOne";
 import validateLoanData from "../helper/validateLoanData";
-// import validateUsingZod from "../helper/validateUsingZod";
 
 const SingleEntryForm = () => {
   const history = useNavigate();
@@ -59,43 +58,6 @@ const SingleEntryForm = () => {
       });
     formRef.current.reset();
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const validatedData = validateUsingZod(formData);
-  //     console.log(validatedData);
-
-  //     axios
-  //       .post("http://localhost:5000/api/loans", validatedData)
-  //       .then((response) => {
-  //         showAlert("success", "Single loan entry submitted successfully!");
-  //       })
-  //       .catch((error) => {
-  //         showAlert("danger", "Error submitting loan entry.");
-  //       });
-
-  //     formRef.current.reset();
-  //   } catch (error) {
-  //     if (error.message === "Please review the errors and correct the input data.") {
-  //       // Handle Zod validation errors:
-  //       const formattedErrors = error.flatten();
-
-  //       if (formattedErrors.formErrors.length > 0) {
-  //         showAlert("danger", formattedErrors.formErrors.join(", "));
-  //       } else {
-  //         const fieldErrorMessages = Object.values(formattedErrors.fieldErrors)
-  //           .flatMap((fieldErrors) => fieldErrors)
-  //           .join(", ");
-  //         showAlert("danger", fieldErrorMessages);
-  //       }
-  //     } else {
-  //       // Handle other errors:
-  //       showAlert("danger", `Validation error: ${error.message}`);
-  //     }
-  //   }
-  // };
 
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split("-");
@@ -328,7 +290,10 @@ const SingleEntryForm = () => {
                     </div>
                   </Col>
                 </Row>
-                <button className="btn btn-dark text-center w-50 mt-5">
+                <button
+                  type="submit"
+                  className="btn btn-dark text-center w-50 mt-5"
+                >
                   Submit
                 </button>
               </form>

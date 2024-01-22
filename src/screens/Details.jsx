@@ -148,7 +148,7 @@ const Details = () => {
                 <td>
                   <Link to={`/payment-schedule-details/${loan.id}`}>
                     <Button
-                      variant="light"
+                      variant="info"
                       className="rounded"
                       onClick={savingId}
                     >
