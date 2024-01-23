@@ -85,11 +85,6 @@ const HomePage = () => {
             >
               Search
             </Button>
-            <Link to={"/addloans"}>
-              <Button variant="dark" className="rounded">
-                Board
-              </Button>
-            </Link>
           </InputGroup>
         </div>
         <div>

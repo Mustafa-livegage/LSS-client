@@ -5,6 +5,7 @@ import { Button, Container, Table } from "react-bootstrap";
 const EscrowMaster = () => {
   //   const history = useNavigate();
   const [master, setMaster] = useState([]);
+  const tArray = new Array(40).fill();
 
   useEffect(() => {
     axios
@@ -21,7 +22,7 @@ const EscrowMaster = () => {
       <Container className="container-fluid text-center mt-5">
         <h2 className="my-5 fw-bold fs-1">Escrow Master</h2>
         <div>
-          {master.length > 0 && (
+          {tArray.length > 0 && (
             <Table striped responsive bordered hover>
               <thead>
                 <tr className="table-dark">
@@ -30,28 +31,28 @@ const EscrowMaster = () => {
                   <th>Escrow Type</th>
                   <th>Escrow Amount</th>
                   <th>Beneficiary Name</th>
+                  <th>Bank Details</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody>
-                {master.map((loan) => (
-                  <tr key={loan.id}>
-                    <td>{loan.item_name}</td>
-                    <td>{loan.freq}</td>
-                    <td>{loan.escrow_type}</td>
-                    <td>{loan.amt}</td>
-
-                    <td>{loan.beneficiary_name}</td>
-
+                {tArray.map((index) => (
+                  <tr key={index}>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td>
-                      <Button
+                      {/* <Button
                         variant="danger"
                         size="sm"
                         style={{ zIndex: 2 }}
                         onClick={() => handleDelete(loan.id)}
                       >
                         Delete
-                      </Button>
+                      </Button> */}
                     </td>
                   </tr>
                 ))}
