@@ -7,7 +7,7 @@ export function formatCurrency(amount) {
 
   const formattedCents = cents ? `.${cents.slice(0, 2)}` : '';
 
-  const formattedCurrency = `${formattedDollars}${formattedCents} USD`;
+  const formattedCurrency = `$ ${formattedDollars}${formattedCents}`;
 
   return formattedCurrency;
 }

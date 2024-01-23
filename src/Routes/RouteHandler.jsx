@@ -4,6 +4,7 @@ import Details from "../screens/Details";
 import Schedule from "../screens/Schedule";
 import HomePage from "../screens/HomePage";
 import SingleEntryForm from "../screens/SingleEntryForm";
+import EscrowMaster from "../screens/EscrowMaster";
 
 const RouteHandler = () => {
   return (
@@ -16,6 +17,7 @@ const RouteHandler = () => {
       />
       <Route exact path="/addloans" element={<SingleEntryForm />} />
       <Route exact path="/loan-details/:id" element={<Details />} />
+      <Route exact path="/escrow-master" element={<EscrowMaster />} />
     </Routes>
   );
 };

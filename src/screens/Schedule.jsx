@@ -5,6 +5,7 @@ import axios from "axios";
 import PaymentSchedule from "../components/PaymentSchedule";
 import EscrowSchedule from "../components/EscrowSchedule";
 import BackButton from "../components/BackButton";
+import { formatCurrency } from "../helper/formatCurrency";
 
 const Schedule = () => {
   const { id } = useParams();
@@ -54,7 +55,7 @@ const Schedule = () => {
               Borrower Name : <strong>{loan.name}</strong>
             </h4>
             <h4>
-              Loan Amount : <strong>--------</strong>
+              Loan Amount : <strong>{formatCurrency(loan.loan_amount)}</strong>
             </h4>
           </div>
         </div>

@@ -6,7 +6,7 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
     <>
       <Container className="mt-5">
         <div
-          className="d-flex gap-4 flex-wrap align-items-center justify-content-center"
+          className="d-flex gap-4 flex-wrap align-items-start justify-content-start"
           style={{ margin: "50px" }}
         >
           {escrowAmt != 0 ? (
@@ -18,14 +18,14 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
                   key={es.month}
                 >
                   <Card.Header className=" text-center fw-bold ">
-                    {es.month} (2023)
+                    {es.month}
                   </Card.Header>
-                  <Card.Body className="d-flex flex-column align-items-center justify-content-center">
+                  <Card.Body className="d-flex flex-column align-items-start justify-content-start">
                     <div className="row w-100 fw-bold ">
-                      <div className="col-8">
+                      <div className="col-9">
                         <Card.Text>Monthly Payment</Card.Text>
                       </div>
-                      <div className="col-4 text-end">
+                      <div className="col-3 text-start">
                         <Card.Text>
                           {escrowAmt <= 1200
                             ? formatCurrency(es.escrow)
@@ -34,10 +34,10 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
                       </div>
                     </div>
                     <div className="row w-100">
-                      <div className="col-8">
+                      <div className="col-9">
                         <Card.Text>County Tax</Card.Text>
                       </div>
-                      <div className="col-4 text-end">
+                      <div className="col-3 text-start">
                         <Card.Text>
                           {escrowAmt <= 1200
                             ? formatCurrency(es.county_tax)
@@ -46,10 +46,10 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
                       </div>
                     </div>
                     <div className="row w-100">
-                      <div className="col-8">
+                      <div className="col-9">
                         <Card.Text>District Tax </Card.Text>
                       </div>
-                      <div className="col-4 text-end">
+                      <div className="col-3 text-start">
                         <Card.Text>
                           {escrowAmt <= 1200
                             ? formatCurrency(es.special_district_tax)
@@ -58,10 +58,10 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
                       </div>
                     </div>
                     <div className="row w-100">
-                      <div className="col-8">
+                      <div className="col-9">
                         <Card.Text>Mortgage Insurance</Card.Text>
                       </div>
-                      <div className="col-4 text-end">
+                      <div className="col-3 text-start">
                         <Card.Text>
                           {escrowAmt <= 1200
                             ? formatCurrency(es.mortgage_insurance)
@@ -70,10 +70,10 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
                       </div>
                     </div>
                     <div className="row w-100">
-                      <div className="col-8">
+                      <div className="col-9">
                         <Card.Text>Hazard Insurance</Card.Text>
                       </div>
-                      <div className="col-4 text-end">
+                      <div className="col-3 text-start">
                         <Card.Text>
                           {escrowAmt <= 1200
                             ? formatCurrency(es.hazard_insurance)
@@ -82,10 +82,10 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
                       </div>
                     </div>
                     <div className="row w-100">
-                      <div className="col-8">
+                      <div className="col-9">
                         <Card.Text>Flood Insurance</Card.Text>
                       </div>
-                      <div className="col-4 text-end">
+                      <div className="col-3 text-start">
                         <Card.Text>
                           {escrowAmt <= 1200
                             ? formatCurrency(es.flood_insurance)
@@ -94,10 +94,10 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
                       </div>
                     </div>
                     <div className="row w-100 fw-bold">
-                      <div className="col-8">
+                      <div className="col-9">
                         <Card.Text>Balance</Card.Text>
                       </div>
-                      <div className="col-4 text-end">
+                      <div className="col-3 text-start">
                         <Card.Text>
                           {escrowAmt <= 1200
                             ? formatCurrency(es.balance)
