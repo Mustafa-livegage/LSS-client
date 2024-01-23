@@ -18,7 +18,12 @@ function NavBar() {
             className="ml-auto justify-content-end"
             style={{ width: "100%" }}
           >
-            <Link to="/addloans" className="text-decoration-none ">
+            <Link to="/" className="text-decoration-none">
+              <Navbar.Text className="text-white fs-4 ">Home</Navbar.Text>
+            </Link>
+            <div className="border-end border-secondary border-3 mx-3" />
+
+            <Link to="/addloans" className="text-decoration-none">
               <Navbar.Text className="text-white fs-4 ">Board</Navbar.Text>
             </Link>
             <div className="border-end border-secondary border-3 mx-3" />
@@ -27,6 +32,7 @@ function NavBar() {
                 Escrow Master
               </Navbar.Text>
             </Link>
+            <div className="border-end border-secondary border-3 mx-3" />
           </Nav>
         </Navbar.Collapse>
       </Nav>
