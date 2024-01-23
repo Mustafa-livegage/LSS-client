@@ -20,7 +20,7 @@ const PaymentSchedule = ({ data }) => {
           {data.map((data, index) => (
             <tr key={index}>
               <td>
-                <strong>{data.month}</strong>
+                <strong>{data.month} (2023)</strong>
               </td>
               <td>{`${formatCurrency(data.monthly_payment)}`}</td>
               <td>{`${formatCurrency(data.principal_amount)}`}</td>

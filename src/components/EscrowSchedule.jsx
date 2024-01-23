@@ -18,7 +18,7 @@ const EscrowSchedule = ({ data, escrowAmt }) => {
                   key={es.month}
                 >
                   <Card.Header className=" text-center fw-bold ">
-                    {es.month}
+                    {es.month} (2023)
                   </Card.Header>
                   <Card.Body className="d-flex flex-column align-items-center justify-content-center">
                     <div className="row w-100 fw-bold ">

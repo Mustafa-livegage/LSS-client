@@ -5,9 +5,9 @@ export function formatCurrency(amount) {
 
   const formattedDollars = dollars.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-  const formattedCents = cents ? `.${cents.slice(0, 3)}` : '';
+  const formattedCents = cents ? `.${cents.slice(0, 2)}` : '';
 
-  const formattedCurrency = `${formattedDollars}${formattedCents} $`;
+  const formattedCurrency = `${formattedDollars}${formattedCents} USD`;
 
   return formattedCurrency;
 }

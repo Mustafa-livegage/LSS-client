@@ -24,7 +24,7 @@ const HomePage = () => {
   }, []);
   const parseDate = (dateString) => {
     const [year, month, day] = dateString.split("-");
-    return day + "-" + month + "-" + year;
+    return year + "-" + month + "-" + day;
   };
 
   const handleSearch = () => {
@@ -119,7 +119,7 @@ const HomePage = () => {
                     <td>{`${formatCurrency(loan.upb_amount)}`}</td>
 
                     <td className=" fw-bold">
-                      {loan.upb_amount == 0 ? "Expired" : "Active"}
+                      {loan.upb_amount == 0 ? "Loan Closed" : "Active"}
                     </td>
 
                     <td>

@@ -87,7 +87,7 @@ const Details = () => {
           </thead>
           <tbody>
             <tr>
-              <td>Borrowers Name</td>
+              <td>Borrower Name</td>
               <td>{loan.name}</td>
             </tr>
             <tr>
@@ -96,7 +96,7 @@ const Details = () => {
             </tr>
             <tr>
               <td>Note Rate Percent</td>
-              <td>{loan.note_rate}</td>
+              <td>{loan.note_rate} %</td>
             </tr>
             <tr>
               <td>Loan Boarding Date</td>
@@ -108,22 +108,21 @@ const Details = () => {
             </tr>
             <tr>
               <td>Current Interest Rate</td>
-              <td>{loan.current_rate}</td>
+              <td>{loan.current_rate} %</td>
             </tr>
             <tr>
-              <td>Net Payment Due Date</td>
+              <td>Next Payment Due Date</td>
               <td>{loan.pmt_due_date}</td>
             </tr>
             {payment[0] && (
               <tr>
                 <td>Monthly Payment</td>
                 <td>
-                  {"$ " +
-                    `${formatCurrency(
-                      payment[0].interest_amount +
-                        payment[0].principal_amount +
-                        loan.escrow_amount / 12
-                    )}`}
+                  {`${formatCurrency(
+                    payment[0].interest_amount +
+                      payment[0].principal_amount +
+                      loan.escrow_amount / 12
+                  )}`}
                 </td>
               </tr>
             )}
@@ -169,7 +168,7 @@ const Details = () => {
                     : { backgroundColor: "green" }
                 }
               >
-                {loan.upb_amount == 0 ? "Expired" : "Active"}
+                {loan.upb_amount == 0 ? "Loan Closed" : "Active"}
               </td>
             </tr>
           </tbody>

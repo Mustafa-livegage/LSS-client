@@ -54,7 +54,7 @@ const Schedule = () => {
               Borrower Name : <strong>{loan.name}</strong>
             </h4>
             <h4>
-              Boarding Date : <strong>{loan.boarding_date}</strong>
+              Loan Amount : <strong>--------</strong>
             </h4>
           </div>
         </div>
