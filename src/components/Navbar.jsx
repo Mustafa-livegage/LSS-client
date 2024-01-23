@@ -19,11 +19,11 @@ function NavBar() {
             style={{ width: "100%" }}
           >
             <Link to="/addloans" className="text-decoration-none ">
-              <Navbar.Text className="text-white fs-3 ">Board</Navbar.Text>
+              <Navbar.Text className="text-white fs-4 ">Board</Navbar.Text>
             </Link>
             <div className="border-end border-secondary border-3 mx-3" />
             <Link to="/escrow-master" className="text-decoration-none">
-              <Navbar.Text className="text-white fs-3 ">
+              <Navbar.Text className="text-white fs-4 ">
                 Escrow Master
               </Navbar.Text>
             </Link>
