@@ -35,7 +35,7 @@ const EditableTableCell = ({ value, onSave, options }) => {
               </option>
             ))}
           </Form.Select>
-          <div className="btn btn-info mx-2" onClick={handleSave}>
+          <div className="btn btn-dark mx-2" onClick={handleSave}>
             <FaSave />
           </div>
         </>

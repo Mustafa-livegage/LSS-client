@@ -22,7 +22,7 @@ const EscrowMaster = () => {
       <Container className="container-fluid text-center mt-5">
         <h2 className="my-5 fw-bold fs-1">Escrow Master</h2>
         <div>
-          {tArray.length > 0 && (
+          {master.length > 0 && (
             <Table striped responsive bordered hover>
               <thead>
                 <tr className="table-dark">
@@ -36,23 +36,34 @@ const EscrowMaster = () => {
                 </tr>
               </thead>
               <tbody>
-                {tArray.map((index) => (
-                  <tr key={index}>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                {master.map((m) => (
+                  <tr key={m.id}>
+                    <td>{m.item_name}</td>
+                    <td>{m.freq}</td>
+                    <td>{m.escrow_type}</td>
+                    <td>{m.amt}</td>
+                    <td>{m.beneficiary_name}</td>
                     <td>
-                      {/* <Button
+                      {" "}
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        style={{ zIndex: 2 }}
+                        onClick={() => handleDelete(loan.id)}
+                      >
+                        Show
+                      </Button>
+                    </td>
+
+                    <td>
+                      <Button
                         variant="danger"
                         size="sm"
                         style={{ zIndex: 2 }}
                         onClick={() => handleDelete(loan.id)}
                       >
                         Delete
-                      </Button> */}
+                      </Button>
                     </td>
                   </tr>
                 ))}
