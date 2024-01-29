@@ -1,31 +1,30 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Container, Table } from "react-bootstrap";
-import BankDetailsModal from "../components/BankDetailsModal";
-import { BiSolidShow } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import EditEscrowForm from "../components/EditEscrowForm";
 
 const EscrowMaster = () => {
   //   const history = useNavigate();
   const [master, setMaster] = useState([]);
   const [showBankDetails, setShowBankDetails] = useState(false);
   const [escrowId, setEscrowId] = useState();
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [selectedEscrow, setSelectedEscrow] = useState(null);
 
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/emaster")
       .then(function (response) {
-        setMaster(response.data);
+        setMaster(response.data.reverse());
+        setEscrowId(response.data.id);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  const handleShowBankDetails = (id) => {
-    setShowBankDetails(true);
-    setEscrowId(id);
-  };
   const handleDelete = (id) => {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this escrow service?"
@@ -45,9 +44,29 @@ const EscrowMaster = () => {
         });
     }
   };
+
+  const handleEdit = (escrow) => {
+    setSelectedEscrow(escrow);
+    setEditModalVisible(true);
+  };
+
+  const handleUpdate = (updatedEscrow) => {
+    setMaster((prevEscrows) =>
+      prevEscrows.map((escrow) =>
+        escrow.id === updatedEscrow.id ? updatedEscrow : escrow
+      )
+    );
+  };
   return (
     <>
       <Container className="container-fluid text-center mt-5">
+        {editModalVisible && selectedEscrow && (
+          <EditEscrowForm
+            escrow={selectedEscrow}
+            onUpdate={handleUpdate}
+            onClose={() => setEditModalVisible(false)}
+          />
+        )}
         <h2 className="my-5 fw-bold fs-1">Escrow Master</h2>
         <div>
           {master.length > 0 && (
@@ -56,27 +75,31 @@ const EscrowMaster = () => {
                 <thead>
                   <tr className="table-dark">
                     <th>Item Name</th>
-                    <th>Frequency</th>
                     <th>Escrow Type</th>
-                    <th>Escrow Amount</th>
                     <th>Mode of Payment</th>
+                    <th>Beneficiary Name</th>
                     <th>Bank Details</th>
+                    <th>Route Number</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {master.map((m) => (
                     <tr key={m.id}>
                       <td>{m.item_name}</td>
-                      <td>{m.freq}</td>
                       <td>{m.escrow_type}</td>
-                      <td>{m.amt}</td>
                       <td>{m.mop}</td>
+                      <td>{m.beneficiary_name}</td>
+                      <td>
+                        {m.bank_name} / {m.account_number}
+                      </td>
+                      <td>{m.route_number}</td>
                       <td>
                         <div
                           className="btn btn-sm btn-primary"
-                          onClick={() => handleShowBankDetails(m.id)}
+                          onClick={() => handleEdit(m)}
                         >
-                          <BiSolidShow />
+                          <FaEdit />
                         </div>
                         <div
                           className="btn btn-sm btn-danger mx-2"
@@ -89,11 +112,6 @@ const EscrowMaster = () => {
                   ))}
                 </tbody>
               </Table>
-              <BankDetailsModal
-                showModal={showBankDetails}
-                handleClose={() => setShowBankDetails(false)}
-                id={escrowId}
-              />
             </>
           )}
         </div>

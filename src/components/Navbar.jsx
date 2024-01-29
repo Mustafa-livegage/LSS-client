@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { MdLogout } from "react-icons/md";
 
 function NavBar() {
   const { logout } = useAuth();
@@ -40,12 +41,11 @@ function NavBar() {
             </Link>
             <div className="border-end border-secondary border-3 mx-3" />
             <Button
-              variant="outline-light"
-              className="fs-4"
+              variant="outline-danger"
+              className="fs-5 btn-sm d-flex align-items-center justify-content-between"
               onClick={handleLogout}
             >
-              {" "}
-              logout
+              Logout <MdLogout className="ms-2" />
             </Button>
           </Nav>
         </Navbar.Collapse>

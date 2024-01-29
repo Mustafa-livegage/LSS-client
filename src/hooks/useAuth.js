@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext from "../context/AuthProvider";
 import axios from "axios";
 import {  useNavigate } from "react-router-dom";
@@ -7,6 +7,9 @@ import {  useNavigate } from "react-router-dom";
 const useAuth = () => {
   const { auth, setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+
+
+  
   
 
   const login = async (email, password) => {

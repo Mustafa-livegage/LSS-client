@@ -62,9 +62,6 @@ const HomePage = () => {
     history(`/loan-details/${loan.id}`);
   };
 
-  const savingId = () => {
-    history(`/payment-schedule-details/${loan.id}`);
-  };
   return (
     <>
       <Container className="container-fluid text-center mt-5">
