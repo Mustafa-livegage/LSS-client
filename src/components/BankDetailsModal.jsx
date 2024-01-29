@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
+import { ListGroup } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 
 function BankDetailsModal({ showModal, handleClose, id }) {
@@ -23,19 +23,28 @@ function BankDetailsModal({ showModal, handleClose, id }) {
 
   return (
     <>
-      <Modal
-        show={showModal}
-        onHide={handleClose}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{bankDetails.id}</Modal.Title>
+      <Modal show={showModal} onHide={handleClose} centered>
+        <Modal.Header>
+          <hr />
+          <Modal.Title className=" fs-3 justify-content-center   text-center">
+            Bank Details
+          </Modal.Title>
+          <hr />
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-        {/* <Modal.Footer>
-            
-          </Modal.Footer> */}
+        <Modal.Body className="text-center fw-bold fs-5">
+          <ListGroup>
+            <ListGroup.Item>
+              Beneficiary Name: {bankDetails.beneficiary_name}
+            </ListGroup.Item>
+            <ListGroup.Item>Bank name : {bankDetails.bank_name}</ListGroup.Item>
+            <ListGroup.Item>
+              Account Number: {bankDetails.account_number}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Route Number : {bankDetails.route_number}
+            </ListGroup.Item>
+          </ListGroup>
+        </Modal.Body>
       </Modal>
     </>
   );
