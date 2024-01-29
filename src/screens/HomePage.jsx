@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import { Container, Form, InputGroup, Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { formatCurrency } from "../helper/formatCurrency";
+import useAuth from "../hooks/useAuth";
 
 const HomePage = () => {
   const history = useNavigate();
   const [loans, setLoans] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredLoans, setFilteredLoans] = useState([]);
+  const { auth } = useAuth();
 
   useEffect(() => {
     axios
@@ -67,7 +68,10 @@ const HomePage = () => {
   return (
     <>
       <Container className="container-fluid text-center mt-5">
-        <h2 className="fw-bold fs-1">Loan Servicing System</h2>
+        <h2 className="fw-bold fs-1">
+          Loan Servicing System for{" "}
+          <span className="text-decoration-underline ">{auth.user_name}</span>
+        </h2>
 
         <div className="w-100">
           <InputGroup className="my-5">

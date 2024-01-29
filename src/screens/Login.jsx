@@ -1,12 +1,18 @@
-import { useRef, useState, useEffect, useContext } from "react";
-import AuthContext from "../context/AuthProvider";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
 import axios from "axios";
-
 // import axios from "./api/axios";
 import { Button, Container, FloatingLabel, Form } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+  // const { setAuth } = useAuth();
+  const { login } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const userRef = useRef();
   const errRef = useRef();
 
@@ -22,29 +28,46 @@ const Login = () => {
     setErrMsg("");
   }, [email, pwd]);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const response = await axios.post("http://localhost:5000/api/login", {
+  //       email,
+  //       password: pwd,
+  //     });
+  //     const username = response?.data?.u_name;
+  //     const roles = response?.data?.role;
+  //     setAuth({ email, pwd, roles, username });
+  //     setEmail("");
+  //     setPwd("");
+  //     navigate(from, { replace: true });
+  //   } catch (err) {
+  //     if (!err?.response) {
+  //       setErrMsg("No Server Response");
+  //     } else if (err.response?.status === 400) {
+  //       setErrMsg("Missing Username or Password");
+  //     } else if (err.response?.status === 401) {
+  //       setErrMsg("Unauthorized");
+  //     } else {
+  //       setErrMsg("Login Failed");
+  //     }
+  //     errRef.current.focus();
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post("http://localhost:5000/api/login", {
-        email,
-        password: pwd,
-      });
-      const username = response?.data?.user_name;
-      const roles = response?.data?.roles;
-      setAuth({ email, pwd, roles, username });
+    const success = await login(email, pwd);
+
+    if (success) {
       setEmail("");
       setPwd("");
-    } catch (err) {
-      if (!err?.response) {
-        setErrMsg("No Server Response");
-      } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
-      } else {
-        setErrMsg("Login Failed");
-      }
+      console.log("Navigating to:", from);
+      navigate(from, { replace: true });
+    } else {
+      // Handle login failure
+      setErrMsg("Login failed. Please check your credentials.");
       errRef.current.focus();
     }
   };

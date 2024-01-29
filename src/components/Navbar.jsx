@@ -1,9 +1,15 @@
-import { Nav, NavDropdown } from "react-bootstrap";
+import { Button, Nav, NavDropdown } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 function NavBar() {
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <Navbar expand="lg" className="bg-dark">
       <Nav className="container-fluid px-5">
@@ -33,6 +39,14 @@ function NavBar() {
               </Navbar.Text>
             </Link>
             <div className="border-end border-secondary border-3 mx-3" />
+            <Button
+              variant="outline-light"
+              className="fs-4"
+              onClick={handleLogout}
+            >
+              {" "}
+              logout
+            </Button>
           </Nav>
         </Navbar.Collapse>
       </Nav>
