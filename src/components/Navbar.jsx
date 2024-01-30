@@ -7,7 +7,6 @@ import { MdLogout } from "react-icons/md";
 function NavBar() {
   const { logout, auth } = useAuth();
 
-  console.log(auth);
   const adminPaths = [
     { name: "Register", path: "/adduser" },
     { name: "Escrow Master", path: "/escrow-master" },

@@ -63,7 +63,6 @@ const Login = () => {
     if (success) {
       setEmail("");
       setPwd("");
-      console.log(userRole);
       navigate(userRole == "admin" ? "/users" : "/", { replace: true });
     } else {
       // Handle login failure
