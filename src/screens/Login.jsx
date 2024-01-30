@@ -7,11 +7,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   // const { setAuth } = useAuth();
-  const { login } = useAuth();
+  const { fetchUserWithRoles, login } = useAuth();
+  const { auth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   const userRef = useRef();
   const errRef = useRef();
@@ -58,13 +58,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const success = await login(email, pwd);
+    const [success, userRole] = await login(email, pwd);
 
     if (success) {
       setEmail("");
       setPwd("");
-      console.log("Navigating to:", from);
-      navigate(from, { replace: true });
+      console.log(userRole);
+      navigate(userRole == "admin" ? "/users" : "/", { replace: true });
     } else {
       // Handle login failure
       setErrMsg("Login failed. Please check your credentials.");

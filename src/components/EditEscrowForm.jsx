@@ -1,7 +1,7 @@
 // EditEscrowForm.js
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, FloatingLabel } from "react-bootstrap";
 
 const EditEscrowForm = ({ escrow, onUpdate, onClose }) => {
   const [editedEscrow, setEditedEscrow] = useState(escrow);
@@ -43,76 +43,83 @@ const EditEscrowForm = ({ escrow, onUpdate, onClose }) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="itemName">
-            <Form.Label>Item Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="item_name"
-              value={editedEscrow.item_name}
-              onChange={handleChange}
-              disabled
-            />
+          <Form.Group controlId="itemName" className="mt-3">
+            <FloatingLabel label="item Name">
+              <Form.Control
+                type="text"
+                name="item_name"
+                value={editedEscrow.item_name}
+                onChange={handleChange}
+                disabled
+              />
+            </FloatingLabel>
           </Form.Group>
 
-          <Form.Group controlId="escrow_type">
-            <Form.Label>Escrow Type</Form.Label>
-            <Form.Control
-              type="text"
-              name="escrow_type"
-              value={editedEscrow.escrow_type}
-              onChange={handleChange}
-              disabled
-            />
+          <Form.Group controlId="escrow_type" className="mt-3">
+            <FloatingLabel label="Escrow Type">
+              <Form.Control
+                type="text"
+                name="escrow_type"
+                value={editedEscrow.escrow_type}
+                onChange={handleChange}
+                disabled
+              />
+            </FloatingLabel>
           </Form.Group>
 
-          <Form.Group controlId="mop">
-            <Form.Label>Mode of payment</Form.Label>
-            <Form.Control
-              type="text"
-              name="mop"
-              value={editedEscrow.mop}
-              onChange={handleChange}
-            />
+          <Form.Group controlId="mop" className="mt-3">
+            <FloatingLabel label="Mode of payment">
+              <Form.Control
+                type="text"
+                name="mop"
+                value={editedEscrow.mop}
+                onChange={handleChange}
+              />
+            </FloatingLabel>
           </Form.Group>
 
-          <Form.Group controlId="beneficiary_name">
-            <Form.Label>Beneficiary Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="beneficiary_name"
-              value={editedEscrow.beneficiary_name}
-              onChange={handleChange}
-            />
+          <Form.Group controlId="beneficiary_name" className="mt-3">
+            <FloatingLabel label="Beneficiary Name">
+              <Form.Control
+                type="text"
+                name="beneficiary_name"
+                value={editedEscrow.beneficiary_name}
+                onChange={handleChange}
+              />
+            </FloatingLabel>
           </Form.Group>
 
-          <Form.Group controlId="bank_name">
-            <Form.Label>Bank Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="bank_name"
-              value={editedEscrow.bank_name}
-              onChange={handleChange}
-            />
+          <Form.Group controlId="bank_name" className="mt-3">
+            <FloatingLabel label="Bank Name">
+              <Form.Control
+                type="text"
+                name="bank_name"
+                value={editedEscrow.bank_name}
+                onChange={handleChange}
+              />
+            </FloatingLabel>
           </Form.Group>
 
-          <Form.Group controlId="account_number">
-            <Form.Label>Account Number</Form.Label>
-            <Form.Control
-              type="number"
-              name="account_number"
-              value={editedEscrow.account_number}
-              onChange={handleChange}
-            />
+          <Form.Group controlId="account_number" className="mt-3">
+            <FloatingLabel label="Account Number">
+              <Form.Control
+                type="number"
+                name="account_number"
+                value={editedEscrow.account_number}
+                onChange={handleChange}
+              />
+            </FloatingLabel>
           </Form.Group>
 
-          <Form.Group controlId="route_number">
-            <Form.Label>Route Number </Form.Label>
-            <Form.Control
-              type="number"
-              name="route_number"
-              value={editedEscrow.route_number}
-              onChange={handleChange}
-            />
+          <Form.Group controlId="route_number" className="mt-3">
+            <FloatingLabel label="Routing Number">
+              <Form.Control
+                type="number"
+                name="route_number"
+                value={editedEscrow.route_number}
+                onChange={handleChange}
+              />
+            </FloatingLabel>
           </Form.Group>
 
           <Button className="text-center mt-3" variant="primary" type="submit">

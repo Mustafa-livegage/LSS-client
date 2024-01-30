@@ -71,7 +71,7 @@ const EscrowMaster = () => {
         <div>
           {master.length > 0 && (
             <>
-              <Table striped responsive bordered hover>
+              <Table striped responsive bordered>
                 <thead>
                   <tr className="table-dark">
                     <th>Item Name</th>
@@ -79,7 +79,7 @@ const EscrowMaster = () => {
                     <th>Mode of Payment</th>
                     <th>Beneficiary Name</th>
                     <th>Bank Details</th>
-                    <th>Route Number</th>
+                    <th>Routing Number</th>
                     <th>Action</th>
                   </tr>
                 </thead>
