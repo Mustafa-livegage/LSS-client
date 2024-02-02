@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Form, InputGroup, Button, Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { formatCurrency } from "../helper/formatCurrency";
 import useAuth from "../hooks/useAuth";
@@ -86,6 +86,15 @@ const HomePage = () => {
             >
               Search
             </Button>
+            <Link to="/add-loan">
+              <Button
+                className="mx-3 rounded"
+                variant="dark"
+                onClick={handleSearch}
+              >
+                <strong>+</strong> Add Loans
+              </Button>
+            </Link>
           </InputGroup>
         </div>
         <div>

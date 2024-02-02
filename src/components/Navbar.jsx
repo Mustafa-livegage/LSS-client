@@ -35,27 +35,20 @@ function NavBar() {
             className="ml-auto justify-content-end"
             style={{ width: "100%" }}
           >
-            {auth.role == "admin"
-              ? adminPaths.map((path, index) => (
-                  <React.Fragment key={index}>
-                    <Link to={path.path} className="text-decoration-none">
-                      <Navbar.Text className="text-white fs-4 ">
-                        {path.name}
-                      </Navbar.Text>
-                    </Link>
-                    <div className="border-end border-secondary border-3 mx-3" />
-                  </React.Fragment>
-                ))
-              : userPaths.map((path, index) => (
-                  <React.Fragment key={index}>
-                    <Link to={path.path} className="text-decoration-none">
-                      <Navbar.Text className="text-white fs-4 ">
-                        {path.name}
-                      </Navbar.Text>
-                    </Link>
-                    <div className="border-end border-secondary border-3 mx-3" />
-                  </React.Fragment>
-                ))}
+            {auth.role == "admin" ? (
+              adminPaths.map((path, index) => (
+                <React.Fragment key={index}>
+                  <Link to={path.path} className="text-decoration-none">
+                    <Navbar.Text className="text-white fs-4 ">
+                      {path.name}
+                    </Navbar.Text>
+                  </Link>
+                  <div className="border-end border-secondary border-3 mx-3" />
+                </React.Fragment>
+              ))
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
             <Button
               variant="outline-danger"
               className="fs-5 btn-sm d-flex align-items-center justify-content-between"
