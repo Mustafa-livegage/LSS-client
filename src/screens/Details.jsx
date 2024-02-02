@@ -157,6 +157,16 @@ const Details = () => {
                 </td>
               </tr>
             )}
+            <tr>
+              <td>Payment</td>
+              <td>
+                <Link to={`/payment/${loan.id}`}>
+                  <Button variant="dark" className="rounded" onClick={savingId}>
+                    Make Payment
+                  </Button>
+                </Link>
+              </td>
+            </tr>
 
             <tr>
               <td

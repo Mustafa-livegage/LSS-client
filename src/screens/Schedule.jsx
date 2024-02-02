@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Table, Tab, Tabs } from "react-bootstrap";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import PaymentSchedule from "../components/PaymentSchedule";
 import EscrowSchedule from "../components/EscrowSchedule";

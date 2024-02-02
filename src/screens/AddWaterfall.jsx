@@ -1,14 +1,17 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Accordion,
   Alert,
   Button,
+  Card,
   Col,
   Container,
   FloatingLabel,
   Form,
   Row,
 } from "react-bootstrap";
+import { MdSlideshow } from "react-icons/md";
 
 const checkBoxOptions = [
   "Interest",
@@ -26,6 +29,26 @@ const AddWaterfall = () => {
   const [checkedCheckboxes, setCheckedCheckboxes] = useState([]);
   const [name, setName] = useState("");
   const [alertMessage, setAlertMessage] = useState(null);
+  const [waterfalls, setWaterfalls] = useState([]);
+  const [showWaterfalls, setShowWaterfalls] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const fetchWaterfalls = () => {
+    axios
+      .get("http://localhost:5000/api/Waterfall")
+      .then((response) => {
+        console.log(response.data);
+        setWaterfalls(response.data);
+      })
+      // console.log(waterfalls.data)
+      .catch((error) => {
+        console.error("Error fetching waterfalls:", error);
+      })
+      .finally(() => setLoading(false));
+  };
+  useEffect(() => {
+    fetchWaterfalls();
+  }, []);
 
   const handleInputChange = (e) => {
     const { value } = e.target;
@@ -60,7 +83,6 @@ const AddWaterfall = () => {
         showAlert("success", "Your waterfall has been succesfully added!");
       })
       .catch((error) => {
-        console.log(error);
         showAlert("danger", "Error! waterall data not added.");
       });
 
@@ -81,7 +103,7 @@ const AddWaterfall = () => {
       >
         {alertMessage?.message}
       </Alert>
-      <h1 className="text-center mb-4">Add Waterfall</h1>
+      <h1 className="text-center mb-4 fw-bold ">Add Waterfalls</h1>
       <Row className="">
         <Col xs={10} md={8} lg={6}>
           <Form onSubmit={handleSubmit} className="mb-4">
@@ -107,6 +129,7 @@ const AddWaterfall = () => {
                   label={`${type}`}
                   checked={checkedCheckboxes.includes(type)}
                   onChange={() => handleCheckboxChange(type)}
+                  style={{ fontSize: "3.3 rem" }}
                 />
               ))}
             </Form.Group>
@@ -124,6 +147,49 @@ const AddWaterfall = () => {
           </ol>
         </Col>
       </Row>
+      {/* all waterfalls */}
+      <div className="mt-3">
+        <h1 className="text-center mb-4 fw-bold">Waterfall Data</h1>
+        <Button
+          className="mb-3"
+          onClick={() => setShowWaterfalls(!showWaterfalls)}
+          variant="outline-primary"
+        >
+          {showWaterfalls ? "Hide Waterfalls" : "Show Waterfalls"}
+        </Button>
+        {showWaterfalls && (
+          <Accordion>
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              waterfalls.map((waterfall) => (
+                <Accordion.Item
+                  className="mt-2"
+                  eventKey={waterfall.id.toString()}
+                >
+                  <div key={waterfall.id}>
+                    <Accordion.Header>
+                      <h5 className="fw-bold">{waterfall.w_name}</h5>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div>
+                        <strong className="fs-4">
+                          Selected Hierarchy (In-order):
+                        </strong>
+                        <ol className="fs-5">
+                          {waterfall.desc.map((type, index) => (
+                            <li key={index}>{type}</li>
+                          ))}
+                        </ol>
+                      </div>
+                    </Accordion.Body>
+                  </div>
+                </Accordion.Item>
+              ))
+            )}
+          </Accordion>
+        )}
+      </div>
     </Container>
   );
 };

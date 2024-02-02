@@ -32,15 +32,15 @@ function App() {
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/addloans" element={<SingleEntryForm />} />
           <Route exact path="/loan-details/:id" element={<Details />} />
-          <Route exact path="/payment" element={<Payment />} />
-        </Route>
-        <Route element={<RequireAuth allowedRoles={ROLES.ADMIN} />}>
-          <Route exact path="/users" element={<Users />} />
+          <Route exact path="/payment/:id" element={<Payment />} />
           <Route
             exact
             path="/payment-schedule-details/:id"
             element={<Schedule />}
           />
+        </Route>
+        <Route element={<RequireAuth allowedRoles={ROLES.ADMIN} />}>
+          <Route exact path="/users" element={<Users />} />
           <Route exact path="/adduser" element={<AddUser />} />
           <Route exact path="/escrow-master" element={<EscrowMaster />} />
           <Route exact path="/addwaterfall" element={<AddWaterfall />} />
