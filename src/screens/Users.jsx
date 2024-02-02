@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Container, Form, InputGroup, Table } from "react-bootstrap";
-import { GrUserAdmin } from "react-icons/gr";
+import { GoPasskeyFill, GoPerson } from "react-icons/go";
 
 const Users = () => {
   const [user, setUsers] = useState();
@@ -78,16 +78,16 @@ const Users = () => {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="fs-4">
               {filteredUsers.map((u) => (
                 <tr key={u.id}>
-                  <td
-                    style={{
-                      // textDecoration: u.role === "admin" ? "underline" : "none",
-                      fontWeight: u.role === "admin" ? "bold" : "normal",
-                    }}
-                  >
+                  <td className="d-flex flex-row justify-content-center align-items-center">
                     {u.user_name}
+                    {u.role === "admin" ? (
+                      <GoPasskeyFill size={20} className="ms-2" />
+                    ) : (
+                      <GoPerson size={20} className="ms-2" />
+                    )}
                   </td>
                   <td>{u.email}</td>
 
