@@ -68,7 +68,7 @@ const Payment = () => {
           <Col className="p-3 bg-light col-7 rounded-4">
             <Form
               onSubmit={handleSubmit}
-              className="text-center px-5 pt-5"
+              className="text-center px-5 pt-5 pb-3"
               ref={formRef}
             >
               <Form.Select className="mb-3" size="lg" required>
