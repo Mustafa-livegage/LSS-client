@@ -70,7 +70,7 @@ const Users = () => {
           </InputGroup>
         </div>
         <div>
-          <Table striped responsive bordered hover>
+          <Table responsive striped bordered hover>
             <thead>
               <tr className="table-dark">
                 <th>User Name</th>
@@ -81,7 +81,7 @@ const Users = () => {
             <tbody className="fs-4">
               {filteredUsers.map((u) => (
                 <tr key={u.id}>
-                  <td className="d-flex flex-row justify-content-center align-items-center">
+                  <td>
                     {u.user_name}
                     {u.role === "admin" ? (
                       <GoPasskeyFill size={20} className="ms-2" />
