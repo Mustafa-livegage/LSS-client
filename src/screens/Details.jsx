@@ -140,44 +140,50 @@ const Details = () => {
                 />
               </td>
             </tr>
-            {loan.upb_amount != 0 && (
-              <tr>
-                <td>Schedules</td>
-                <td>
-                  <Link to={`/payment-schedule-details/${loan.id}`}>
-                    <Button
-                      variant="dark"
-                      className="rounded"
-                      onClick={savingId}
-                    >
-                      Show Details
-                    </Button>
-                  </Link>
-                </td>
-              </tr>
+            {loan.upb_amount > 0 && (
+              <>
+                <tr>
+                  <td>Schedules</td>
+                  <td>
+                    <Link to={`/payment-schedule-details/${loan.id}`}>
+                      <Button
+                        variant="dark"
+                        className="rounded"
+                        onClick={savingId}
+                      >
+                        Show Details
+                      </Button>
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Payment</td>
+                  <td>
+                    <Link to={`/payment/${loan.id}`}>
+                      <Button
+                        variant="dark"
+                        className="rounded"
+                        onClick={savingId}
+                      >
+                        Make Payment
+                      </Button>
+                    </Link>
+                  </td>
+                </tr>
+              </>
             )}
-            <tr>
-              <td>Payment</td>
-              <td>
-                <Link to={`/payment/${loan.id}`}>
-                  <Button variant="dark" className="rounded" onClick={savingId}>
-                    Make Payment
-                  </Button>
-                </Link>
-              </td>
-            </tr>
 
             <tr>
               <td
                 colSpan="2"
                 className="text-white fw-bold"
                 style={
-                  loan.upb_amount == 0
+                  loan.upb_amount <= 0
                     ? { backgroundColor: "grey" }
                     : { backgroundColor: "green" }
                 }
               >
-                {loan.upb_amount == 0 ? "Loan Closed" : "Active"}
+                {loan.upb_amount <= 0 ? "Loan Closed" : "Active"}
               </td>
             </tr>
           </tbody>
