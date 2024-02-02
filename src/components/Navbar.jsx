@@ -14,8 +14,8 @@ function NavBar() {
     { name: "Add Waterfall", path: "/addwaterfall" },
   ];
   const userPaths = [
+    { name: "Home", path: "/" },
     { name: "Add Loans", path: "/addloans" },
-    { name: "Payment", path: "/payment" },
   ];
 
   const handleLogout = () => {

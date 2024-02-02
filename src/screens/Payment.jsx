@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Button,
   Col,
@@ -17,7 +17,9 @@ const Payment = () => {
   const { id } = useParams();
   const [amt, setAmt] = useState();
   const [loan, setLoan] = useState();
-  const [distribution, setDistribution] = useState([]);
+  const [distribution, setDistribution] = useState({});
+  const [loading, setLoading] = useState(true);
+  const formRef = useRef();
 
   const fetchLoans = () => {
     axios
@@ -40,6 +42,9 @@ const Payment = () => {
       .put(`http://localhost:5000/api/payment/${id}`, updated)
       .then((response) => {
         setDistribution(response.data);
+        setLoading(false);
+        formRef.current.reset();
+        setAmt("");
       })
       .catch((error) => {
         console.error("Error in PUT request:", error);
@@ -55,12 +60,17 @@ const Payment = () => {
 
   return (
     <>
-      <Container>
-        <h1 className="text-center fw-bold">Make Payment</h1>
-        <Row>
-          <Col md={8}>
-            <h2 className="fw-bold">Payment Details</h2>
-            <Form onSubmit={handleSubmit} className="w-50 text-center ">
+      <Container className="container-fluid">
+        <h1 className="text-center my-5 fw-bold text-decoration-underline ">
+          Make Payment
+        </h1>
+        <Row className="gap-4">
+          <Col className="p-3 bg-light col-7 rounded-4">
+            <Form
+              onSubmit={handleSubmit}
+              className="text-center px-5 pt-5"
+              ref={formRef}
+            >
               <Form.Select className="mb-3" size="lg" required>
                 <option disabled selected value="#">
                   Mode of payment
@@ -109,51 +119,69 @@ const Payment = () => {
                   required
                 />
               </FloatingLabel>
-              <Button type="submit">make payment</Button>
+              <Button type="submit" className="w-100">
+                Pay
+              </Button>
             </Form>
           </Col>
-          <Col className="p-3 bg-light">
-            <h1 className="fw-bold ">Payment Distribution</h1>
+          <Col className="px-5 pt-3 bg-light rounded-4">
+            <h3 className="fw-bold text-center">Payment Distribution</h3>
+            {distribution.monthly_payment != undefined && (
+              <h4 className="fw-bold">
+                Amount Paid: {formatCurrency(distribution.monthly_payment)}
+              </h4>
+            )}
+            {!loading ? (
+              <Table className="mb-0" responsive bordered hover>
+                <thead>
+                  <tr className="table-dark">
+                    <th>Item</th>
+                    <th>Amount Distributed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Interest Amount</td>
+                    <td>{formatCurrency(distribution.interest_amount)}</td>
+                  </tr>
+                  <tr>
+                    <td>Principal Amount</td>
+                    <td>{formatCurrency(distribution.principal_amount)}</td>
+                  </tr>
+                  <tr>
+                    <td>Escrow Amount</td>
+                    <td>{formatCurrency(distribution.escrow)}</td>
+                  </tr>
+                  <tr>
+                    <td>Late Fees</td>
+                    <td>{formatCurrency(distribution.late_fee)}</td>
+                  </tr>
+                  <tr>
+                    <td>Extra Principal</td>
+                    <td>{formatCurrency(distribution.e_principal)}</td>
+                  </tr>
 
-            <h3 className="fw-bold">Amount Paid: $ {amt}</h3>
-            <Table className="mb-0" responsive bordered hover>
-              <thead>
-                <tr className="table-dark">
-                  <th>Item</th>
-                  <th>Amount Distributed</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>UPB Amount:</td>
-                  <td>{formatCurrency(distribution.upb_amount)}</td>
-                </tr>
-                <tr>
-                  <td>Interest Amount</td>
-                  <td>{formatCurrency(distribution.interest_amount)}</td>
-                </tr>
-                <tr>
-                  <td>Principal Amount</td>
-                  <td>{formatCurrency(distribution.principal_amount)}</td>
-                </tr>
-                <tr>
-                  <td>Escrow Amount</td>
-                  <td>{formatCurrency(distribution.escrow)}</td>
-                </tr>
-                <tr>
-                  <td>Late Fees</td>
-                  <td>{formatCurrency(distribution.late_fee)}</td>
-                </tr>
-                <tr>
-                  <td>Extra Principal</td>
-                  <td>{formatCurrency(distribution.e_principal)}</td>
-                </tr>
-                <tr>
-                  <td>Suspense</td>
-                  <td>{formatCurrency(distribution.suspense)}</td>
-                </tr>
-              </tbody>
-            </Table>
+                  <tr>
+                    <td>NSF (Non Sufficient Fee)</td>
+                    <td>{formatCurrency(distribution.nsf)}</td>
+                  </tr>
+                  <tr>
+                    <td>Extra Escrow</td>
+                    <td>{formatCurrency(distribution.extra_escrow)}</td>
+                  </tr>
+                  <tr>
+                    <td>Other fee</td>
+                    <td>{formatCurrency(distribution.other_fee)}</td>
+                  </tr>
+                  <tr>
+                    <td>Suspense</td>
+                    <td>{formatCurrency(distribution.suspense)}</td>
+                  </tr>
+                </tbody>
+              </Table>
+            ) : (
+              <></>
+            )}
           </Col>
         </Row>
       </Container>
