@@ -47,7 +47,9 @@ function NavBar() {
                 </React.Fragment>
               ))
             ) : (
-              <React.Fragment></React.Fragment>
+              <React.Fragment>
+                <h1>Hi,{auth.user_name}</h1>
+              </React.Fragment>
             )}
             <Button
               variant="outline-danger"

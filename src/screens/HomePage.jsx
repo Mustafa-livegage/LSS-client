@@ -65,10 +65,7 @@ const HomePage = () => {
   return (
     <>
       <Container className="container-fluid text-center mt-5">
-        <h2 className="fw-bold fs-1">
-          Loan Servicing System for{" "}
-          <span className="text-decoration-underline ">{auth.user_name}</span>
-        </h2>
+        <h2 className="fw-bold fs-1">Loan Servicing System</h2>
 
         <div className="w-100">
           <InputGroup className="my-5">
