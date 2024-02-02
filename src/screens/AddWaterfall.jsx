@@ -137,6 +137,13 @@ const AddWaterfall = () => {
               Submit
             </Button>
           </Form>
+          <Button
+            className="mb-3"
+            onClick={() => setShowWaterfalls(!showWaterfalls)}
+            variant={showWaterfalls ? "outline-primary" : "primary"}
+          >
+            {showWaterfalls ? "Hide all Waterfalls" : "Show all Waterfalls"}
+          </Button>
         </Col>
         <Col xs={10} md={8} lg={6} className="border-start bg-light p-4">
           <h1 className="mb-4">Selected Hierarchy (In-order)</h1>
@@ -148,16 +155,8 @@ const AddWaterfall = () => {
         </Col>
       </Row>
       {/* all waterfalls */}
-      <div className="mt-3">
-        <h1 className="text-center mb-4 fw-bold">Waterfall Data</h1>
-        <Button
-          className="mb-3"
-          onClick={() => setShowWaterfalls(!showWaterfalls)}
-          variant="outline-primary"
-        >
-          {showWaterfalls ? "Hide Waterfalls" : "Show Waterfalls"}
-        </Button>
-        {showWaterfalls && (
+      {showWaterfalls && (
+        <div className="mt-3">
           <Accordion>
             {loading ? (
               <p>Loading...</p>
@@ -188,8 +187,8 @@ const AddWaterfall = () => {
               ))
             )}
           </Accordion>
-        )}
-      </div>
+        </div>
+      )}
     </Container>
   );
 };

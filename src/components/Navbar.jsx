@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { MdLogout } from "react-icons/md";
+import React from "react";
 
 function NavBar() {
   const { logout, auth } = useAuth();
@@ -36,24 +37,24 @@ function NavBar() {
           >
             {auth.role == "admin"
               ? adminPaths.map((path, index) => (
-                  <>
+                  <React.Fragment key={index}>
                     <Link to={path.path} className="text-decoration-none">
                       <Navbar.Text className="text-white fs-4 ">
                         {path.name}
                       </Navbar.Text>
                     </Link>
                     <div className="border-end border-secondary border-3 mx-3" />
-                  </>
+                  </React.Fragment>
                 ))
               : userPaths.map((path, index) => (
-                  <>
+                  <React.Fragment key={index}>
                     <Link to={path.path} className="text-decoration-none">
                       <Navbar.Text className="text-white fs-4 ">
                         {path.name}
                       </Navbar.Text>
                     </Link>
                     <div className="border-end border-secondary border-3 mx-3" />
-                  </>
+                  </React.Fragment>
                 ))}
             <Button
               variant="outline-danger"
