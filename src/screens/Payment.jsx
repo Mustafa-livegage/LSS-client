@@ -7,9 +7,11 @@ import {
   FloatingLabel,
   Form,
   Row,
+  Table,
 } from "react-bootstrap";
 
 import { useParams } from "react-router-dom";
+import { formatCurrency } from "../helper/formatCurrency";
 
 const Payment = () => {
   const { id } = useParams();
@@ -110,48 +112,48 @@ const Payment = () => {
               <Button type="submit">make payment</Button>
             </Form>
           </Col>
-          <Col className="ms-3 bordered bg-light  mb-4">
+          <Col className="p-3 bg-light">
             <h1 className="fw-bold ">Payment Distribution</h1>
 
-            <h3 className="mt-2 fw-bold">Amount Paid: $ {amt}</h3>
-            <table>
+            <h3 className="fw-bold">Amount Paid: $ {amt}</h3>
+            <Table className="mb-0" responsive bordered hover>
               <thead>
                 <tr className="table-dark">
                   <th>Item</th>
                   <th>Amount Distributed</th>
                 </tr>
-                <tbody className="d-flex flex-column justify-content-end ">
-                  <tr>
-                    <td>UPB Amount::</td>
-                    <td>{distribution.upb_amount}</td>
-                  </tr>
-                  <tr>
-                    <td>Interest Amount::</td>
-                    <td>{distribution.interest_amount}</td>
-                  </tr>
-                  <tr>
-                    <td>Principal Amount::</td>
-                    <td>{distribution.principal_amount}</td>
-                  </tr>
-                  <tr>
-                    <td>Escrow Amount::</td>
-                    <td>{distribution.escrow}</td>
-                  </tr>
-                  <tr>
-                    <td>Late Fees::</td>
-                    <td>{distribution.late_fee}</td>
-                  </tr>
-                  <tr>
-                    <td>Extra Principal::</td>
-                    <td>{distribution.e_principal}</td>
-                  </tr>
-                  <tr>
-                    <td>Suspense::</td>
-                    <td>{distribution.suspense}</td>
-                  </tr>
-                </tbody>
               </thead>
-            </table>
+              <tbody>
+                <tr>
+                  <td>UPB Amount:</td>
+                  <td>{formatCurrency(distribution.upb_amount)}</td>
+                </tr>
+                <tr>
+                  <td>Interest Amount</td>
+                  <td>{formatCurrency(distribution.interest_amount)}</td>
+                </tr>
+                <tr>
+                  <td>Principal Amount</td>
+                  <td>{formatCurrency(distribution.principal_amount)}</td>
+                </tr>
+                <tr>
+                  <td>Escrow Amount</td>
+                  <td>{formatCurrency(distribution.escrow)}</td>
+                </tr>
+                <tr>
+                  <td>Late Fees</td>
+                  <td>{formatCurrency(distribution.late_fee)}</td>
+                </tr>
+                <tr>
+                  <td>Extra Principal</td>
+                  <td>{formatCurrency(distribution.e_principal)}</td>
+                </tr>
+                <tr>
+                  <td>Suspense</td>
+                  <td>{formatCurrency(distribution.suspense)}</td>
+                </tr>
+              </tbody>
+            </Table>
           </Col>
         </Row>
       </Container>
