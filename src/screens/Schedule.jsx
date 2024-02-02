@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Container, Table, Tab, Tabs } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import PaymentSchedule from "../components/PaymentSchedule";
-import EscrowSchedule from "../components/EscrowSchedule";
+import React, { useEffect, useState } from "react";
+import { Container, Tab, Tabs } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import BackButton from "../components/BackButton";
+import EscrowSchedule from "../components/EscrowSchedule";
+import PaymentSchedule from "../components/PaymentSchedule";
 import { formatCurrency } from "../helper/formatCurrency";
 
 const Schedule = () => {

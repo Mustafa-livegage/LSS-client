@@ -1,12 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Button, Table } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
-import { Table, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import EditableTableCell from "../components/EditableTableCell";
-import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "../helper/formatCurrency";
 
 const Details = () => {

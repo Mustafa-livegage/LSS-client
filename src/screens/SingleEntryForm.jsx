@@ -1,17 +1,17 @@
+import axios from "axios";
+import Papa from "papaparse";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import Container from "react-bootstrap/Container";
+import { Alert, Tab, Tabs } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import axios from "axios";
 import { useDropzone } from "react-dropzone";
-import Papa from "papaparse";
 import { useNavigate } from "react-router-dom";
-import { Alert, InputGroup, Tab, Tabs } from "react-bootstrap";
 import BackButton from "../components/BackButton";
-import validateLoanDataOne from "../helper/validateLoanDataOne";
 import validateLoanData from "../helper/validateLoanData";
+import validateLoanDataOne from "../helper/validateLoanDataOne";
 
 const SingleEntryForm = () => {
   const history = useNavigate();

@@ -1,9 +1,9 @@
-import { Button, Nav, NavDropdown } from "react-bootstrap";
+import React from "react";
+import { Button, Nav } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
+import { MdLogout } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { MdLogout } from "react-icons/md";
-import React from "react";
 
 function NavBar() {
   const { logout, auth } = useAuth();

@@ -1,14 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button, Container, Table } from "react-bootstrap";
-import { MdDeleteForever } from "react-icons/md";
+import { Container, Table } from "react-bootstrap";
 import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 import EditEscrowForm from "../components/EditEscrowForm";
 
 const EscrowMaster = () => {
-  //   const history = useNavigate();
   const [master, setMaster] = useState([]);
-  const [showBankDetails, setShowBankDetails] = useState(false);
   const [escrowId, setEscrowId] = useState();
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [selectedEscrow, setSelectedEscrow] = useState(null);
@@ -34,7 +32,6 @@ const EscrowMaster = () => {
       axios
         .delete(`http://localhost:5000/api/emaster/${id}`)
         .then((response) => {
-          // Remove the deleted loan from the state
           setMaster((prevEscrows) =>
             prevEscrows.filter((escrow) => escrow.id !== id)
           );

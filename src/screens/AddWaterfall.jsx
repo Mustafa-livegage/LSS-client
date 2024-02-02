@@ -4,14 +4,12 @@ import {
   Accordion,
   Alert,
   Button,
-  Card,
   Col,
   Container,
   FloatingLabel,
   Form,
   Row,
 } from "react-bootstrap";
-import { MdSlideshow } from "react-icons/md";
 
 const checkBoxOptions = [
   "Interest",

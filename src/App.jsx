@@ -1,18 +1,18 @@
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import "./styles.css";
-import Login from "./screens/Login";
+import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
-import HomePage from "./screens/HomePage";
-import Schedule from "./screens/Schedule";
-import SingleEntryForm from "./screens/SingleEntryForm";
+import RequireAuth from "./components/RequireAuth";
 import AddUser from "./screens/AddUser";
+import AddWaterfall from "./screens/AddWaterfall";
 import Details from "./screens/Details";
 import EscrowMaster from "./screens/EscrowMaster";
-import RequireAuth from "./components/RequireAuth";
-import Unauthorized from "./screens/Unauthorized";
-import AddWaterfall from "./screens/AddWaterfall";
+import HomePage from "./screens/HomePage";
+import Login from "./screens/Login";
 import Payment from "./screens/Payment";
+import Schedule from "./screens/Schedule";
+import SingleEntryForm from "./screens/SingleEntryForm";
+import Unauthorized from "./screens/Unauthorized";
 import Users from "./screens/Users";
+import "./styles.css";
 
 export const ROLES = {
   ADMIN: "admin",
