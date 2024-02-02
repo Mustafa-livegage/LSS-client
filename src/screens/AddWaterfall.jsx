@@ -103,8 +103,10 @@ const AddWaterfall = () => {
       >
         {alertMessage?.message}
       </Alert>
-      <h1 className="text-center mb-4 fw-bold ">Add Waterfalls</h1>
-      <Row className="">
+      <h1 className="text-center mb-5 fw-bold text-decoration-underline">
+        Add Waterfalls
+      </h1>
+      <Row>
         <Col xs={10} md={8} lg={6}>
           <Form onSubmit={handleSubmit} className="mb-4">
             <FloatingLabel
@@ -117,20 +119,22 @@ const AddWaterfall = () => {
                 name="name"
                 value={name}
                 onChange={handleInputChange}
+                required
               />
             </FloatingLabel>
             <Form.Group>
               <Form.Label className="fs-4 fw-bold">Select Hierarchy</Form.Label>
               {checkBoxOptions.map((type) => (
-                <Form.Check
-                  key={type}
-                  type="checkbox"
-                  id={`${type}`}
-                  label={`${type}`}
-                  checked={checkedCheckboxes.includes(type)}
-                  onChange={() => handleCheckboxChange(type)}
-                  style={{ fontSize: "3.3 rem" }}
-                />
+                <div className="d-flex flex-row align-items-center">
+                  <Form.Check
+                    key={type}
+                    type="checkbox"
+                    id={`${type}`}
+                    checked={checkedCheckboxes.includes(type)}
+                    onChange={() => handleCheckboxChange(type)}
+                  />
+                  <Form.Label className="fs-4 ms-3">{type}</Form.Label>
+                </div>
               ))}
             </Form.Group>
             <Button className="mt-3" type="submit" variant="primary" block>
@@ -146,8 +150,8 @@ const AddWaterfall = () => {
           </Button>
         </Col>
         <Col xs={10} md={8} lg={6} className="border-start bg-light p-4">
-          <h1 className="mb-4">Selected Hierarchy (In-order)</h1>
-          <ol className=" fs-5">
+          <h3 className="mb-4">Selected Hierarchy (In-order)</h3>
+          <ol className=" fs-4">
             {checkedCheckboxes.map((type) => (
               <li key={type}>{type}</li>
             ))}
