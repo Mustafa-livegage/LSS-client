@@ -6,7 +6,7 @@ const checkBoxOptions = [
   "Interest",
   "Principal",
   "Escrow",
-  "Late fee",
+  "Late Fee",
   "Extra Principal",
   "Extra Escrow",
   "NSF",
