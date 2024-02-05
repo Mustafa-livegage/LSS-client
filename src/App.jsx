@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import AddUser from "./screens/AddUser";
-import AddWaterfall from "./screens/AddWaterfall";
 import Details from "./screens/Details";
 import EscrowMaster from "./screens/EscrowMaster";
 import HomePage from "./screens/HomePage";
@@ -13,6 +12,7 @@ import SingleEntryForm from "./screens/SingleEntryForm";
 import Unauthorized from "./screens/Unauthorized";
 import Users from "./screens/Users";
 import "./styles.css";
+import WaterfallDetails from "./screens/WaterfallDetails";
 
 export const ROLES = {
   ADMIN: "admin",
@@ -43,7 +43,11 @@ function App() {
           <Route exact path="/users" element={<Users />} />
           <Route exact path="/adduser" element={<AddUser />} />
           <Route exact path="/escrow-master" element={<EscrowMaster />} />
-          <Route exact path="/addwaterfall" element={<AddWaterfall />} />
+          <Route
+            exact
+            path="/waterfall-details"
+            element={<WaterfallDetails />}
+          />
         </Route>
       </Route>
     </Routes>

@@ -11,7 +11,7 @@ function NavBar() {
   const adminPaths = [
     { name: "Register", path: "/adduser" },
     { name: "Escrow Master", path: "/escrow-master" },
-    { name: "Add Waterfall", path: "/addwaterfall" },
+    { name: "Waterfall Details", path: "/waterfall-details" },
   ];
   const userPaths = [
     { name: "Home", path: "/" },

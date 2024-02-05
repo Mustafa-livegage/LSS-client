@@ -83,7 +83,7 @@ const HomePage = () => {
             >
               Search
             </Button>
-            <Link to="/add-loan">
+            <Link to="/addloans">
               <Button
                 className="mx-3 rounded"
                 variant="dark"
