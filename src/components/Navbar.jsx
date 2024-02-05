@@ -38,18 +38,28 @@ function NavBar() {
             {auth.role == "admin" ? (
               adminPaths.map((path, index) => (
                 <React.Fragment key={index}>
-                  <Link to={path.path} className="text-decoration-none">
-                    <Navbar.Text className="text-white fs-4 ">
-                      {path.name}
-                    </Navbar.Text>
-                  </Link>
-                  <div className="border-end border-secondary border-3 mx-3" />
+                  <div className="d-flex flex-row align-items-center">
+                    <Link to={path.path} className="text-decoration-none">
+                      <Navbar.Text className="text-white fs-4 ">
+                        {path.name}
+                      </Navbar.Text>
+                    </Link>
+                    <div
+                      className="border-end border-secondary border-3 mx-3"
+                      style={{ height: "30px" }}
+                    />
+                  </div>
                 </React.Fragment>
               ))
             ) : (
-              <React.Fragment>
-                <h1>Hi,{auth.user_name}</h1>
-              </React.Fragment>
+              <div>
+                <h1 className="text-white text-center me-4">
+                  Hi,{" "}
+                  <span className="text-decoration-underline">
+                    {auth.user_name}
+                  </span>
+                </h1>
+              </div>
             )}
             <Button
               variant="outline-danger"
