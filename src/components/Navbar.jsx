@@ -37,19 +37,17 @@ function NavBar() {
           >
             {auth.role == "admin" ? (
               adminPaths.map((path, index) => (
-                <React.Fragment key={index}>
-                  <div className="d-flex flex-row align-items-center">
-                    <Link to={path.path} className="text-decoration-none">
-                      <Navbar.Text className="text-white fs-4 ">
-                        {path.name}
-                      </Navbar.Text>
-                    </Link>
-                    <div
-                      className="border-end border-secondary border-3 mx-3"
-                      style={{ height: "30px" }}
-                    />
-                  </div>
-                </React.Fragment>
+                <div key={index} className="d-flex flex-row align-items-center">
+                  <Link to={path.path} className="text-decoration-none">
+                    <Navbar.Text className="text-white fs-4 ">
+                      {path.name}
+                    </Navbar.Text>
+                  </Link>
+                  <div
+                    className="border-end border-secondary border-3 mx-3"
+                    style={{ height: "30px" }}
+                  />
+                </div>
               ))
             ) : (
               <div>
