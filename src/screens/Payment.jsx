@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import {
+  Alert,
   Button,
   Col,
   Container,
@@ -18,6 +19,8 @@ const Payment = () => {
   const [amt, setAmt] = useState();
   const [loan, setLoan] = useState();
   const [distribution, setDistribution] = useState({});
+  const [alertMessage, setAlertMessage] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const formRef = useRef();
 
@@ -33,6 +36,10 @@ const Payment = () => {
       });
   };
 
+  const showAlert = (variant, message) => {
+    setAlertMessage({ variant, message });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -44,10 +51,14 @@ const Payment = () => {
         setDistribution(response.data);
         setLoading(false);
         formRef.current.reset();
+        showAlert("success", "Payment Done!!");
         setAmt("");
       })
       .catch((error) => {
-        console.error("Error in PUT request:", error);
+        showAlert(
+          "danger",
+          "Some error occured while processing your payment."
+        );
       });
   };
   const handleInputChange = (e) => {
@@ -57,9 +68,28 @@ const Payment = () => {
   useEffect(() => {
     fetchLoans();
   }, []);
+  useEffect(() => {
+    if (alertMessage) {
+      const timeOutId = setTimeout(() => {
+        setAlertMessage(null);
+      }, 4000);
+
+      return () => clearTimeout(timeOutId);
+    }
+  }, [alertMessage]);
 
   return (
-    <>
+    <Container>
+      <Alert
+        className="mt-1"
+        variant={alertMessage?.variant}
+        show={!!alertMessage}
+        onClose={() => {
+          setAlertMessage(null);
+        }}
+      >
+        {alertMessage?.message}
+      </Alert>
       <Container className="container-fluid">
         <h1 className="text-center my-5 fw-bold text-decoration-underline ">
           Make Payment
@@ -191,8 +221,11 @@ const Payment = () => {
             )}
           </Col>
         </Row>
+        <div className="mt-5">
+          <h3>Payment History</h3>
+        </div>
       </Container>
-    </>
+    </Container>
   );
 };
 
