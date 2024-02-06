@@ -69,7 +69,7 @@ const Details = () => {
   };
   const renderTooltip = (props) => (
     <Tooltip id="tooltip" {...props}>
-      Simple tooltip
+      {props.msg}
     </Tooltip>
   );
   return (
@@ -127,20 +127,18 @@ const Details = () => {
                       payment[0].principal_amount +
                       loan.escrow_amount / 12
                   )}`}
-                  <Link
-                    to={`/payment/${loan.id}`}
-                    className="position-relative "
-                  >
+                  <Link to={`/payment/${loan.id}`}>
                     <OverlayTrigger
-                      placement="left"
+                      placement="right"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip}
+                      overlay={renderTooltip({ msg: "Make Payment" })}
                     >
-                      <FcMoneyTransfer
-                        size={25}
+                      <Button
+                        className="bg-transparent border-0"
                         onClick={savingId}
-                        className="ms-3 "
-                      />
+                      >
+                        <FcMoneyTransfer size={25} />
+                      </Button>
                     </OverlayTrigger>
                   </Link>
                 </td>
@@ -154,17 +152,11 @@ const Details = () => {
             <tr>
               <td>PPR</td>
               <td className="fw-bold d-flex flex-row align-items-center justify-content-center">
-                <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip}
-                >
-                  <EditableTableCell
-                    value={loan.waterfall_name}
-                    onSave={handleSavePPR}
-                    options={waterfallOptions.map((wf) => wf.w_name)}
-                  />
-                </OverlayTrigger>
+                <EditableTableCell
+                  value={loan.waterfall_name}
+                  onSave={handleSavePPR}
+                  options={waterfallOptions.map((wf) => wf.w_name)}
+                />
               </td>
             </tr>
             {loan.upb_amount > 0 && (
