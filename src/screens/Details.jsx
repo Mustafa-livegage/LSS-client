@@ -134,7 +134,7 @@ const Details = () => {
                       overlay={renderTooltip({ msg: "Make Payment" })}
                     >
                       <Button
-                        className="bg-transparent border-0"
+                        className="bg-transparent border-0 p-1"
                         onClick={savingId}
                       >
                         <FcMoneyTransfer size={25} />
