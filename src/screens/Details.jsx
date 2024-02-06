@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import { useParams } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import EditableTableCell from "../components/EditableTableCell";
 import { formatCurrency } from "../helper/formatCurrency";
+import { FcMoneyTransfer } from "react-icons/fc";
 
 const Details = () => {
   const history = useNavigate();
@@ -66,7 +67,11 @@ const Details = () => {
   const savingId = () => {
     history(`/payment-schedule-details/${loan.id}`);
   };
-
+  const renderTooltip = (props) => (
+    <Tooltip id="tooltip" {...props}>
+      Simple tooltip
+    </Tooltip>
+  );
   return (
     <>
       <BackButton />
@@ -116,12 +121,28 @@ const Details = () => {
             {payment[0] && (
               <tr>
                 <td>Monthly Payment</td>
-                <td>
+                <td className="">
                   {`${formatCurrency(
                     payment[0].interest_amount +
                       payment[0].principal_amount +
                       loan.escrow_amount / 12
                   )}`}
+                  <Link
+                    to={`/payment/${loan.id}`}
+                    className="position-relative "
+                  >
+                    <OverlayTrigger
+                      placement="left"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip}
+                    >
+                      <FcMoneyTransfer
+                        size={25}
+                        onClick={savingId}
+                        className="ms-3 "
+                      />
+                    </OverlayTrigger>
+                  </Link>
                 </td>
               </tr>
             )}
@@ -133,11 +154,17 @@ const Details = () => {
             <tr>
               <td>PPR</td>
               <td className="fw-bold d-flex flex-row align-items-center justify-content-center">
-                <EditableTableCell
-                  value={loan.waterfall_name}
-                  onSave={handleSavePPR}
-                  options={waterfallOptions.map((wf) => wf.w_name)}
-                />
+                <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip}
+                >
+                  <EditableTableCell
+                    value={loan.waterfall_name}
+                    onSave={handleSavePPR}
+                    options={waterfallOptions.map((wf) => wf.w_name)}
+                  />
+                </OverlayTrigger>
               </td>
             </tr>
             {loan.upb_amount > 0 && (
@@ -156,7 +183,7 @@ const Details = () => {
                     </Link>
                   </td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>Payment</td>
                   <td>
                     <Link to={`/payment/${loan.id}`}>
@@ -169,7 +196,7 @@ const Details = () => {
                       </Button>
                     </Link>
                   </td>
-                </tr>
+                </tr> */}
               </>
             )}
 

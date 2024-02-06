@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 
 const checkBoxOptions = [
@@ -18,6 +18,15 @@ const AddWaterfall = () => {
   const [name, setName] = useState("");
   const [alertMessage, setAlertMessage] = useState(null);
 
+  useEffect(() => {
+    if (alertMessage) {
+      const timeOutId = setTimeout(() => {
+        setAlertMessage(null);
+      }, 4000);
+
+      return () => clearTimeout(timeOutId);
+    }
+  }, [alertMessage]);
   const handleCheckboxChange = (type) => {
     if (checkedCheckboxes.includes(type)) {
       // If checkbox is already checked, uncheck it
@@ -67,8 +76,6 @@ const AddWaterfall = () => {
         onClose={() => {
           setAlertMessage(null);
         }}
-        autoClose={3000}
-        dismissible
       >
         {alertMessage?.message}
       </Alert>
