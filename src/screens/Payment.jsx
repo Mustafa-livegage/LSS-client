@@ -71,14 +71,21 @@ const Payment = () => {
               className="text-center px-5 pt-5 pb-3"
               ref={formRef}
             >
-              <Form.Select className="mb-3" size="lg" required>
-                <option disabled selected value="#">
-                  Mode of payment
-                </option>
-                <option value="1">Net Banking</option>
-                <option value="2">PQR</option>
-                <option value="3">XYZ</option>
-              </Form.Select>
+              <div className="wrapper">
+                <input
+                  type="radio"
+                  name="select"
+                  id="option-1"
+                  defaultChecked
+                />
+                <input type="radio" name="select" id="option-2" />
+                <label htmlFor="option-1" className="option option-1">
+                  <span>Wire</span>
+                </label>
+                <label htmlFor="option-2" className="option option-2">
+                  <span>ACH</span>
+                </label>
+              </div>
               <FloatingLabel controlId="name" label="Name" className="mb-3">
                 <Form.Control required type="text" placeholder="John Doe " />
               </FloatingLabel>
@@ -132,7 +139,7 @@ const Payment = () => {
               </h4>
             )}
             {!loading ? (
-              <Table className="mb-0" responsive bordered hover>
+              <Table className="mb-0" responsive bordered>
                 <thead>
                   <tr className="table-dark">
                     <th>Item</th>
