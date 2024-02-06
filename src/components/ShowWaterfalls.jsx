@@ -1,7 +1,26 @@
+import axios from "axios";
 import React from "react";
-import { Accordion, Container } from "react-bootstrap";
+import { Accordion, Button, Container } from "react-bootstrap";
 
 const ShowWaterfalls = ({ data, loading }) => {
+  const handleDelete = (id) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this waterfall?"
+    );
+
+    if (isConfirmed) {
+      axios
+        .delete(`http://localhost:5000/api/waterfall/${id}`)
+        .then((response) => {})
+        .catch((error) => {
+          console.error(
+            `Error deleting waterfall with ID ${id}:`,
+            error.response.data
+          );
+          alert(error.response.data);
+        });
+    }
+  };
   return (
     <Container>
       <div className="mt-3">
@@ -32,6 +51,13 @@ const ShowWaterfalls = ({ data, loading }) => {
                           <li key={index}>{type}</li>
                         ))}
                       </ol>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleDelete(waterfall.id)}
+                      >
+                        Delete
+                      </Button>
                     </div>
                   </Accordion.Body>
                 </div>
