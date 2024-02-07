@@ -16,8 +16,7 @@ import { formatCurrency } from "../helper/formatCurrency";
 
 const Payment = () => {
   const { id } = useParams();
-  // const [amt, setAmt] = useState();
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([]); // [loan, setLoan]
   const [distribution, setDistribution] = useState({});
   const [alertMessage, setAlertMessage] = useState(null);
   const date = new Date().toString().slice(0, 24);
@@ -40,9 +39,7 @@ const Payment = () => {
     axios
       .get(`http://localhost:5000/api/history/${id}`)
       .then((response) => {
-        console.log(response.data);
         setHistory(response.data);
-        console.log(history);
       })
       .catch((error) => {
         console.error("Error fetching loans:", error);
@@ -61,7 +58,7 @@ const Payment = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:5000/api/payments", formData)
+      .post("http://localhost:5000/api/history", formData)
       .then(() => {
         console.log(formData);
         showAlert("success", "Single loan entry submitted successfully!");
@@ -281,7 +278,33 @@ const Payment = () => {
           </Col>
         </Row>
         <div className="mt-5">
-          <h3>Payment History</h3>
+          <h2 className="opacity-75 ">Payment History</h2>
+          <Table striped responsive className="text-center mt-1">
+            <thead>
+              <tr className="table-dark">
+                <th>Transaction Id</th>
+                <th> Name</th>
+                <th> Date & Time</th>
+                <th> Amount</th>
+                <th> Account Number</th>
+                <th> Route Number</th>
+                <th>Bank Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              {history.map((his) => (
+                <tr key={his.id}>
+                  <td>{his.id}</td>
+                  <td>{his.c_name}</td>
+                  <td>{his.date_time}</td>
+                  <td>{formatCurrency(his.pmt_amt)}</td>
+                  <td>{his.account_number}</td>
+                  <td>{his.route_number}</td>
+                  <td>{his.bank_name}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
       </Container>
     </Container>
