@@ -17,10 +17,10 @@ import { formatCurrency } from "../helper/formatCurrency";
 const Payment = () => {
   const { id } = useParams();
   // const [amt, setAmt] = useState();
-  // const [loan, setLoan] = useState();
+  const [history, setHistory] = useState([]);
   const [distribution, setDistribution] = useState({});
   const [alertMessage, setAlertMessage] = useState(null);
-  const [date, setDate] = useState(new Date().toString().slice(0, 24));
+  const date = new Date().toString().slice(0, 24);
 
   const [loading, setLoading] = useState(true);
 
@@ -36,17 +36,22 @@ const Payment = () => {
   });
   const formRef = useRef();
 
-  // const fetchLoans = () => {
-  //   axios
-  //     .get(`http://localhost:5000/api/loans/${id}`)
-  //     .then((response) => {
-  //       // console.log(response.data);
-  //       setLoan(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching loans:", error);
-  //     });
-  // };
+  const fetchHistory = () => {
+    axios
+      .get(`http://localhost:5000/api/history/${id}`)
+      .then((response) => {
+        console.log(response.data);
+        setHistory(response.data);
+        console.log(history);
+      })
+      .catch((error) => {
+        console.error("Error fetching loans:", error);
+      });
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
   const showAlert = (variant, message) => {
     setAlertMessage({ variant, message });
@@ -54,8 +59,6 @@ const Payment = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // const updated = { ...loan, last_pmt_amount: parseInt(amt) };
 
     axios
       .post("http://localhost:5000/api/payments", formData)
@@ -91,10 +94,6 @@ const Payment = () => {
       setFormData({ ...formData, [name]: value });
     }
   };
-
-  // useEffect(() => {
-  //   fetchLoans();
-  // }, []);
 
   useEffect(() => {
     if (alertMessage) {
