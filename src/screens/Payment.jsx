@@ -16,25 +16,37 @@ import { formatCurrency } from "../helper/formatCurrency";
 
 const Payment = () => {
   const { id } = useParams();
-  const [amt, setAmt] = useState();
-  const [loan, setLoan] = useState();
+  // const [amt, setAmt] = useState();
+  // const [loan, setLoan] = useState();
   const [distribution, setDistribution] = useState({});
   const [alertMessage, setAlertMessage] = useState(null);
+  const [date, setDate] = useState(new Date().toString().slice(0, 24));
 
   const [loading, setLoading] = useState(true);
+
+  const [formData, setFormData] = useState({
+    mop: "Wire",
+    c_name: "",
+    bank_name: "",
+    account_number: "",
+    route_number: "",
+    pmt_amt: 0,
+    date_time: date,
+    loan_id: id,
+  });
   const formRef = useRef();
 
-  const fetchLoans = () => {
-    axios
-      .get(`http://localhost:5000/api/loans/${id}`)
-      .then((response) => {
-        // console.log(response.data);
-        setLoan(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching loans:", error);
-      });
-  };
+  // const fetchLoans = () => {
+  //   axios
+  //     .get(`http://localhost:5000/api/loans/${id}`)
+  //     .then((response) => {
+  //       // console.log(response.data);
+  //       setLoan(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching loans:", error);
+  //     });
+  // };
 
   const showAlert = (variant, message) => {
     setAlertMessage({ variant, message });
@@ -43,16 +55,25 @@ const Payment = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const updated = { ...loan, last_pmt_amount: parseInt(amt) };
+    // const updated = { ...loan, last_pmt_amount: parseInt(amt) };
 
     axios
-      .put(`http://localhost:5000/api/payment/${id}`, updated)
+      .post("http://localhost:5000/api/payments", formData)
+      .then(() => {
+        console.log(formData);
+        showAlert("success", "Single loan entry submitted successfully!");
+        fetchHistory();
+      })
+      .catch((error) => {
+        showAlert("danger", "Error submitting loan entry.");
+      });
+    axios
+      .put(`http://localhost:5000/api/payment/${id}?pmt=${formData.pmt_amt}`)
       .then((response) => {
         setDistribution(response.data);
         setLoading(false);
         formRef.current.reset();
         showAlert("success", "Payment Done!!");
-        setAmt("");
       })
       .catch((error) => {
         showAlert(
@@ -62,12 +83,19 @@ const Payment = () => {
       });
   };
   const handleInputChange = (e) => {
-    const { value } = e.target;
-    setAmt(value);
+    const { name, value, type, checked } = e.target;
+
+    if (type === "radio" && checked) {
+      setFormData({ ...formData, [name]: value });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
-  useEffect(() => {
-    fetchLoans();
-  }, []);
+
+  // useEffect(() => {
+  //   fetchLoans();
+  // }, []);
+
   useEffect(() => {
     if (alertMessage) {
       const timeOutId = setTimeout(() => {
@@ -104,11 +132,19 @@ const Payment = () => {
               <div className="wrapper">
                 <input
                   type="radio"
-                  name="select"
+                  name="mop"
+                  value="Wire"
                   id="option-1"
+                  onChange={handleInputChange}
                   defaultChecked
                 />
-                <input type="radio" name="select" id="option-2" />
+                <input
+                  type="radio"
+                  name="mop"
+                  id="option-2"
+                  value="ACH"
+                  onChange={handleInputChange}
+                />
                 <label htmlFor="option-1" className="option option-1">
                   <span>Wire</span>
                 </label>
@@ -117,28 +153,52 @@ const Payment = () => {
                 </label>
               </div>
               <FloatingLabel controlId="name" label="Name" className="mb-3">
-                <Form.Control required type="text" placeholder="John Doe " />
+                <Form.Control
+                  onChange={handleInputChange}
+                  name="c_name"
+                  required
+                  type="text"
+                  placeholder="John Doe "
+                />
               </FloatingLabel>
               <FloatingLabel
                 controlId="bank_name"
                 label="Bank Name"
                 className="mb-3"
               >
-                <Form.Control required type="text" placeholder="XYZ bank" />
+                <Form.Control
+                  onChange={handleInputChange}
+                  name="bank_name"
+                  required
+                  type="text"
+                  placeholder="XYZ bank"
+                />
               </FloatingLabel>
               <FloatingLabel
                 controlId="acc_num"
                 label="Account Number"
                 className="mb-3"
               >
-                <Form.Control required type="number" placeholder="0000000000" />
+                <Form.Control
+                  onChange={handleInputChange}
+                  name="account_number"
+                  required
+                  type="number"
+                  placeholder="0000000000"
+                />
               </FloatingLabel>
               <FloatingLabel
                 controlId="Routing_number"
                 label="Routing  Number"
                 className="mb-3"
               >
-                <Form.Control required type="number" placeholder="0000000000" />
+                <Form.Control
+                  onChange={handleInputChange}
+                  name="route_number"
+                  required
+                  type="number"
+                  placeholder="0000000000"
+                />
               </FloatingLabel>
 
               {/* important */}
@@ -148,9 +208,9 @@ const Payment = () => {
                 className="mb-3"
               >
                 <Form.Control
-                  name="payment_amount"
-                  value={amt}
                   onChange={handleInputChange}
+                  name="pmt_amt"
+                  // value={amt}
                   type="number"
                   placeholder="500 $"
                   required
