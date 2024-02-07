@@ -40,7 +40,7 @@ const Payment = () => {
     axios
       .get(`http://localhost:5000/api/history/${id}`)
       .then((response) => {
-        setHistory(response.data);
+        setHistory(response.data.reverse());
       })
       .catch((error) => {
         console.error("Error fetching loans:", error);
@@ -210,8 +210,8 @@ const Payment = () => {
                 <Form.Control
                   onChange={handleInputChange}
                   name="pmt_amt"
-                  // value={amt}
                   type="number"
+                  step={0.01}
                   placeholder="500 $"
                   required
                 />
