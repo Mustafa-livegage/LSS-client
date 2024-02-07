@@ -120,12 +120,13 @@ const Details = () => {
             </tr>
             {payment[0] && (
               <tr>
-                <td>Monthly Payment</td>
-                <td>
+                <td>Monthly Payment <br /> <span className="fs-6 fw-bold">(Due Amt. {formatCurrency(loan.balance)})</span></td>
+                <td className="">
                   {`${formatCurrency(
                     payment[0].interest_amount +
                       payment[0].principal_amount +
-                      loan.escrow_amount / 12
+                      loan.escrow_amount / 12 +
+                      loan.balance
                   )}`}
                   {loan.upb_amount > 0 && (
                     <Link to={`/payment/${loan.id}`} className="m-2">
