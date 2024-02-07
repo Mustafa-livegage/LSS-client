@@ -121,20 +121,21 @@ const Details = () => {
             {payment[0] && (
               <tr>
                 <td>Monthly Payment</td>
-                <td className="">
+                <td >
                   {`${formatCurrency(
                     payment[0].interest_amount +
                       payment[0].principal_amount +
                       loan.escrow_amount / 12
                   )}`}
-                  <Link to={`/payment/${loan.id}`}>
+                  <Link to={`/payment/${loan.id}`} className="m-2">
                     <OverlayTrigger
                       placement="right"
-                      delay={{ show: 250, hide: 400 }}
+                      // delay={{ show: 250, hide: 400 }}
                       overlay={renderTooltip({ msg: "Make Payment" })}
+
                     >
                       <Button
-                        className="bg-transparent border-0 p-1"
+                        className="bg-transparent border-0 p-1 "
                         onClick={savingId}
                       >
                         <FcMoneyTransfer size={25} />
