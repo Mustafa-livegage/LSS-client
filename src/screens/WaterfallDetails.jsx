@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Tab, Tabs } from "react-bootstrap";
 import AddWaterfall from "../components/AddWaterfall";
 import ShowWaterfalls from "../components/ShowWaterfalls";
+import BackButton from "../components/BackButton";
 
 const WaterfallDetails = () => {
   const [waterfalls, setWaterfalls] = useState([]);
@@ -24,6 +25,9 @@ const WaterfallDetails = () => {
   }, []);
 
   return (
+    <>
+    <BackButton />
+    
     <Container className="mt-5">
       <h1 className="text-center mb-5 fw-bold text-decoration-underline">
         Waterfall Details
@@ -43,6 +47,7 @@ const WaterfallDetails = () => {
         </Tab>
       </Tabs>
     </Container>
+    </>
   );
 };
 

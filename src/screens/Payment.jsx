@@ -13,6 +13,7 @@ import {
 
 import { useParams } from "react-router-dom";
 import { formatCurrency } from "../helper/formatCurrency";
+import BackButton from "../components/BackButton";
 
 const Payment = () => {
   const { id } = useParams();
@@ -103,6 +104,9 @@ const Payment = () => {
   }, [alertMessage]);
 
   return (
+    <>
+    <BackButton />
+
     <Container>
       <Alert
         className="mt-1"
@@ -308,6 +312,7 @@ const Payment = () => {
         </div>
       </Container>
     </Container>
+    </>
   );
 };
 
