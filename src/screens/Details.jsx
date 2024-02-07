@@ -121,27 +121,28 @@ const Details = () => {
             {payment[0] && (
               <tr>
                 <td>Monthly Payment</td>
-                <td >
+                <td>
                   {`${formatCurrency(
                     payment[0].interest_amount +
                       payment[0].principal_amount +
                       loan.escrow_amount / 12
                   )}`}
-                  <Link to={`/payment/${loan.id}`} className="m-2">
-                    <OverlayTrigger
-                      placement="right"
-                      // delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip({ msg: "Make Payment" })}
-
-                    >
-                      <Button
-                        className="bg-transparent border-0 p-1 "
-                        onClick={savingId}
+                  {loan.upb_amount > 0 && (
+                    <Link to={`/payment/${loan.id}`} className="m-2">
+                      <OverlayTrigger
+                        placement="right"
+                        // delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip({ msg: "Make Payment" })}
                       >
-                        <FcMoneyTransfer size={25} />
-                      </Button>
-                    </OverlayTrigger>
-                  </Link>
+                        <Button
+                          className="bg-transparent border-0 p-1 "
+                          onClick={savingId}
+                        >
+                          <FcMoneyTransfer size={25} />
+                        </Button>
+                      </OverlayTrigger>
+                    </Link>
+                  )}
                 </td>
               </tr>
             )}
