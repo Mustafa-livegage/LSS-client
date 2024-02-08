@@ -314,7 +314,7 @@ const Payment = () => {
                   />
 
                   <Button
-                    className="mx-3 rounded"
+                    className="mx-3 rounded btn-sm"
                     variant="dark"
                     onClick={handleSearch}
                   >
