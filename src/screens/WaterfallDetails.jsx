@@ -7,7 +7,6 @@ import BackButton from "../components/BackButton";
 
 const WaterfallDetails = () => {
   const [waterfalls, setWaterfalls] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const fetchWaterfalls = () => {
     axios
@@ -17,8 +16,7 @@ const WaterfallDetails = () => {
       })
       .catch((error) => {
         console.error("Error fetching waterfalls:", error);
-      })
-      .finally(() => setLoading(false));
+      });
   };
   useEffect(() => {
     fetchWaterfalls();
@@ -26,27 +24,27 @@ const WaterfallDetails = () => {
 
   return (
     <>
-    <BackButton />
-    
-    <Container className="mt-5">
-      <h1 className="text-center mb-5 fw-bold text-decoration-underline">
-        Waterfall Details
-      </h1>
-      <Tabs
-        defaultActiveKey="addWaterfall"
-        className="fs-5 w-100 my-5 fw-bold"
-        fill
-        onSelect={() => fetchWaterfalls()}
-      >
-        <Tab eventKey="addWaterfall" title="Add Waterfall">
-          <AddWaterfall />
-        </Tab>
+      <BackButton />
 
-        <Tab eventKey="showWaterfalls" title="Show Waterfalls">
-          <ShowWaterfalls data={waterfalls} loading={loading} />
-        </Tab>
-      </Tabs>
-    </Container>
+      <Container className="mt-5">
+        <h1 className="text-center mb-5 fw-bold text-decoration-underline">
+          Waterfall Details
+        </h1>
+        <Tabs
+          defaultActiveKey="addWaterfall"
+          className="fs-5 w-100 my-5 fw-bold"
+          fill
+          onSelect={() => fetchWaterfalls()}
+        >
+          <Tab eventKey="addWaterfall" title="Add Waterfall">
+            <AddWaterfall />
+          </Tab>
+
+          <Tab eventKey="showWaterfalls" title="Show Waterfalls">
+            <ShowWaterfalls data={waterfalls} />
+          </Tab>
+        </Tabs>
+      </Container>
     </>
   );
 };
