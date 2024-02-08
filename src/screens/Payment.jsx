@@ -338,9 +338,9 @@ const Payment = () => {
                       <th> Name</th>
                       <th> Date & Time</th>
                       <th> Amount</th>
+                      <th>Bank Name</th>
                       <th> Account Number</th>
                       <th> Route Number</th>
-                      <th>Bank Name</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -353,9 +353,9 @@ const Payment = () => {
                         <td>{his.c_name}</td>
                         <td>{his.date_time}</td>
                         <td>{formatCurrency(his.pmt_amt)}</td>
+                        <td>{his.bank_name}</td>
                         <td>{his.account_number}</td>
                         <td>{his.route_number}</td>
-                        <td>{his.bank_name}</td>
                       </tr>
                     ))}
                   </tbody>
