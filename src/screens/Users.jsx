@@ -38,9 +38,9 @@ const Users = () => {
         .delete(`http://localhost:5000/api/deleteUser/${id}`)
         .then((response) => {
           // Remove the deleted loan from the state
-          setUsers((prevUser) => prevUser.filter((u) => u.Id !== id));
+          setUsers((prevUser) => prevUser.filter((u) => u.id !== id));
           setFilteredUsers((prevFilteredUsers) =>
-            prevFilteredUsers.filter((u) => u.Id !== id)
+            prevFilteredUsers.filter((u) => u.id !== id)
           );
         })
         .catch((error) => {
