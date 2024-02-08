@@ -124,7 +124,6 @@ const Payment = () => {
   return (
     <>
       <BackButton />
-
       <Container>
         <Alert
           className="mt-1"
@@ -233,6 +232,7 @@ const Payment = () => {
                     onChange={handleInputChange}
                     name="pmt_amt"
                     type="number"
+                    min={1}
                     step={0.01}
                     placeholder="500 $"
                     required
@@ -308,53 +308,59 @@ const Payment = () => {
               )}
             </Col>
           </Row>
-          <div className="mt-5">
+          <Container className="mt-5">
             <h2 className="opacity-75 ">Payment History</h2>
-            <div className="w-100">
-              <InputGroup className="mt-5 mb-3">
-                <Form.Control
-                  placeholder="Enter Customer name or Bank name"
-                  aria-label=""
-                  aria-describedby="basic-addon2"
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
+            {filteredHistory.length > 0 ? (
+              <div>
+                <div className="w-100">
+                  <InputGroup className="mt-5 mb-3">
+                    <Form.Control
+                      placeholder="Enter Customer name or Bank name"
+                      aria-label=""
+                      aria-describedby="basic-addon2"
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
 
-                <Button
-                  className="mx-3 rounded"
-                  variant="dark"
-                  onClick={handleSearch}
-                >
-                  Search
-                </Button>
-              </InputGroup>
-            </div>
-            <Table striped responsive className="text-center mt-1">
-              <thead>
-                <tr className="table-dark">
-                  <th>Transaction Id</th>
-                  <th> Name</th>
-                  <th> Date & Time</th>
-                  <th> Amount</th>
-                  <th> Account Number</th>
-                  <th> Route Number</th>
-                  <th>Bank Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredHistory.map((his) => (
-                  <tr key={his.id}>
-                    <td>{his.id}</td>
-                    <td>{his.c_name}</td>
-                    <td>{his.date_time}</td>
-                    <td>{formatCurrency(his.pmt_amt)}</td>
-                    <td>{his.account_number}</td>
-                    <td>{his.route_number}</td>
-                    <td>{his.bank_name}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
+                    <Button
+                      className="mx-3 rounded"
+                      variant="dark"
+                      onClick={handleSearch}
+                    >
+                      Search
+                    </Button>
+                  </InputGroup>
+                </div>
+                <Table striped responsive className="text-center mt-1">
+                  <thead>
+                    <tr className="table-dark">
+                      <th>Transaction Id</th>
+                      <th> Name</th>
+                      <th> Date & Time</th>
+                      <th> Amount</th>
+                      <th> Account Number</th>
+                      <th> Route Number</th>
+                      <th>Bank Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredHistory.map((his) => (
+                      <tr key={his.id}>
+                        <td>{his.id}</td>
+                        <td>{his.c_name}</td>
+                        <td>{his.date_time}</td>
+                        <td>{formatCurrency(his.pmt_amt)}</td>
+                        <td>{his.account_number}</td>
+                        <td>{his.route_number}</td>
+                        <td>{his.bank_name}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </div>
+            ) : (
+              <h3>No Payment history found!!</h3>
+            )}
+          </Container>
         </Container>
       </Container>
     </>
