@@ -110,14 +110,7 @@ const Payment = () => {
 
   const handleSearch = () => {
     setFilteredHistory(
-      history.filter(
-        (loan) =>
-          loan.c_name.toString().includes(searchTerm) ||
-          loan.bank_name
-            .toString()
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase())
-      )
+      history.filter((loan) => loan.c_name.toString().includes(searchTerm))
     );
   };
 
@@ -136,7 +129,7 @@ const Payment = () => {
           {alertMessage?.message}
         </Alert>
         <Container className="container-fluid">
-          <h1 className="text-center my-5 fw-bold text-decoration-underline ">
+          <h1 className="text-center mb-5 fw-bold text-decoration-underline ">
             Make Payment
           </h1>
           <Row className="gap-4">
@@ -310,26 +303,29 @@ const Payment = () => {
           </Row>
           <Container className="mt-5">
             <h2 className="opacity-75 ">Payment History</h2>
+            {history.length > 0 && (
+              <div className="w-25">
+                <InputGroup className="mt-1 mb-3">
+                  <Form.Control
+                    placeholder="Enter Customer name"
+                    aria-label=""
+                    aria-describedby="basic-addon2"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+
+                  <Button
+                    className="mx-3 rounded"
+                    variant="dark"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </Button>
+                </InputGroup>
+              </div>
+            )}
+
             {filteredHistory.length > 0 ? (
               <div>
-                <div className="w-100">
-                  <InputGroup className="mt-5 mb-3">
-                    <Form.Control
-                      placeholder="Enter Customer name or Bank name"
-                      aria-label=""
-                      aria-describedby="basic-addon2"
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-
-                    <Button
-                      className="mx-3 rounded"
-                      variant="dark"
-                      onClick={handleSearch}
-                    >
-                      Search
-                    </Button>
-                  </InputGroup>
-                </div>
                 <Table striped responsive className="text-center mt-1">
                   <thead>
                     <tr className="table-dark">

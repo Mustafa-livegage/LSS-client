@@ -76,7 +76,7 @@ const Details = () => {
     <>
       <BackButton />
       <Container className="d-flex flex-column align-align-items-center justify-content-center">
-        <div className="text-center  mt-5 fw-bold">
+        <div className="text-center fw-bold">
           <h2 className="fw-bold fs-1 text-decoration-underline ">
             Loan Details
           </h2>
@@ -120,7 +120,12 @@ const Details = () => {
             </tr>
             {payment[0] && (
               <tr>
-                <td>Monthly Payment <br /> <span className="fs-6 fw-bold">(Due Amt. {formatCurrency(loan.balance)})</span></td>
+                <td>
+                  Monthly Payment <br />{" "}
+                  <span className="fs-6 fw-bold">
+                    (Due Amt. {formatCurrency(loan.balance)})
+                  </span>
+                </td>
                 <td className="">
                   {`${formatCurrency(
                     payment[0].interest_amount +
