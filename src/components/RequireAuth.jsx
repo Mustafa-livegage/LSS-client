@@ -8,9 +8,12 @@ const RequireAuth = ({ allowedRoles }) => {
   console.log("User Role:", auth.role);
   const isAuthorized = auth?.role == allowedRoles;
 
-  return isAuthorized ? (
+  const storedAuthData = JSON.parse(localStorage.getItem("authData"));
+
+  return isAuthorized ||
+    (storedAuthData && storedAuthData.role === allowedRoles) ? (
     <Outlet />
-  ) : auth?.user_name ? (
+  ) : storedAuthData ? (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

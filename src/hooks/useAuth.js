@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 
@@ -7,6 +7,22 @@ import AuthContext from "../context/AuthProvider";
 const useAuth = () => {
   const { auth, setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const storeAuthData = (data) => {
+    localStorage.setItem("authData", JSON.stringify(data));
+  };
+
+  const getStoredAuthData = () => {
+    const storedAuthData = localStorage.getItem("authData");
+    return storedAuthData ? JSON.parse(storedAuthData) : null;
+  };
+
+  useEffect(() => {
+    const storedAuthData = getStoredAuthData();
+    if (storedAuthData) {
+      setAuth(storedAuthData);
+    }
+  }, [setAuth]);
 
   const login = async (email, password) => {
     try {
@@ -17,8 +33,11 @@ const useAuth = () => {
 
       const user_name = response?.data?.user_name;
       const role = response?.data?.role;
+      const authData = { email, password, role, user_name };
 
-      setAuth({ email, password, role, user_name });
+      storeAuthData(authData);
+      setAuth(authData);
+      // setAuth({ email, password, role, user_name });
 
       return [true,role]; // Return true to indicate successful login
     } catch (err) {
@@ -29,6 +48,7 @@ const useAuth = () => {
   const logout = () => {
     // Clear the auth state when logging out
     setAuth({});
+    localStorage.removeItem('authData');
     navigate("/login");
   };
 
