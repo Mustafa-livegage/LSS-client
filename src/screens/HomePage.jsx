@@ -98,6 +98,7 @@ const HomePage = () => {
             <Table striped responsive bordered hover>
               <thead>
                 <tr className="table-dark">
+                  <th>S.No.</th>
                   <th>Loan Number</th>
                   <th>Borrower Name</th>
                   <th>Boarding Date</th>
@@ -107,8 +108,11 @@ const HomePage = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredLoans.map((loan) => (
+                {filteredLoans.map((loan, index) => (
                   <tr key={loan.id}>
+                    <td className="fw-bold" style={{ width: "25px" }}>
+                      {index + 1}.
+                    </td>
                     <td
                       onClick={() => handleRowClick(loan)}
                       style={{ cursor: "pointer" }}

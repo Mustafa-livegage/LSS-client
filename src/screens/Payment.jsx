@@ -333,6 +333,7 @@ const Payment = () => {
                 <Table striped responsive className="text-center mt-1">
                   <thead>
                     <tr className="table-dark">
+                      <th>S.No.</th>
                       <th>Transaction Id</th>
                       <th> Name</th>
                       <th> Date & Time</th>
@@ -343,8 +344,11 @@ const Payment = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredHistory.map((his) => (
+                    {filteredHistory.map((his, index) => (
                       <tr key={his.id}>
+                        <td className="fw-bold" style={{ width: "25px" }}>
+                          {index + 1}.
+                        </td>
                         <td>{his.id}</td>
                         <td>{his.c_name}</td>
                         <td>{his.date_time}</td>

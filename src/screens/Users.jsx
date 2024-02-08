@@ -70,17 +70,21 @@ const Users = () => {
         </div>
         <div>
           {filteredUsers.length > 0 ? (
-            <Table responsive striped bordered hover>
+            <Table responsive bordered hover>
               <thead>
                 <tr className="table-dark">
+                  <th>S.No.</th>
                   <th>User Name</th>
                   <th>Email Id</th>
                   <th>Action</th>
                 </tr>
               </thead>
               <tbody className="fs-4">
-                {filteredUsers.map((u) => (
+                {filteredUsers.map((u, index) => (
                   <tr key={u.id}>
+                    <td className="fw-bold" style={{ width: "25px" }}>
+                      {index + 1}.
+                    </td>
                     <td>
                       {u.user_name}
                       {u.role === "admin" ? (
