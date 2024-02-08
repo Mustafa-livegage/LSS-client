@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Container, FloatingLabel, Form } from "react-bootstrap";
+import { Alert, Button, Container, FloatingLabel, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { fetchUserWithRoles, login } = useAuth();
-  const { auth } = useAuth();
+  const { login } = useAuth();
+  const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -35,6 +35,7 @@ const Login = () => {
       navigate(userRole == "admin" ? "/users" : "/", { replace: true });
     } else {
       // Handle login failure
+      setShow(true);
       setErrMsg("Login failed. Please check your credentials.");
       errRef.current.focus();
     }
@@ -43,9 +44,18 @@ const Login = () => {
   return (
     <>
       <Container className="d-flex flex-column justify-content-center p-3 bg-white w-25 mt-5 rounded-5 ">
-        <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
-          {errMsg}
-        </p>
+        {show && (
+          <Alert
+            variant="danger"
+            onClose={() => setShow(false)}
+            dismissible
+            className="text-center"
+            ref={errRef}
+          >
+            {errMsg}
+          </Alert>
+        )}
+
         <h1 className="text-center">Sign In</h1>
 
         <form
