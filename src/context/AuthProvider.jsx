@@ -5,7 +5,6 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
 
-  // Pass the fetch function in the context value
   const contextValue = { auth, setAuth };
 
   return (

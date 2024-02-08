@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   Button,
@@ -9,13 +9,12 @@ import {
   Form,
   InputGroup,
   Row,
-  Spinner,
   Table,
 } from "react-bootstrap";
 
 import { useParams } from "react-router-dom";
-import { formatCurrency } from "../helper/formatCurrency";
 import BackButton from "../components/BackButton";
+import { formatCurrency } from "../helper/formatCurrency";
 
 const Payment = () => {
   const { id } = useParams();

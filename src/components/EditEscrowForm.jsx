@@ -17,7 +17,6 @@ const EditEscrowForm = ({ escrow, onUpdate, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Update the escrow item using the API
     axios
       .put(`http://localhost:5000/api/emaster/${escrow.id}`, editedEscrow)
       .then((response) => {
@@ -27,13 +26,6 @@ const EditEscrowForm = ({ escrow, onUpdate, onClose }) => {
       .catch((error) => {
         console.error(`Error updating escrow with ID ${escrow.id}:`, error);
       });
-
-    // For demonstration purposes, we'll simulate the API call with a timeout
-    // setTimeout(() => {
-    //   onUpdate(editedEscrow);
-    //   console.log(editedEscrow);
-    //   onClose();
-    // }, 1000);
   };
 
   return (

@@ -46,7 +46,6 @@ const HomePage = () => {
       axios
         .delete(`http://localhost:5000/api/loans/${id}`)
         .then((response) => {
-          // Remove the deleted loan from the state
           setLoans((prevLoans) => prevLoans.filter((loan) => loan.id !== id));
           setFilteredLoans((prevFilteredLoans) =>
             prevFilteredLoans.filter((loan) => loan.id !== id)
