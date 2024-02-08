@@ -94,7 +94,7 @@ const HomePage = () => {
           </InputGroup>
         </div>
         <div>
-          {loans.length > 0 && (
+          {filteredLoans.length > 0 ? (
             <Table striped responsive bordered hover>
               <thead>
                 <tr className="table-dark">
@@ -137,6 +137,8 @@ const HomePage = () => {
                 ))}
               </tbody>
             </Table>
+          ) : (
+            <h1>No loans found!!</h1>
           )}
         </div>
       </Container>

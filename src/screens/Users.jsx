@@ -37,7 +37,6 @@ const Users = () => {
       axios
         .delete(`http://localhost:5000/api/deleteUser/${id}`)
         .then((response) => {
-          // Remove the deleted loan from the state
           setUsers((prevUser) => prevUser.filter((u) => u.id !== id));
           setFilteredUsers((prevFilteredUsers) =>
             prevFilteredUsers.filter((u) => u.id !== id)
@@ -70,43 +69,45 @@ const Users = () => {
           </InputGroup>
         </div>
         <div>
-          <Table responsive striped bordered hover>
-            <thead>
-              <tr className="table-dark">
-                <th>User Name</th>
-                <th>Email Id</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody className="fs-4">
-              {filteredUsers.map((u) => (
-                <tr key={u.id}>
-                  <td>
-                    <div className="d-flex flex-row align-items-center justify-content-center">
+          {filteredUsers.length > 0 ? (
+            <Table responsive striped bordered hover>
+              <thead>
+                <tr className="table-dark">
+                  <th>User Name</th>
+                  <th>Email Id</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody className="fs-4">
+                {filteredUsers.map((u) => (
+                  <tr key={u.id}>
+                    <td>
                       {u.user_name}
                       {u.role === "admin" ? (
                         <GoPasskeyFill size={20} className="ms-2" />
                       ) : (
                         <GoPerson size={20} className="ms-2" />
                       )}
-                    </div>
-                  </td>
-                  <td>{u.email}</td>
+                    </td>
+                    <td>{u.email}</td>
 
-                  <td>
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      style={{ zIndex: 2 }}
-                      onClick={() => handleDelete(u.id)}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+                    <td>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        style={{ zIndex: 2 }}
+                        onClick={() => handleDelete(u.id)}
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <h1>No users found!!</h1>
+          )}
         </div>
       </Container>
     </>
