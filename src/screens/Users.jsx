@@ -30,7 +30,7 @@ const Users = () => {
 
   const handleDelete = (id) => {
     const isConfirmed = window.confirm(
-      "Are you sure you want to delete this loan?"
+      "Are you sure you want to delete this user?"
     );
 
     if (isConfirmed) {
@@ -43,7 +43,7 @@ const Users = () => {
           );
         })
         .catch((error) => {
-          console.error(`Error deleting loan with ID ${id}:`, error);
+          console.error(`Error deleting user with ID ${id}:`, error);
         });
     }
   };
