@@ -110,7 +110,9 @@ const Payment = () => {
 
   const handleSearch = () => {
     setFilteredHistory(
-      history.filter((loan) => loan.c_name.toString().includes(searchTerm))
+      history.filter((loan) =>
+        loan.c_name.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
     );
   };
 
