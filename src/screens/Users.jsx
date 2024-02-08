@@ -82,12 +82,14 @@ const Users = () => {
               {filteredUsers.map((u) => (
                 <tr key={u.id}>
                   <td>
-                    {u.user_name}
-                    {u.role === "admin" ? (
-                      <GoPasskeyFill size={20} className="ms-2" />
-                    ) : (
-                      <GoPerson size={20} className="ms-2" />
-                    )}
+                    <div className="d-flex flex-row align-items-center justify-content-center">
+                      {u.user_name}
+                      {u.role === "admin" ? (
+                        <GoPasskeyFill size={20} className="ms-2" />
+                      ) : (
+                        <GoPerson size={20} className="ms-2" />
+                      )}
+                    </div>
                   </td>
                   <td>{u.email}</td>
 
