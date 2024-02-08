@@ -9,6 +9,7 @@ import {
   Form,
   InputGroup,
   Row,
+  Spinner,
   Table,
 } from "react-bootstrap";
 
@@ -200,6 +201,8 @@ const Payment = () => {
                   <Form.Control
                     onChange={handleInputChange}
                     name="account_number"
+                    min={1000000000}
+                    max={9999999999}
                     required
                     type="number"
                     placeholder="0000000000"
@@ -213,6 +216,8 @@ const Payment = () => {
                   <Form.Control
                     onChange={handleInputChange}
                     name="route_number"
+                    min={100000000}
+                    max={999999999}
                     required
                     type="number"
                     placeholder="0000000000"
@@ -295,7 +300,12 @@ const Payment = () => {
                   </tbody>
                 </Table>
               ) : (
-                <></>
+                <div className="mt-5">
+                  <h4 className="text-center">
+                    (Payment Distribution will be shown once the payment is
+                    done.)
+                  </h4>
+                </div>
               )}
             </Col>
           </Row>
