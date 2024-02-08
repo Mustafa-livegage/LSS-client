@@ -31,17 +31,16 @@ const WaterfallDetails = () => {
           Waterfall Details
         </h1>
         <Tabs
-          defaultActiveKey="addWaterfall"
+          defaultActiveKey="showWaterfalls"
           className="fs-5 w-100 my-5 fw-bold"
           fill
           onSelect={() => fetchWaterfalls()}
         >
-          <Tab eventKey="addWaterfall" title="Add Waterfall">
-            <AddWaterfall />
-          </Tab>
-
           <Tab eventKey="showWaterfalls" title="Show Waterfalls">
             <ShowWaterfalls data={waterfalls} />
+          </Tab>
+          <Tab eventKey="addWaterfall" title="Add Waterfall">
+            <AddWaterfall />
           </Tab>
         </Tabs>
       </Container>

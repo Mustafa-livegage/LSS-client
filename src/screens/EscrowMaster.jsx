@@ -15,7 +15,7 @@ const EscrowMaster = () => {
     axios
       .get("http://localhost:5000/api/emaster")
       .then(function (response) {
-        setMaster(response.data.reverse());
+        setMaster(response.data);
         setEscrowId(response.data.id);
       })
       .catch((error) => {

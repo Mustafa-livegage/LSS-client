@@ -11,7 +11,9 @@ const ShowWaterfalls = ({ data }) => {
     if (isConfirmed) {
       axios
         .delete(`http://localhost:5000/api/waterfall/${id}`)
-        .then((response) => {})
+        .then((response) => {
+          location.reload();
+        })
         .catch((error) => {
           console.error(
             `Error deleting waterfall with ID ${id}:`,
@@ -24,7 +26,7 @@ const ShowWaterfalls = ({ data }) => {
   return (
     <Container>
       <div className="mt-3">
-        <Accordion>
+        <Accordion defaultActiveKey={["1"]}>
           {data.map((waterfall, index) => (
             <Accordion.Item
               className="mt-2 w-50 mx-auto"
