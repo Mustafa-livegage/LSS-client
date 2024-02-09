@@ -228,6 +228,9 @@ const SingleEntryForm = () => {
                         onChange={handleChange}
                         name="waterfall_name"
                       >
+                        <option selected disabled>
+                          Select waterfall
+                        </option>
                         {waterfallOptions.map((option) => (
                           <option key={option.id} value={option.w_name}>
                             {option.w_name}
