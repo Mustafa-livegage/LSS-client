@@ -7,12 +7,13 @@ import SingleEntryForm from "../screens/SingleEntryForm";
 import EscrowMaster from "../screens/EscrowMaster";
 import AddUser from "../screens/AddUser";
 import Login from "../screens/Login";
-import Unauthorized from "../screens/Unauthorized";
+import Unauthorized from "../components/Unauthorized";
 import RequireAuth from "../components/RequireAuth";
 import Payment from "../screens/Payment";
 import Users from "../screens/Users";
 import WaterfallDetails from "../screens/WaterfallDetails";
 import Layout from "../components/Layout";
+import NotFound from "../components/NotFound";
 
 export const ROLES = {
   ADMIN: "admin",
@@ -49,6 +50,7 @@ const RouteHandler = () => {
             element={<WaterfallDetails />}
           />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
